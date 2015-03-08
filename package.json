@@ -1,0 +1,35 @@
+{
+  "name": "generator-moda",
+  "version": "0.1.0",
+  "description": "Modular angular",
+  "keywords": [
+    "yeoman-generator",
+    "scaffold",
+    "framework",
+    "component",
+    "front-end",
+    "app",
+    "angular",
+    "modular",
+    "sass",
+    "scss"
+  ],
+  "author": "johannesjo",
+  "files": [
+    "app"
+  ],
+  "dependencies": {
+    "chalk": "^1.0.0",
+    "wiredep": "^2.2.2",
+    "yeoman-generator": "^0.18.10",
+    "yosay": "^1.0.3"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "licenses": [
+    {
+      "type": "BSD"
+    }
+  ]
+}
