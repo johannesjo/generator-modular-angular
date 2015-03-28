@@ -98,59 +98,74 @@ var Generator = module.exports = function Generator(args, options)
 
 util.inherits(Generator, yeoman.generators.Base);
 
-Generator.prototype.welcome = function welcome()
-{
-    if (!this.options['skip-welcome-message']) {
-        this.log(yosay());
-        this.log(
-            chalk.magenta(
-                'Out of the box I include Bootstrap and some AngularJS recommended modules.' +
-                '\n'
-            )
-        );
-    }
-};
 
-Generator.prototype.askForCompass = function askForCompass()
+//Generator.prototype.projectName = function projectName()
+//{
+//this.log(yosay());
+//    this.prompt({
+//        type: 'input',
+//        name: 'name',
+//        message: 'Your project name (used for bower.json, package.json, angular.module-name, config.xml)',
+//        default: this.appname // Default to current folder name
+//    }, function (answers)
+//    {
+//        this.log(answers.name);
+//    }.bind(this));
+//};
+
+Generator.prototype.askForCssFramework = function askForCssFramework()
 {
     var cb = this.async();
 
     this.prompt([{
         type: 'confirm',
-        name: 'compass',
-        message: 'Would you like to use Sass (with Compass)?',
-        default: true
-    }], function (props)
-    {
-        this.compass = props.compass;
-
-        cb();
-    }.bind(this));
-};
-
-Generator.prototype.askForBootstrap = function askForBootstrap()
-{
-    var compass = this.compass;
-    var cb = this.async();
-
-    this.prompt([{
-        type: 'confirm',
-        name: 'bootstrap',
-        message: 'Would you like to include Bootstrap?',
+        name: 'useCssFramework',
+        message: 'Would you like to include a css-Framework?',
         default: true
     }, {
-        type: 'confirm',
-        name: 'compassBootstrap',
-        message: 'Would you like to use the Sass version of Bootstrap?',
-        default: true,
         when: function (props)
         {
-            return props.bootstrap && compass;
-        }
+            return props.useCssFramework;
+        },
+        type: 'list',
+        name: 'cssFramwork',
+        message: 'Which (s)css-framework would you like to use?',
+        default: 'animateModule',
+        choices: [
+            {
+                value: 'bootstrap (sass)',
+                name: 'angular-ui-bootstrap'
+            },
+            {
+                value: 'angular-ui-bootstrap',
+                name: 'angular-ui-bootstrap'
+            },
+            {
+                value: 'foundation',
+                name: 'foundation'
+            },
+            {
+                value: 'semantic-ui',
+                name: 'bootstrap'
+            },
+            {
+                value: 'ionic',
+                name: 'ionic'
+            }
+        ]
+    }, {
+        when: function (props)
+        {
+            return props.useCssFramework;
+        },
+        type: 'confirm',
+        name: 'useCssFrameworkJs',
+        message: 'Would you like to to add the frameworks js files to the wiredep ignore?',
+        default: true
     }], function (props)
     {
-        this.bootstrap = props.bootstrap;
-        this.compassBootstrap = props.compassBootstrap;
+        this.useCssFramework = props.useCssFramework;
+        this.cssFramwork = props.cssFramwork;
 
         cb();
     }.bind(this));
@@ -172,7 +187,7 @@ Generator.prototype.askForModules = function askForModules()
             }, {
                 value: 'ariaModule',
                 name: 'angular-aria.js',
-                checked: false
+                checked: true
             }, {
                 value: 'cookiesModule',
                 name: 'angular-cookies.js',
@@ -180,14 +195,6 @@ Generator.prototype.askForModules = function askForModules()
             }, {
                 value: 'resourceModule',
                 name: 'angular-resource.js',
-                checked: true
-            }, {
-                value: 'messagesModule',
-                name: 'angular-messages.js',
-                checked: false
-            }, {
-                value: 'routeModule',
-                name: 'angular-route.js',
                 checked: true
             }, {
                 value: 'sanitizeModule',
@@ -202,9 +209,17 @@ Generator.prototype.askForModules = function askForModules()
                 name: 'ng-fab-form.js',
                 checked: true
             }, {
+                value: 'messagesModule',
+                name: 'angular-messages.js (included with ngFabForm)',
+                checked: false
+            }, {
                 value: 'ui-router',
                 name: 'ui-router.js',
                 checked: true
+            }, {
+                value: 'routeModule',
+                name: 'angular-route.js (standard router dot\'t use with ui-router)',
+                checked: false
             }
         ]
     }];
@@ -319,6 +334,7 @@ Generator.prototype._injectDependencies = function _injectDependencies()
             '\n' + chalk.yellow.bold('grunt wiredep')
         );
     } else {
-        this.spawnCommand('grunt', ['wiredep']);
+        this.spawnCommand('gulp', ['wiredep']);
+        this.spawnCommand('gulp', ['inj']);
     }
 };
