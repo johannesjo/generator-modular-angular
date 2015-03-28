@@ -5,6 +5,7 @@ Modular yeoman generator for AngularJS all device apps.
 # file-structure of app folder
 ```
 index.html
+bower_components/   // ignored
 fonts/
 images/
 styles/
@@ -76,6 +77,7 @@ _*/             : main app directories main and route
 _*.js           : angular module, prefixed like this to be
                   loaded first by file-injection
 *.spec.js       : unit tests of all kind
+*.e2e.js        : end to end tests
 *-c.js          : controller 
 *-c.html        : controller-template
 *-c.scss        : route-specfic (usually page-level) styles
@@ -87,6 +89,35 @@ _*.js           : angular module, prefixed like this to be
 *-p.js          : provider
 *-filter.js     : filter
 *-decorator.js  : decorator
+```
+
+# ./ structure
+```
+.bowerrc
+.editorconfig
+.gitignore
+.jshintrc
+.travis.yml
+bower.json
+config.xml
+gulpfile.js
+karma.conf.js
+karma-e2e.conf.js
+package.json
+app/
+e2e-tests/
+  po/         // page-objects
+  example.e2e.js
+node_modules/
+plattforms/   // ignored
+plugins/
+tasks/
+  build.js
+  config.js
+  cordova.js
+  dev.js
+www/          // ignored
+
 ```
 
 # nice feature ideas
