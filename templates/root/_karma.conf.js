@@ -1,13 +1,11 @@
 // Karma configuration
-// Generated on Fri Aug 01 2014 09:51:05 GMT+0200 (CEST)
+'use strict';
 
 module.exports = function (config)
 {
     config.set({
-
         // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: '',
-
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -17,16 +15,14 @@ module.exports = function (config)
         // list of files / patterns to load in the browser
         files: [
             // bower:js
-            'bower_components/angular/angular.js',
-            'bower_components/angular-messages/angular-messages.js',
-            'bower_components/angular-animate/angular-animate.js',
-            'bower_components/angular-mocks/angular-mocks.js',
             // endbower
 
             // modules first
-            'src/**/_*.js',
+            'app/scripts/**/_*.js',
             // all the rest of the files
-            'src/**/*.js'
+            'app/scripts/**/*.js',
+            // load html as well as required for karma-ng-html2js-preprocessor
+            'app/scripts/**/*.html'
         ],
 
 
@@ -46,9 +42,25 @@ module.exports = function (config)
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
         logLevel: config.LOG_INFO,
 
+        plugins: [
+            'karma-jasmine',
+            //'karma-coverage',
+            'karma-phantomjs-launcher',
+            'karma-ng-html2js-preprocessor'
+        ],
 
-// enable / disable watching file and executing tests whenever any file changes
-        autoWatch: true,
+        preprocessors: {
+            //'**/app/scripts/*/*.js': 'coverage',
+            '**/app/scripts/**/*.html': 'ng-html2js'
+        },
+
+        ngHtml2JsPreprocessor: {
+            moduleName: 'templates',
+            stripPrefix: 'app/'
+        },
+
+        // enable / disable watching file and executing tests whenever any file changes
+        autoWatch: false,
 
 
         // start these browsers
@@ -58,6 +70,6 @@ module.exports = function (config)
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
-        singleRun: false
+        singleRun: true
     });
 };
