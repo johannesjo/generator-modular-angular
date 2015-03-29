@@ -29,6 +29,28 @@ gulp serve
 * **super modular**: no more controller madness by design
 * configurable and extendable (still work in progress though)
 
+## Sub-Generators
+### Directive
+Example:
+```
+yo moda:directive my-directive
+```
+**Options**
+
+```
+path, e.g.:
+yo moda:directive my-directive my-directive-directory
+
+```
+
+**Parameters** 
+```
+--openInIntelliJ  : opens the created files automatically in intellj
+--useDefaults     : skips the dialogs and uses the defaults
+```
+
+
+
 
 ## (a concept of) the file-structure of the app folder
 Don't worry. That's not what the output of the generator is, but what it could be. Have a look: 
@@ -160,7 +182,7 @@ www/          // ignored
 
 
 ## how to set up your generator to run with intellij, webstorm, phpstorm, etc
-Yap, its possible. I wrote a [wiki-article](linkmissing) on how I did it on Ubuntu with IntelliJ. And for those who didn't know: There is a [video by John Lindquist](https://www.youtube.com/watch?v=KBueufmUgdw) for those of you lucky enough having no path issues with node on your machine.
+Yap, its possible. I wrote a [wiki-article](https://github.com/johannesjo/generator-modular-angular/wiki/How-to-integrate-the-generator-with-Jetbrains-products-on-Ubuntu) on how I did it on Ubuntu with IntelliJ. And for those who didn't know: There is a [video by John Lindquist](https://www.youtube.com/watch?v=KBueufmUgdw) for those of you lucky enough having no path issues with node on your machine.
 
 ## nice feature ideas
 * hook for opening created files in favorite editor/ide
