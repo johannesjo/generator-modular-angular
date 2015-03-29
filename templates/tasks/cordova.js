@@ -83,7 +83,7 @@ gulp.task('releaseCordovaReal', function ()
 
 gulp.task('symlinkApp', function ()
 {
-    return gulp.src(config.base)
+    gulp.src(config.base)
         .pipe(symlink(config.dist));
 });
 

@@ -7,7 +7,7 @@ module.exports = (function ()
     var scripts = base + '/scripts';
     var sass = base + '/styles';
 
-    return {
+    var data = {
         base: base,
         mainFile: base + '/index.html',
         mainSassFile: sass + '/main.scss',
@@ -42,4 +42,9 @@ module.exports = (function ()
         karmaConf: './karma.conf.js',
         karmaConfE2E: './karma-e2e.conf.js'
     };
+
+    data.allHtmlF = data.htmlF.slice()
+    data.allHtmlF.push(data.mainFile);
+
+    return data;
 })();

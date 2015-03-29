@@ -33,18 +33,23 @@ function swallowError(error)
 gulp.task('default', function ()
 {
     runSequence(
-        'wiredep',
-        'inject',
-        'sass',
+        'injectAll',
         'connect',
         'test',
         'watch'
     );
 });
-
 gulp.task('serve', ['default']);
 gulp.task('server', ['default']);
 
+gulp.task('injectAll', function ()
+{
+    runSequence(
+        'wiredep',
+        'inject',
+        'sass'
+    );
+});
 
 gulp.task('watch', function ()
 {
@@ -61,9 +66,7 @@ gulp.task('watch', function ()
         gulp.start('jshint');
     });
 
-    var htmlFiles = config.htmlF.slice();
-    htmlFiles.push(config.mainFile);
-    watch(htmlFiles, function ()
+    watch(config.allHtmlF, function ()
     {
         gulp.start('html');
     });
@@ -105,7 +108,7 @@ gulp.task('sass', function (done)
 
 gulp.task('connect', function ()
 {
-    connect.server({
+    return connect.server({
         root: config.base,
         livereload: true
     });
@@ -114,23 +117,18 @@ gulp.task('connect', function ()
 
 gulp.task('html', function ()
 {
-    // TODO add index.html
-    gulp.src(config.htmlF)
+    return gulp.src(config.allHtmlF)
         .pipe(connect.reload());
 });
 
 
 gulp.task('wiredep', function ()
 {
-    gulp.src(config.mainFile, {base: './'})
+    gulp.src([config.karmaConf, config.mainFile], {base: './'})
         .pipe(wiredep({
-            exclude: []
-        }))
-        .pipe(gulp.dest('./'));
-
-    gulp.src(config.karmaConf, {base: './'})
-        .pipe(wiredep({
-            exclude: [],
+            exclude: [
+                // TODO inject excluded
+            ],
             devDependencies: true
         }))
         .pipe(gulp.dest('./'));
@@ -156,7 +154,7 @@ gulp.task('inject', function ()
 gulp.task('test', function ()
 {
     // Be sure to return the stream
-    return gulp.src('.nonononoNOTHING')
+    gulp.src('.nonononoNOTHING')
         .pipe(karma({
             configFile: './karma.conf.js',
             action: 'watch'
@@ -171,7 +169,7 @@ gulp.task('test', function ()
 gulp.task('testSingle', function ()
 {
     // Be sure to return the stream
-    return gulp.src('.nonononoNOTHING')
+    gulp.src('.nonononoNOTHING')
         .pipe(karma({
             configFile: './karma.conf.js',
             action: 'run'
@@ -186,7 +184,7 @@ gulp.task('testSingle', function ()
 gulp.task('protractor', function ()
 {
     // Be sure to return the stream
-    return gulp.src('.nonononoNOTHING')
+    gulp.src('.nonononoNOTHING')
         .pipe(protractor({
             configFile: './karma-e2e.conf.js',
             args: ['--baseUrl', e2eBaseUrl]
@@ -199,7 +197,7 @@ gulp.task('protractor', function ()
 
 gulp.task('jshint', function ()
 {
-    return gulp.src([
+    gulp.src([
         config.scriptsAllF,
         './karma-e2e.conf.js',
         './karma.conf.js',

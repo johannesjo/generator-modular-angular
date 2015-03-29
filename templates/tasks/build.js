@@ -24,8 +24,7 @@ gulp.task('build', function (callback)
 {
     runSequence(
         'cleanDist',
-        'wiredep',
-        'wiredep',
+        'wiredepBuild',
         'inj',
         'testSingle',
         'jshint',
@@ -34,6 +33,18 @@ gulp.task('build', function (callback)
         'copy',
         'deploy',
         callback);
+});
+
+gulp.task('wiredepBuild', function ()
+{
+    gulp.src([config.karmaConf, config.mainFile], {base: './'})
+        .pipe(wiredep({
+            exclude: [
+                // TODO inject excluded
+            ],
+            devDependencies: false
+        }))
+        .pipe(gulp.dest('./'));
 });
 
 gulp.task('deploy', function ()
@@ -55,7 +66,7 @@ gulp.task('deploy', function ()
 
 gulp.task('cleanDist', function ()
 {
-    return del(config.dist);
+    del(config.dist);
 });
 
 
@@ -82,7 +93,7 @@ gulp.task('copy', function ()
 gulp.task('minFiles', function ()
 {
     var assets = useref.assets();
-    return gulp.src(config.mainFile)
+    gulp.src(config.mainFile)
         .pipe(assets)
         .pipe(gulpif('*.js', ngAnnotate()))
         .pipe(gulpif('*.css', minifyCss()))
