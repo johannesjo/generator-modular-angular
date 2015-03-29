@@ -298,6 +298,7 @@ Generator.prototype.tasks = function packageFiles()
     this.template('tasks/config.js', 'tasks/config.js');
     this.template('tasks/build.js', 'tasks/build.js');
     this.template('tasks/dev.js', 'tasks/dev.js');
+    this.template('tasks/deploy.js', 'tasks/deploy.js');
 
     // TODO make cordova optional
     this.template('tasks/cordova.js', 'tasks/cordova.js');
@@ -307,6 +308,9 @@ Generator.prototype.installDeps = function packageFiles()
 {
     this.on('end', function ()
     {
+        // save configuration
+        this.config.save();
+
         this.installDependencies({
             callback: function ()
             {
