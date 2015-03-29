@@ -66,16 +66,21 @@ Generator.prototype.getCurrentModulePath = function (src, dest)
 
 Generator.prototype.generateSourceAndTest = function (appTemplate, prefix, suffix, data)
 {
+    var targetFolder,
+        fileTypesToCreate = [],
+        filesToOpen = [];
     suffix = suffix || '';
     prefix = prefix || '';
 
+
     // allow creating sub-modules
-    var targetFolder = this.name;
     if (this.targetFolder) {
         this.targetFolder = this.targetFolder
             .replace('scripts', '')
             .replace('app', '');
-        targetFolder = path.join(this.targetFolder, targetFolder);
+        targetFolder = path.join(this.targetFolder, this.name);
+    } else {
+        targetFolder = this.name
     }
 
     var tplPathWithoutFileExt = path.join(this.scriptsFolder, targetFolder, prefix + this.name + suffix).toLowerCase();
@@ -93,8 +98,8 @@ Generator.prototype.generateSourceAndTest = function (appTemplate, prefix, suffi
     // create html template
     if (data.createTemplate) {
         this.tplUrl = tplPathWithoutFileExt + this.tplSuffix;
-        this.appTemplate(appTemplate, pathWithoutFileExt, this.tplSuffix);
-        this.appTemplate(appTemplate, pathWithoutFileExt, this.styleSuffix);
+        fileTypesToCreate.push(this.tplSuffix);
+        fileTypesToCreate.push(this.styleSuffix);
     }
 
     if (data && (data.createService === 'service' || data.createService === 'factory')) {
@@ -105,13 +110,24 @@ Generator.prototype.generateSourceAndTest = function (appTemplate, prefix, suffi
         this.svcName = this.classedName;
     }
 
-
     // create main file
-    this.appTemplate(appTemplate, pathWithoutFileExt, this.scriptSuffix);
+    fileTypesToCreate.push(this.scriptSuffix);
+
     // create test
-    this.appTemplate(appTemplate, pathWithoutFileExt, this.testSuffix);
+    fileTypesToCreate.push(this.testSuffix);
+
+    for (var i = 0; i < fileTypesToCreate.length; i++) {
+        this.appTemplate(appTemplate, pathWithoutFileExt, fileTypesToCreate[i]);
+        filesToOpen.push(pathWithoutFileExt + fileTypesToCreate[i]);
+
+    }
 
     // inject all files after creation
     this.spawnCommand('gulp', ['inject']);
+
+    // run favorite ide
+    if (this.options.openInIntelliJ) {
+        this.spawnCommand('idea', filesToOpen);
+    }
 
 };

@@ -35,6 +35,7 @@ Generator.prototype.createDirectiveFiles = function createDirectiveFiles()
     };
 
     this.option('useDefaults');
+    this.option('openInIntelliJ');
     this.argument('targetFolder', {
         type: String,
         required: false,
@@ -42,7 +43,7 @@ Generator.prototype.createDirectiveFiles = function createDirectiveFiles()
     });
 
      if (this.options.useDefaults) {
-         console.log('Using default options');
+         this.log('Using default options');
          createFiles.bind(this)(defaults);
     } else {
         this.prompt(
