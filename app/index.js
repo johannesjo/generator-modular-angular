@@ -139,8 +139,12 @@ Generator.prototype.askForModules = function askForModules()
                 name: 'angular-touch.js',
                 checked: false
             }, {
+                value: 'ngMaterialModule',
+                name: 'angular material design',
+                checked: false
+            }, {
                 value: 'ngFabFormModule',
-                name: 'ng-fab-form.js',
+                name: 'ng-fab-form (form helper)',
                 checked: true
             }, {
                 value: 'messagesModule',
@@ -215,6 +219,11 @@ Generator.prototype.askForModules = function askForModules()
             this.env.options.uiRouter = true;
         }
 
+        if (this.ngMaterialModule) {
+            angMods.push("'ngMaterial'");
+            this.env.options.ngMaterial = true;
+        }
+
         if (this.ngFabFormModule) {
             angMods.push("'ngFabForm'");
         }
@@ -231,6 +240,7 @@ Generator.prototype.readIndex = function readIndex()
 {
     this.ngRoute = this.env.options.ngRoute;
     this.uiRouter = this.env.options.uiRouter;
+    this.ngMaterial = this.env.options.ngMaterial;
     this.indexFile = this.engine(this.read('index.html'), this);
 };
 
