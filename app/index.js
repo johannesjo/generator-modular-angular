@@ -11,6 +11,8 @@ var chalk = require('chalk');
 var Generator = module.exports = function Generator(args, options)
 {
     yeoman.generators.Base.apply(this, arguments);
+
+    // get app name
     this.argument('appname', {type: String, required: false});
     this.appname = this.appname || path.basename(process.cwd());
     this.appname = this._.camelize(this._.slugify(this._.humanize(this.appname)));
@@ -18,25 +20,14 @@ var Generator = module.exports = function Generator(args, options)
     this.humanizedAppName = this._.humanize(this.appname);
     this.scriptAppName = this.appname;
 
-    args = ['main'];
 
-    if (typeof this.env.options.appPath === 'undefined') {
-        this.option('appPath', {
-            desc: 'Allow to choose where to write the files'
-        });
-
-        this.env.options.appPath = this.options.appPath;
-
-        if (!this.env.options.appPath) {
-            try {
-                this.env.options.appPath = require(path.join(process.cwd(), 'bower.json')).appPath;
-            } catch (e) {
-            }
-        }
-        this.env.options.appPath = this.env.options.appPath || 'app';
-        this.options.appPath = this.env.options.appPath;
+    // get app path
+    try {
+        this.env.options.appPath = require(path.join(process.cwd(), 'bower.json')).appPath;
+    } catch (e) {
     }
-
+    this.env.options.appPath = this.env.options.appPath || 'app';
+    this.options.appPath = this.env.options.appPath;
     this.appPath = this.env.options.appPath;
 
 
@@ -251,12 +242,6 @@ Generator.prototype.cssFiles = function bootstrapFiles()
         this.destinationPath(path.join(this.appPath, 'styles/')
         )
     );
-
-    //var cssFile = 'styles/main.scss';
-    //this.copy(
-    //    cssFile,
-    //    path.join(this.appPath, cssFile)
-    //);
 };
 
 Generator.prototype.createIndexHtml = function createIndexHtml()
