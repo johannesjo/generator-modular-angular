@@ -14,37 +14,27 @@ Generator.prototype.createDirectiveFiles = function createDirectiveFiles()
     var cb = this.async(),
         defaults = {
             createTemplate: true,
-            createService: false
+            createService: false,
+            createDirectory: !this.options.dontCreateFolder
         };
 
     var createFiles = function (props)
     {
-        console.log(props);
+        this.createService = props.createService;
+        this.createTemplate = props.createTemplate;
+        this.createDirectory = defaults.createDirectory;
 
         this.generateSourceAndTest(
             'directive',
             null,
-            '-d',
-            {
-                createService: props.createService,
-                createTemplate: props.createTemplate
-            }
+            '-d'
         );
         // NOTE: never forget the callback!
         cb();
     };
 
-    this.option('useDefaults');
-    this.option('openInIntelliJ');
-    this.argument('targetFolder', {
-        type: String,
-        required: false,
-        description: 'The path of the parent module. Strips app and scripts folders'
-    });
-
-     if (this.options.useDefaults) {
-         this.log('Using default options');
-         createFiles.bind(this)(defaults);
+    if (this.options.useDefaults) {
+        createFiles.bind(this)(defaults);
     } else {
         this.prompt(
             [
