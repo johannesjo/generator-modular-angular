@@ -33,7 +33,7 @@ gulp serve
 ### Directive
 Example:
 ```
-yo moda:directive my-directive
+yo moda:d my-directive
 ```
 **Options**
 
