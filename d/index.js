@@ -17,6 +17,7 @@ Generator.prototype.createDirectiveFiles = function createDirectiveFiles()
             createService: false,
             createDirectory: !this.options.dontCreateFolder
         };
+    this.isDirective = true;
 
     var createFiles = function (props)
     {

@@ -22,9 +22,9 @@ var Generator = module.exports = function Generator()
     });
 
 
-    /***************************
-     **** other global vars ***
-     **************************/
+    /*************************************
+     **** other global templating vars ***
+     ************************************/
 
     // define app name variables
     var bowerJson = {};
@@ -64,7 +64,11 @@ var Generator = module.exports = function Generator()
     this.styleSuffix = '.scss';
     this.currentModule = path.basename(process.cwd());
 
-    this.globalServicePath = 'main/global-services';
+    this.globalDir = '_main';
+    this.globalServicePath = this.globalDir + '/global-services';
+    this.globalFiltersPath = this.globalDir + '/global-filters';
+    this.globalDirectivesPath = '';
+    this.routesPath = '_routes';
 };
 util.inherits(Generator, yeoman.generators.NamedBase);
 
@@ -89,21 +93,25 @@ Generator.prototype.defineTargetFolder = function ()
             .replace('app', '');
         realTargetFolder = path.join(this.targetFolder);
     } else {
-        realTargetFolder = '.'
+        if (this.isService) {
+            realTargetFolder = this.globalServicePath;
+        } else if (this.isFilter) {
+            realTargetFolder = this.globalFiltersPath;
+        } else if (this.isRoute) {
+            realTargetFolder = this.routesPath;
+        } else if (this.isDirective) {
+            realTargetFolder = this.globalDirectivesPath;
+        } else {
+            realTargetFolder = '.'
+        }
     }
 
     // check if a same named parent directory should be created
+    // for directives and routes
     if (this.createDirectory) {
         realTargetFolder = path.join(realTargetFolder, this.name);
     }
 
-    // check if service or factory and if no path is given
-    if (this.isService) {
-        this.svcName = this.classedName;
-        if (!realTargetFolder) {
-            realTargetFolder = this.globalServicePath;
-        }
-    }
     return realTargetFolder;
 };
 
