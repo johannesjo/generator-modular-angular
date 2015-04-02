@@ -1,4 +1,4 @@
-node_modules
+node_modules/
 .tmp
 .sass-cache
 .grunt
@@ -7,5 +7,4 @@ dist/example
 .idea/
 *.DS_*
 npm-debug.log
-coverage
-test/tmp
+coverage/
