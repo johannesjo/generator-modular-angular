@@ -4,10 +4,10 @@ var assert = require('assert');
 var helpers = require('yeoman-generator').test;
 var assert = require('yeoman-generator').assert;
 
-describe('Moda generator', function ()
+describe('moda generator', function ()
 {
     // not testing the actual run of generators yet
-    it('the generator can be required without throwing', function ()
+    it('can be required without throwing', function ()
     {
         this.app = require('../app');
     });
