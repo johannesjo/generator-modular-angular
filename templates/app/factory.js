@@ -1,12 +1,12 @@
 /**
  * @ngdoc service
- * @name <%= scriptAppName %>.<%= cameledName %>
+ * @name <%= scriptAppName %>.<%= classedName %>
  * @description
- * # <%= cameledName %>
+ * # <%= classedName %>
  * Factory in the <%= scriptAppName %>.
  */
 angular.module('<%= scriptAppName %>')
-    .factory('<%= cameledName %>', function ()
+    .factory('<%= classedName %>', function ()
     {
         'use strict';
 
