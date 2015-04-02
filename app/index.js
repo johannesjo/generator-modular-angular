@@ -33,6 +33,8 @@ module.exports = yeoman.generators.Base.extend({
 
         this.pkg = require('../package.json');
         this.sourceRoot(path.join(__dirname, '../templates'));
+
+
     },
 
     askForModules: function askForModules()
@@ -96,7 +98,10 @@ module.exports = yeoman.generators.Base.extend({
         {
             var hasMod = function (mod)
             {
-                return props.modules.indexOf(mod) !== -1;
+                // prevent test errors if no values mocked
+                if (props && props.modules) {
+                    return props.modules.indexOf(mod) !== -1;
+                }
             };
             this.animateModule = hasMod('animateModule');
             this.ariaModule = hasMod('ariaModule');
@@ -229,23 +234,26 @@ module.exports = yeoman.generators.Base.extend({
         this.template('tasks/cordova.js', 'tasks/cordova.js');
     },
 
-    installDeps: function packageFiles()
+    install: function packageFiles()
     {
         this.on('end', function ()
         {
-            // save configuration
+            //save configuration
             this.config.save();
-
-            this.installDependencies({
-                callback: function ()
-                {
-                    // Emit a new event - dependencies installed
-                    this.emit('dependenciesInstalled');
-                }.bind(this)
-            });
+            if (!this.options['skip-install']) {
+                this.installDependencies({
+                    callback: function ()
+                    {
+                        // Emit a new event - dependencies installed
+                        this.emit('dependenciesInstalled');
+                    }.bind(this)
+                });
+            }
         });
-
-        // Now you can bind to the dependencies installed event
+    },
+    postRun: function ()
+    {
+        // TODO find a better place
         this.on('dependenciesInstalled', function ()
         {
             this.spawnCommand('gulp', ['serve']);

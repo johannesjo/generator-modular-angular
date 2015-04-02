@@ -15,9 +15,6 @@
     "scss"
   ],
   "author": "johannesjo",
-  "files": [
-    "app"
-  ],
   "dependencies": {
     "chalk": "^1.0.0",
     "wiredep": "^2.2.2",
@@ -31,5 +28,16 @@
     {
       "type": "MIT"
     }
-  ]
+  ],
+  "main": "app/index.js",
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "files": [
+    "app"
+  ],
+  "devDependencies": {
+    "mocha": "^2.2.1",
+    "underscore": "^1.8.3"
+  }
 }
