@@ -37,65 +37,6 @@ var Generator = module.exports = function Generator(args, options)
 
 util.inherits(Generator, yeoman.generators.Base);
 
-
-//Generator.prototype.askForCssFramework = function askForCssFramework()
-//{
-//    var cb = this.async();
-//
-//    this.prompt([{
-//        type: 'confirm',
-//        name: 'useCssFramework',
-//        message: 'Would you like to include a css-Framework?',
-//        default: true
-//    }, {
-//        when: function (props)
-//        {
-//            return props.useCssFramework;
-//        },
-//        type: 'list',
-//        name: 'cssFramwork',
-//        message: 'Which (s)css-framework would you like to use?',
-//        default: 'animateModule',
-//        choices: [
-//            {
-//                value: 'bootstrap',
-//                name: 'bootstrap-sass-official'
-//            },
-//            {
-//                value: 'angularUi',
-//                name: 'angular-ui-bootstrap'
-//            },
-//            {
-//                value: 'foundation',
-//                name: 'foundation'
-//            },
-//            {
-//                value: 'semantic-ui',
-//                name: 'bootstrap'
-//            },
-//            {
-//                value: 'ionic',
-//                name: 'ionic'
-//            }
-//        ]
-//    }, {
-//        when: function (props)
-//        {
-//            return props.useCssFramework;
-//        },
-//        type: 'confirm',
-//        name: 'useCssFrameworkJs',
-//        message: 'Would you like to to add the frameworks js files to the wiredep ignore?',
-//        default: true
-//    }], function (props)
-//    {
-//        this.useCssFramework = props.useCssFramework;
-//        this.cssFramwork = props.cssFramwork;
-//
-//        cb();
-//    }.bind(this));
-//};
-//
 Generator.prototype.askForModules = function askForModules()
 {
     var cb = this.async();
@@ -168,6 +109,7 @@ Generator.prototype.askForModules = function askForModules()
         this.uiRouterModule = hasMod('uiRouterModule');
         this.ngFabFormModule = hasMod('ngFabFormModule');
         this.sanitizeModule = hasMod('sanitizeModule');
+        this.ngMaterialModule = hasMod('ngMaterialModule');
         this.touchModule = hasMod('touchModule');
 
         var angMods = [];
