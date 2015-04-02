@@ -56,6 +56,7 @@ var Generator = module.exports = function Generator()
 
     // additional variables
     this.testPassOnDefault = true;
+    this.createdFiles = [];
     this.scriptsFolder = 'scripts';
     this.scriptSuffix = '.js';
     this.testSuffix = '.spec' + this.scriptSuffix;
@@ -68,10 +69,8 @@ var Generator = module.exports = function Generator()
 util.inherits(Generator, yeoman.generators.NamedBase);
 
 
-Generator.prototype.appTemplate = function (src, dest, fileExt)
+Generator.prototype.createFromTemplate = function (src, dest, fileExt)
 {
-    console.log(this.tplUrl);
-
     yeoman.generators.Base.prototype.template.apply(this, [
         src + fileExt,
         dest + fileExt
@@ -79,56 +78,70 @@ Generator.prototype.appTemplate = function (src, dest, fileExt)
 };
 
 
-Generator.prototype.generateSourceAndTest = function (appTemplate, prefix, suffix, data)
+Generator.prototype.defineTargetFolder = function ()
 {
-    // TODO huge refactor
-
-    var targetFolder,
-        fileTypesToCreate = [],
-        filesToOpen = [];
-    suffix = suffix || '';
-    prefix = prefix || '';
+    var realTargetFolder;
 
     // allow creating sub-modules via reading and parsing the path argument
     if (this.targetFolder) {
         this.targetFolder = this.targetFolder
             .replace('scripts', '')
             .replace('app', '');
-        targetFolder = path.join(this.targetFolder);
+        realTargetFolder = path.join(this.targetFolder);
     } else {
-        targetFolder = '.'
+        realTargetFolder = '.'
     }
 
     // check if a same named parent directory should be created
     if (this.createDirectory) {
-        targetFolder = path.join(targetFolder, this.name);
+        realTargetFolder = path.join(realTargetFolder, this.name);
     }
 
     // check if service or factory and if no path is given
     if (this.isService) {
         this.svcName = this.classedName;
-        if (!targetFolder) {
-            targetFolder = path.join(targetFolder, this.globalServicePath);
+        if (!realTargetFolder) {
+            realTargetFolder = this.globalServicePath;
         }
     }
+    return realTargetFolder;
+};
+
+
+Generator.prototype.afterFileCreationHook = function ()
+{
+    // inject all files after creation
+    this.spawnCommand('gulp', ['inject']);
+
+    // run favorite ide
+    if (this.options.openInIntelliJ) {
+        this.spawnCommand('idea', this.createdFiles);
+    }
+};
+
+Generator.prototype.generateSourceAndTest = function (templateName, prefix, suffix)
+{
+    var realTargetFolder = this.defineTargetFolder(),
+        fileTypesToCreate = [],
+        suffix = suffix || '',
+        prefix = prefix || '';
+
 
     // create file paths
-    var tplPathWithoutFileExt = path.join(this.scriptsFolder, targetFolder, prefix + this.name + suffix).toLowerCase();
-    var pathWithoutFileExt = path.join(this.env.options.appPath, tplPathWithoutFileExt);
+    var tplUrlWithoutFileExt = path.join(this.scriptsFolder, realTargetFolder, prefix + this.name + suffix).toLowerCase();
+    // add app directory to real used paths
+    var pathWithoutFileExt = path.join(this.env.options.appPath, tplUrlWithoutFileExt);
 
+    // start: determine which files to create
     // prepare template template and data
     if (this.createTemplate) {
-        this.tplUrl = tplPathWithoutFileExt + this.tplSuffix;
+        this.tplUrl = tplUrlWithoutFileExt + this.tplSuffix;
         fileTypesToCreate.push(this.tplSuffix);
         fileTypesToCreate.push(this.styleSuffix);
     } else {
         // needs to be set for the _.templates to work
         this.tplUrl = false;
     }
-
-    // always create main file and test
-    fileTypesToCreate.push(this.scriptSuffix);
-    fileTypesToCreate.push(this.testSuffix);
 
     // run create service or factory if option is given
     if (this.createService === 'service' || this.createService === 'factory') {
@@ -137,21 +150,22 @@ Generator.prototype.generateSourceAndTest = function (appTemplate, prefix, suffi
         var svcSuffix = this.createService === 'service' ? '-s' : '-f';
         var svcPath = pathWithoutFileExt.slice(0, (pathWithoutFileExt.length - suffix.length)) + svcSuffix;
 
-        this.appTemplate(this.createService, svcPath, this.scriptSuffix);
-        filesToOpen.push(svcPath + this.scriptSuffix);
+        this.createFromTemplate(this.createService, svcPath, this.scriptSuffix);
+        this.createdFiles.push(svcPath + this.scriptSuffix);
     }
+    // end: determine which files to create
 
-    // create files array
+
+    // always create main file and test
+    fileTypesToCreate.push(this.scriptSuffix);
+    fileTypesToCreate.push(this.testSuffix);
+
+
+    // create files and create a files array for further use
     for (var i = 0; i < fileTypesToCreate.length; i++) {
-        this.appTemplate(appTemplate, pathWithoutFileExt, fileTypesToCreate[i]);
-        filesToOpen.push(pathWithoutFileExt + fileTypesToCreate[i]);
+        this.createFromTemplate(templateName, pathWithoutFileExt, fileTypesToCreate[i]);
+        this.createdFiles.push(pathWithoutFileExt + fileTypesToCreate[i]);
     }
 
-    // inject all files after creation
-    this.spawnCommand('gulp', ['inject']);
-
-    // run favorite ide
-    if (this.options.openInIntelliJ) {
-        this.spawnCommand('idea', filesToOpen);
-    }
+    this.afterFileCreationHook();
 };

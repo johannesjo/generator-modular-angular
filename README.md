@@ -32,6 +32,7 @@ gulp serve
 ## Sub-Generators
 ### Directive
 Example:
+
 ```
 yo moda:d my-directive
 ```

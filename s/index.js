@@ -9,10 +9,9 @@ var Generator = module.exports = function Generator()
 };
 util.inherits(Generator, ScriptBase);
 
-Generator.prototype.createDirectiveFiles = function createDirectiveFiles()
+Generator.prototype.createServiceFiles = function createServiceFiles()
 {
     this.isService = true;
-
     this.generateSourceAndTest(
         'service',
         null,

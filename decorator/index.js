@@ -9,12 +9,12 @@ var Generator = module.exports = function Generator()
 };
 util.inherits(Generator, ScriptBase);
 
-Generator.prototype.createFactoryFiles = function createFactoryFiles()
+Generator.prototype.createDecoratorFiles = function createDecoratorFiles()
 {
     this.isService = true;
     this.generateSourceAndTest(
-        'factory',
+        'decorator',
         null,
-        '-f'
+        '-decorator'
     );
 };

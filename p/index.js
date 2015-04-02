@@ -9,11 +9,11 @@ var Generator = module.exports = function Generator()
 };
 util.inherits(Generator, ScriptBase);
 
-Generator.prototype.createFactoryFiles = function createFactoryFiles()
+Generator.prototype.createProviderFiles = function createProviderFiles()
 {
     this.isService = true;
     this.generateSourceAndTest(
-        'factory',
+        'provider',
         null,
         '-f'
     );
