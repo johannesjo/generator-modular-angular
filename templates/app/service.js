@@ -1,12 +1,12 @@
 /**
  * @ngdoc service
- * @name <%= scriptAppName %>.<%= classedName %>
+ * @name <%= scriptAppName %>.<%= classedName %><%= nameSuffix %>
  * @description
- * # <%= classedName %>
+ * # <%= classedName %><%= nameSuffix %>
  * Service in the <%= scriptAppName %>.
  */
 angular.module('<%= scriptAppName %>')
-    .service('<%= classedName %>', function ()
+    .service('<%= classedName %><%= nameSuffix %>', function ()
     {
         'use strict';
 

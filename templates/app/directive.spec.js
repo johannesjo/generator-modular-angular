@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: <%= cameledName %>', function ()
+describe('Directive: <%= cameledName %><%= nameSuffix %>', function ()
 {
 
     // load the directive's module

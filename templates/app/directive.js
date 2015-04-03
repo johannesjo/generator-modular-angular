@@ -2,12 +2,12 @@
 
 /**
 * @ngdoc directive
-* @name <%= scriptAppName %>.directive:<%= cameledName %>
+* @name <%= scriptAppName %>.directive:<%= cameledName %><%= nameSuffix %>
 * @description
-* # <%= cameledName %>
+* # <%= cameledName %><%= nameSuffix %>
 */
 angular.module('<%= scriptAppName %>')
-.directive('<%= cameledName %>', function ()
+.directive('<%= cameledName %><%= nameSuffix %>', function ()
 {
     return {<% if(tplUrl) {%>
         templateUrl: '<%= tplUrl %>',

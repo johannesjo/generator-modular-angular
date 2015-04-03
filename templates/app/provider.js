@@ -1,12 +1,12 @@
 /**
  * @ngdoc service
- * @name <%= scriptAppName %>.<%= classedName %>
+ * @name <%= scriptAppName %>.<%= classedName %><%= nameSuffix %>
  * @description
- * # <%= classedName %>
+ * # <%= classedName %><%= nameSuffix %>
  * Provider in the <%= scriptAppName %>.
  */
 angular.module('<%= scriptAppName %>')
-    .provider('<%= classedName %>', function <%= classedName %>Provider ()
+    .provider('<%= classedName %><%= nameSuffix %>', function <%= classedName %><%= nameSuffix %>Provider ()
     {
         'use strict';
 
@@ -27,7 +27,7 @@ angular.module('<%= scriptAppName %>')
         // Private constructor-function
         // aka factory definition
         // *****************************
-        function <%= classedName %>()
+        function <%= classedName %><%= nameSuffix %>()
         {
 
             // *****************
@@ -41,6 +41,6 @@ angular.module('<%= scriptAppName %>')
         // return service definition
         this.$get = function ()
         {
-            return new <%= classedName %>();
+            return new <%= classedName %><%= nameSuffix %>();
         };
     });

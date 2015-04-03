@@ -1,13 +1,13 @@
 /**
  * @ngdoc filter
- * @name <%= scriptAppName %>.filter:<%= cameledName %>
+ * @name <%= scriptAppName %>.filter:<%= cameledName %><%= nameSuffix %>
  * @function
  * @description
- * # <%= cameledName %>
+ * # <%= cameledName %><%= nameSuffix %>
  * Filter in the <%= scriptAppName %>.
  */
 angular.module('<%= scriptAppName %>')
-    .filter('<%= cameledName %>', function ()
+    .filter('<%= cameledName %><%= nameSuffix %>', function ()
     {
         'use strict';
 

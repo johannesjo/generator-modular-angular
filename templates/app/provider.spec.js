@@ -1,18 +1,18 @@
 'use strict';
 
-describe('Provider: <%= classedName %>', function () {
+describe('Provider: <%= classedName %><%= nameSuffix %>', function () {
     // load the service's module
     var provider;
 
-    beforeEach(module('<%= scriptAppName %>', function (<%= classedName %>Provider)
+    beforeEach(module('<%= scriptAppName %>', function (<%= classedName %><%= nameSuffix %>Provider)
     {
-        provider = <%= classedName %>Provider;
+        provider = <%= classedName %><%= nameSuffix %>Provider;
     }));
 
     // instantiate service-function
-    var <%= classedName %>;
-    beforeEach(inject(function (_<%= classedName %>_) {
-        <%= classedName %> = _<%= classedName %>_;
+    var <%= classedName %><%= nameSuffix %>;
+    beforeEach(inject(function (_<%= classedName %><%= nameSuffix %>_) {
+        <%= classedName %><%= nameSuffix %> = _<%= classedName %><%= nameSuffix %>_;
     }));
 
     it('should be defined', function () {

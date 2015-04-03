@@ -1,6 +1,6 @@
 {
   "name": "generator-moda",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "A truly modular yeoman generator for AngularJS all device apps.",
   "keywords": [
     "yeoman-generator",

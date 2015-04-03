@@ -1,13 +1,13 @@
 'use strict';
 
-describe('Decorator: <%= classedName %>', function () {
+describe('Decorator: <%= classedName %><%= nameSuffix %>', function () {
     // load the service's module
     beforeEach(module('<%= scriptAppName %>'));
 
     // instantiate service
-    var <%= classedName %>;
-    beforeEach(inject(function (_<%= classedName %>_) {
-        <%= classedName %> = _<%= classedName %>_;
+    var <%= classedName %><%= nameSuffix %>;
+    beforeEach(inject(function (_<%= classedName %><%= nameSuffix %>_) {
+        <%= classedName %><%= nameSuffix %> = _<%= classedName %><%= nameSuffix %>_;
     }));
 
     it('should be defined', function () {
