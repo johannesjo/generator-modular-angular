@@ -89,7 +89,7 @@ yo moda:d my-directive my-path
 app/scripts/my-path/my-directive/my-directive-d.js
 app/scripts/my-path/my-directive/my-directive-d.spec.js
 ```
-By default directives are wrapped into their own folder. If you don't want that you can specify the `--noParentFolder` flag:
+By default directives are wrapped into their own folder. If you don't want that you can [edit the .yo-rc.json](#yo-rc) or specify the `--noParentFolder` flag:
 
 ```
 yo moda:d my-directive my-path --noParentFolder
@@ -125,7 +125,7 @@ yo moda:c my-ctrl my-path
 app/scripts/my-path/my-ctrl/my-ctrl-d.js
 app/scripts/my-path/my-ctrl/my-ctrl-d.spec.js
 ```
-By default controllers are wrapped into their own folder. If you don't want that you can specify the `--noParentFolder` flag:
+By default controllers are wrapped into their own folder. If you don't want that you can [edit the .yo-rc.json](#yo-rc) or specify the `--noParentFolder` flag:
 
 ```
 yo moda:c my-ctrl my-path --noParentFolder
@@ -283,9 +283,95 @@ not implemented yet
 * `--noParentFolder`  does prevent the creation of a wrapper directory with the component name for directives and controllers
 
 ## <a name="yo-rc"></a>Using the .yo-rc.json for configuration
-Chances are that the default settings do not match your taste. Chances are you totally dislike some of the ideas behind this generator. 
+Chances are that the default settings do not match your taste. Chances are you totally dislike some of the ideas behind this generator. In those cases you always can edit the .yo-rc.json with settings more to your taste.
+ 
+The default configuration looks like this:
+```
+// appended suffix for test files
+testSuffix: '.spec',
 
-### file pre- and suffixes
+// if your specs should succeed after creation or not
+testPassOnDefault: true,
+
+// always use defaults, never open prompts
+alwaysSkipDialog: false,
+
+// you can set this to '' if you prefer loading your styles dynamically
+stylePrefix: '_', 
+
+// command launched when using the --openInEditor flag. The command 
+// looks like this <%= editorCommand %> file-created1.ext file-created2.ext etc.
+editorCommand: 'idea', 
+
+// file extensions used. At the moment there are only templates 
+// available for those specified per default. So don't change them
+fileExt: {
+    script: '.js',
+    tpl: '.html',
+    style: '.scss'
+},
+
+// some folders used in the creation process
+dirs: {
+    app: 'app',
+    appModules: 'scripts',
+    globalComponents: '_main',
+    routes: '_routes'
+},
+
+// here it gets interesting...
+subGenerators: {
+    directive: {
+        suffix: '-d',
+        
+        // directory used when no file-path is specified
+        globalDir: '',
+                
+        // create a parent directory with the same name, e.g.:
+        // yo moda:d bla 
+        // => bla/bla-d.js for true
+        // => bla-d.js for false
+        createDirectory: true
+    },
+    controller: {
+        suffix: '-c',
+        
+        // extensions for the name of the component, e.g:
+        // yo moda:c bla 
+        // => Controller-name = 'BlaCtrl'
+        nameSuffix: 'Ctrl',
+        globalDir: '',
+        createDirectory: true
+    },
+    service: {
+        suffix: '-s',
+        globalDir: '_main/global-services'
+    },
+    factory: {
+        suffix: '-f',
+        globalDir: '_main/global-services'
+    },
+    filter: {
+        suffix: '-filter',
+        globalDir: '_main/global-filters'
+    },
+    provider: {
+        suffix: '-p',
+        globalDir: '_main/global-services'
+    },
+    decorator: {
+        suffix: '-decorator',
+        globalDir: '_main/global-services'
+    },
+    mod: {
+        // there are also prefixes available
+        prefix: '_',
+        createDirectory: true
+    }
+}
+```
+
+## default file pre- and suffixes
 To distinguish files (e.g. in your awesome file searcher) they're su- and prefixed by the following rules:
 ```
 _*/             : main app directories main and route
@@ -296,10 +382,10 @@ loaded first by file-injection
 *.e2e.js        : end to end tests
 *-c.js          : controller
 *-c.html        : controller-template
-*-c.scss        : route-specfic (usually page-level) styles
+_*-c.scss        : route-specfic (usually page-level) styles
 *-d.js          : directive
 *-d.html        : directive-template
-*-d.scss        : directive-specific (usually component-level) styles
+_*-d.scss        : directive-specific (usually component-level) styles
 *-f.js          : factory
 *-s.js          : service
 *-p.js          : provider
@@ -321,20 +407,41 @@ gulpfile.js
 karma.conf.js
 karma-e2e.conf.js
 package.json
+README.md
 app/
+    index.html
+    bower_components/  // ignored
+    fonts/
+    images/
+    styles/
+        _variables.scss
+        main.scss
+        mixins/
+        functions/
+        placeholders/
+        base/
+            _buttons.scss
+            _fonts.scss
+            _forms.scss
+            _icons.scss
+            _lists.scss
+            _page.scss
+            _tables.scss
+            _typography.scss
+    scripts/
+      _app.js
+      _app.spec.js
 e2e-tests/
     po/         // page-objects
     example.e2e.js
-node_modules/
-plattforms/   // ignored
-plugins/
+node_modules/ // ignored
 tasks/
     build.js
     config.js
     cordova.js
     deploy.js
     dev.js
-www/          // ignored
+www/          // dist folder - ignored
 ```
 
 
