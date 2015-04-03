@@ -13,10 +13,10 @@ var gulpif = require('gulp-if');
 var minifyHtml = require('gulp-minify-html');
 var minifyCss = require('gulp-minify-css');
 var useref = require('gulp-useref');
-var rsync = require('rsyncwrapper').rsync;
 var ngAnnotate = require('gulp-ng-annotate');
 var imagemin = require('gulp-imagemin');
 var runSequence = require('run-sequence');
+var wiredep = require('wiredep').stream;
 
 
 // main task
@@ -25,13 +25,12 @@ gulp.task('build', function (callback)
     runSequence(
         'cleanDist',
         'wiredepBuild',
-        'inj',
+        'injectAll',
         'testSingle',
         'jshint',
         'sass',
         'minFiles',
         'copy',
-        'deploy',
         callback);
 });
 
@@ -45,23 +44,6 @@ gulp.task('wiredepBuild', function ()
             devDependencies: false
         }))
         .pipe(gulp.dest('./'));
-});
-
-gulp.task('deploy', function ()
-{
-    rsync({
-        ssh: true,
-        src: config.dist,
-        recursive: true,
-        dest: config.wwwDestination,
-        syncDest: true,
-        args: ['--verbose']
-    }, function (error, stdout, stderr)
-    {
-        console.log(error);
-        console.log(stdout);
-        console.log(stderr);
-    });
 });
 
 gulp.task('cleanDist', function ()

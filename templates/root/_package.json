@@ -38,7 +38,6 @@
     "karma-phantomjs-launcher": "^0.1.4",
     "protractor": "^1.8.0",
     "require-dir": "^0.3.0",
-    "rsyncwrapper": "^0.4.2",
     "run-sequence": "^1.0.2",
     "wiredep": "^2.2.2"
   },

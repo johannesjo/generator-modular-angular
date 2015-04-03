@@ -4,7 +4,7 @@ var gulp = require('gulp');
 /**
  * Cordova-Build-Task Files
  *
- * NOTE: Depends on sme of the build-tasks as well
+ * NOTE: Depends on some of the build-tasks as well
  * inspired by:
  * @url https://github.com/kamrik/CordovaGulpTemplate
  */
@@ -36,8 +36,7 @@ gulp.task('buildCordova', function ()
 gulp.task('run', function (cb)
 {
     runSequence(
-        'cleanDist',
-        'symlinkApp',
+       'build',
         function ()
         {
             process.chdir(config.dist);
@@ -50,8 +49,7 @@ gulp.task('run', function (cb)
 gulp.task('emulate', function ()
 {
     runSequence(
-        'cleanDist',
-        'symlinkApp',
+       'build',
         function ()
         {
             process.chdir(config.dist);
