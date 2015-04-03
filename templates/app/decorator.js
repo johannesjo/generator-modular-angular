@@ -10,7 +10,7 @@
 angular.module('<%= scriptAppName %>')
     .config(function ($provide)
     {
-        $provide.decorator('<%= cameledName %>', function ($delegate)
+        $provide.decorator('<%= classedName %>', function ($delegate)
         {
             return $delegate;
         });
