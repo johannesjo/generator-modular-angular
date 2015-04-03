@@ -6,7 +6,7 @@
  * Controller of the <%= scriptAppName %>
  */
 angular.module('<%= scriptAppName %>')
-    .controller('<%= classedName %>Ctrl', function ()
+    .controller('<%= classedName %><%= nameSuffix %>', function ()
     {
         'use strict';
 

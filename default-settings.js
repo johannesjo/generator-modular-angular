@@ -23,6 +23,7 @@ module.exports = {
         },
         controller: {
             suffix: '-c',
+            nameSuffix: 'Ctrl',
             globalDir: '',
             createDirectory: true
         },

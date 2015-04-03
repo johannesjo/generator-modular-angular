@@ -1,15 +1,15 @@
 'use strict';
 
-describe('Controller: <%= classedName %>Ctrl', function () {
+describe('Controller: <%= classedName %><%= nameSuffix %>', function () {
 
     // load the controller's module
     beforeEach(module('<%= scriptAppName %>'));
 
-    var <%= classedName %>Ctrl;
+    var <%= classedName %><%= nameSuffix %>;
 
     // Initialize the controller and a mock scope
     beforeEach(inject(function ($controller, $rootScope) {
-        <%= classedName %>Ctrl = $controller('<%= classedName %>Ctrl', {
+        <%= classedName %><%= nameSuffix %> = $controller('<%= classedName %><%= nameSuffix %>', {
         // place here mocked dependencies
         });
     }));

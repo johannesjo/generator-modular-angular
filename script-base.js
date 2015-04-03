@@ -99,6 +99,7 @@ module.exports = yeoman.generators.Base.extend({
     {
         this.templateName = templateName;
         this.curGenCfg = this.subGenerators[templateName];
+        this.nameSuffix = this.curGenCfg.nameSuffix || '';
 
         var realTargetFolder = this.defineTargetFolder(),
             filesToCreate = [];
