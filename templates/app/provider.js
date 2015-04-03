@@ -1,31 +1,18 @@
 /**
  * @ngdoc service
- * @name <%= scriptAppName %>.<%= cameledName %>
+ * @name <%= scriptAppName %>.<%= classedName %>
  * @description
- * # <%= cameledName %>
+ * # <%= classedName %>
  * Provider in the <%= scriptAppName %>.
  */
 angular.module('<%= scriptAppName %>')
-    .provider('<%= cameledName %>', function <%= cameledName %>Provider ()
+    .provider('<%= classedName %>', function <%= classedName %>Provider ()
     {
         'use strict';
 
         var config = {
 
         };
-
-
-        // Private constructor- function
-        function <%= cameledName %>()
-        {
-
-            // *****************
-            // SERVICE-FUNCTIONS
-            // *****************
-            this.someServiceFunction = function ()
-            {
-            };
-        }
 
 
         // ******************
@@ -36,10 +23,24 @@ angular.module('<%= scriptAppName %>')
             config = angular.extend(config, additionalConfig);
         };
 
+        // *****************************
+        // Private constructor-function
+        // aka factory definition
+        // *****************************
+        function <%= classedName %>()
+        {
+
+            // *****************
+            // SERVICE-FUNCTIONS
+            // *****************
+            this.someServiceFunction = function ()
+            {
+            };
+        }
 
         // return service definition
         this.$get = function ()
         {
-            return new <%= cameledName %>();
+            return new <%= classedName %>();
         };
     });
