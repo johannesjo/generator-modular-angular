@@ -5,7 +5,7 @@
 # generator-moda (modular angular)
 *A truly modular yeoman generator for AngularJS all device apps.*
 
-[![Yeoman](assets/yeoman.png)](http://yeoman.io/) [![Angular](assets/angular.png)](https://angularjs.org) [![Gulp](assets/gulp.png)](http://gulpjs.com/) [![libSass](assets/libsass.png)](http://libsass.org/) [![Bower](assets/bower.png)](http://bower.io/)
+[![Yeoman](assets/yeoman.png)](http://yeoman.io/) [![Angular](assets/angular.png)](https://angularjs.org) [![Gulp](assets/gulp.png)](http://gulpjs.com/) [![libSass](assets/libsass.png)](http://libsass.org/) [![Bower](assets/bower.png)](http://bower.io/) [![Cordova](assets/cordova.png)](https://cordova.apache.org/)
 
 This generator originated in the pure hate towards repetition and because all the ones I've used so far didn't fit my taste. `generator-modular-angular` is intended to encourage and ease a modular workflow for your AngularJS apps. It generates a front-end-build that uses all the tools I love (namely gulp, libsass and of course angular) and offers an **easy adaption towards multi-platform web-app hybrid-apps** (in shot muplawehy-apps, if you didn't know). Although its great, you don't need ionic and sometimes you don't want to need it.
 
@@ -458,9 +458,9 @@ As per default the following tasks are available at your convenience:
 The mobile tasks require a little preparation described in the next section.
 
 * `gulp buildCordova`: Runs the build task followed by a cordova-build.
-* `gulp emulate`: Runs your app in the emulator.   
-* `gulp run`: Runs your app in the emulator or on your device if connected. 
-* `gulp releaseCordova`: Create release version of your app.
+* `gulp emulate`: Runs the build task and your app in the emulator.   
+* `gulp run`: Runs the build task and your app on your device if connected. 
+* `gulp releaseCordova`: Create release version of your app and copies the binaries to the release folder.
 
 All tasks can be edited freely and can be found in the /tasks folder.
  
