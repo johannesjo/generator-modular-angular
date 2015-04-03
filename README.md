@@ -478,6 +478,3 @@ After that you should build your current state via `gulp build` then you can run
 ## how to set up your generator to run with intellij, webstorm, phpstorm, etc
 Yap, its possible. I wrote a [wiki-article](https://github.com/johannesjo/generator-modular-angular/wiki/How-to-integrate-the-generator-with-Jetbrains-products-on-Ubuntu) on how I did it on Ubuntu with IntelliJ. And for those who didn't know: There is a [video by John Lindquist](https://www.youtube.com/watch?v=KBueufmUgdw) for those of you lucky enough having no path issues with node on your machine.
 
-## nice feature ideas
-* hook for opening created files in favorite editor/ide
-* ...
