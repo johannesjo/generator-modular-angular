@@ -16,7 +16,7 @@ var path = require('path');
 var pkg = require('../package.json');
 var cordova_lib = require('cordova-lib');
 var cdv = cordova_lib.cordova.raw;
-var runSequence = require('run-sequence');
+var runSequence = require('run-sequence').use(gulp);
 var symlink = require('gulp-symlink');
 
 

@@ -17,5 +17,5 @@ angular.module('<%= scriptAppName %>.routes', [])
                 url: '/'
                 // ,templateUrl: 'some-tpl.html',
                 // controller: 'MainCtrl'
-            })
+            });
     });

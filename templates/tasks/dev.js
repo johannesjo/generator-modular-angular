@@ -14,7 +14,7 @@ var wiredep = require('wiredep').stream;
 var inj = require('gulp-inject');
 var connect = require('gulp-connect');
 var watch = require('gulp-watch');
-var runSequence = require('run-sequence');
+var runSequence = require('run-sequence').use(gulp);
 
 var jshint = require('gulp-jshint');
 var karma = require('gulp-karma');

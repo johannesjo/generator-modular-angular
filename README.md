@@ -415,8 +415,8 @@ app/
     images/
     styles/
         _variables.scss
-        main.scss // should not be edited manually 
-                     as is used for importing all files
+        main.scss // should not be edited manually as
+                     it is used for importing all files
         mixins/
         functions/
         placeholders/

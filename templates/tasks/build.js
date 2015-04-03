@@ -15,14 +15,14 @@ var minifyCss = require('gulp-minify-css');
 var useref = require('gulp-useref');
 var ngAnnotate = require('gulp-ng-annotate');
 var imagemin = require('gulp-imagemin');
-var runSequence = require('run-sequence');
+var runSequence = require('run-sequence').use(gulp);
 var wiredep = require('wiredep').stream;
 
 
 // main task
 gulp.task('build', function (callback)
 {
-    runSequence(
+    return runSequence(
         'cleanDist',
         'wiredepBuild',
         'injectAll',
@@ -36,7 +36,7 @@ gulp.task('build', function (callback)
 
 gulp.task('wiredepBuild', function ()
 {
-    gulp.src([config.karmaConf, config.mainFile], {base: './'})
+    return gulp.src([config.karmaConf, config.mainFile], {base: './'})
         .pipe(wiredep({
             exclude: [
                 // TODO inject excluded
@@ -48,7 +48,7 @@ gulp.task('wiredepBuild', function ()
 
 gulp.task('cleanDist', function ()
 {
-    del(config.dist);
+    return del(config.dist);
 });
 
 
@@ -63,7 +63,8 @@ gulp.task('copy', function ()
     gulp.src(config.fontsF, {base: config.base})
         .pipe(gulp.dest(config.dist));
 
-    gulp.src(config.imagesF, {base: config.base})
+    // TODO this ain't perfect
+    return gulp.src(config.imagesF, {base: config.base})
         .pipe(imagemin({
             progressive: true,
             svgoPlugins: [{removeViewBox: false}]
@@ -75,7 +76,7 @@ gulp.task('copy', function ()
 gulp.task('minFiles', function ()
 {
     var assets = useref.assets();
-    gulp.src(config.mainFile)
+    return gulp.src(config.mainFile)
         .pipe(assets)
         .pipe(gulpif('*.js', ngAnnotate()))
         .pipe(gulpif('*.css', minifyCss()))
