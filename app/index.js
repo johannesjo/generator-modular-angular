@@ -49,8 +49,10 @@ module.exports = yeoman.generators.Base.extend({
             globalServicePath: '_main/global-services',
             globalFiltersPath: '_main/global-filters',
             globalDirectivesPath: '',
+            globalControllersPath: '',
             routesPath: '_routes',
-            testPassOnDefault: true
+            testPassOnDefault: true,
+            neverCreateParentFolder: true
         });
     },
 

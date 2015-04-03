@@ -15,7 +15,7 @@ Generator.prototype.createCtrlFiles = function createCtrlFiles()
         defaults = {
             createTemplate: true,
             createService: false,
-            createDirectory: !this.options.dontCreateFolder
+            createDirectory: true
         };
 
     var createFiles = function (props)

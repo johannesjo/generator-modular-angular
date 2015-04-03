@@ -67,8 +67,10 @@ module.exports = yeoman.generators.Base.extend({
         this.globalServicePath = this.config.get('globalServicePath') || '_main/global-services';
         this.globalFiltersPath = this.config.get('globalFiltersPath') || '_main/global-filters';
         this.globalDirectivesPath = this.config.get('globalDirectivesPath') || '';
+        this.globalControllersPath = this.config.get('globalControllersPath') || '';
         this.routesPath = this.config.get('routesPath') || '_routes';
         this.testPassOnDefault = this.config.get('tplFileExt') || true;
+        this.neverCreateParentFolder = this.config.get('neverCreateParentFolder') || false;
     },
 
 
@@ -91,6 +93,10 @@ module.exports = yeoman.generators.Base.extend({
                 realTargetFolder = this.routesPath;
             } else if (this.isDirective) {
                 realTargetFolder = this.globalDirectivesPath;
+            } else if (this.isController) {
+                realTargetFolder = this.globalControllersPath;
+            } else if (this.isRoute) {
+                realTargetFolder = this.routesPath;
             } else {
                 realTargetFolder = '.'
             }
@@ -98,7 +104,9 @@ module.exports = yeoman.generators.Base.extend({
 
         // check if a same named parent directory should be created
         // for directives and routes
-        if (this.createDirectory && !this.options.noParentFolder) {
+        console.log(this.neverCreateParentFolder);
+
+        if (this.createDirectory && !this.options.noParentFolder && !this.neverCreateParentFolder) {
             realTargetFolder = path.join(realTargetFolder, this._.slugify(this.name));
         }
 

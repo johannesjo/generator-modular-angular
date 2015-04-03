@@ -15,7 +15,7 @@ Generator.prototype.createDirectiveFiles = function createDirectiveFiles()
         defaults = {
             createTemplate: true,
             createService: false,
-            createDirectory: !this.options.dontCreateFolder
+            createDirectory: true
         };
     this.isDirective = true;
 
