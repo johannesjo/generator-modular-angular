@@ -1,7 +1,7 @@
 'use strict';
-var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
+var defaultSettings = require('./default-settings.js');
 var angularUtils = require('./util.js');
 var chalk = require('chalk');
 
@@ -56,21 +56,14 @@ module.exports = yeoman.generators.Base.extend({
         this.sourceRoot(path.join(__dirname, sourceRoot));
 
         // additional variables
-
         this.createdFiles = [];
-        this.scriptFileExt = this.config.get('scriptFileExt') || '.js';
-        this.tplFileExt = this.config.get('tplFileExt') || '.html';
-        this.styleFileExt = this.config.get('styleFileExt') || '.scss';
-        this.testSuffix = this.config.get('testSuffix') || '.spec';
-        this.appModulesDir = this.config.get('appModulesDir') || 'scripts';
-        this.globalDir = this.config.get('globalDir') || '_main';
-        this.globalServicePath = this.config.get('globalServicePath') || '_main/global-services';
-        this.globalFiltersPath = this.config.get('globalFiltersPath') || '_main/global-filters';
-        this.globalDirectivesPath = this.config.get('globalDirectivesPath') || '';
-        this.globalControllersPath = this.config.get('globalControllersPath') || '';
-        this.routesPath = this.config.get('routesPath') || '_routes';
-        this.testPassOnDefault = this.config.get('tplFileExt') || true;
-        this.neverCreateParentFolder = this.config.get('neverCreateParentFolder') || false;
+
+        // get either default or from config
+        for (var prop in defaultSettings) {
+            if (defaultSettings.hasOwnProperty(prop)) {
+                this[prop] = this.config.get(prop) || defaultSettings[prop];
+            }
+        }
     },
 
 
@@ -104,8 +97,6 @@ module.exports = yeoman.generators.Base.extend({
 
         // check if a same named parent directory should be created
         // for directives and routes
-        console.log(this.neverCreateParentFolder);
-
         if (this.createDirectory && !this.options.noParentFolder && !this.neverCreateParentFolder) {
             realTargetFolder = path.join(realTargetFolder, this._.slugify(this.name));
         }

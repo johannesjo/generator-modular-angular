@@ -3,6 +3,7 @@ var fs = require('fs');
 var path = require('path');
 var util = require('util');
 var angularUtils = require('../util.js');
+var defaultSettings = require('../default-settings.js');
 var yeoman = require('yeoman-generator');
 var wiredep = require('wiredep');
 var chalk = require('chalk');
@@ -39,21 +40,7 @@ module.exports = yeoman.generators.Base.extend({
 
     config: function ()
     {
-        this.config.defaults({
-            scriptFileExt: '.js',
-            tplFileExt: '.html',
-            styleFileExt: '.scss',
-            testSuffix: '.spec',
-            appModulesDir: 'scripts',
-            globalDir: '_main',
-            globalServicePath: '_main/global-services',
-            globalFiltersPath: '_main/global-filters',
-            globalDirectivesPath: '',
-            globalControllersPath: '',
-            routesPath: '_routes',
-            testPassOnDefault: true,
-            neverCreateParentFolder: true
-        });
+        this.config.defaults(defaultSettings);
     },
 
     askForModules: function askForModules()
