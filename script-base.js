@@ -13,8 +13,7 @@ module.exports = yeoman.generators.Base.extend({
         // global options
         this.option('useDefaults');
         this.option('openInIntelliJ');
-        this.option('openInIntelliJ');
-        this.option('dontCreateFolder');
+        this.option('noParentFolder');
         this.option('skipInject');
 
         this.argument('targetFolder', {
@@ -100,7 +99,7 @@ module.exports = yeoman.generators.Base.extend({
 
         // check if a same named parent directory should be created
         // for directives and routes
-        if (this.createDirectory) {
+        if (this.createDirectory && !this.options.noParentFolder) {
             realTargetFolder = path.join(realTargetFolder, this._.slugify(this.name));
         }
 
