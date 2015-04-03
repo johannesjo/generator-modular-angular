@@ -1,17 +1,22 @@
 [![Build Status](https://travis-ci.org/johannesjo/generator-modular-angular.svg)](https://travis-ci.org/johannesjo/generator-modular-angular)
+[![NPM version](http://img.shields.io/npm/v/generator-moda.svg?style=flat-square)](https://npmjs.org/package/generator-moda)
 [![Coverage Status](https://coveralls.io/repos/johannesjo/generator-modular-angular/badge.svg?branch=master)](https://coveralls.io/r/johannesjo/generator-modular-angular?branch=master)
 
-# generator-modular-angular
+# generator-moda (modular angular)
 *A truly modular yeoman generator for AngularJS all device apps.*
 
-This generator originated in the pure hate towards repetition and because all the ones I've used so far didn't fit my taste. `generator-modular-angular` is intended to encourage and ease a modular workflow for your AngularJS apps. It generates a front-end-build that uses all the tools I love (namely gulp, libsass and of course angular) and offers an **easy adaption towards multi-platform web-app hybrid-apps**(in shot muplawehy-apps, if you didn't know). Although its great, you don't need ionic and sometimes you don't want to need it.
+[![Yeoman](assets/yeoman.png)](http://yeoman.io/) [![Angular](assets/angular.png)](https://angularjs.org) [![Gulp](assets/gulp.png)](http://gulpjs.com/) [![libSass](assets/libsass.png)](http://libsass.org/) [![Bower](assets/bower.png)](http://bower.io/)
+
+This generator originated in the pure hate towards repetition and because all the ones I've used so far didn't fit my taste. `generator-modular-angular` is intended to encourage and ease a modular workflow for your AngularJS apps. It generates a front-end-build that uses all the tools I love (namely gulp, libsass and of course angular) and offers an **easy adaption towards multi-platform web-app hybrid-apps** (in shot muplawehy-apps, if you didn't know). Although its great, you don't need ionic and sometimes you don't want to need it.
+
+Creating a generator is much about best practise and much about ones personal taste and preferences for development. At the moment `generator-modular-angular` does fit mostly my own, but I would be really happy to discuss and adjust it to a broader public. So if you don't like something or miss anything always feel free to submit a feature request.
 
 Credits to the [generator-angular](https://github.com/yeoman/generator-angular) team. Their code helped me to get started and some of the file-templates are very similiar.
 
 ## Getting started
 I assume that you have all the good tools already installed (node, bower, yeoman, gulp) in a proper way. Just run:
 ```
-npm install -g generator-modular-angular
+npm install -g generator-moda
 ```
 Then make a new directory and cd into it
 ```
@@ -30,7 +35,7 @@ gulp serve
 * **total injection**: basically everything you create is automatically injected where it needs to be and removed when its gone.
 * **gulp and libsass speedified**: never thought I wouldn't miss grunt
 * **super modular**: no more controller madness by design
-* configurable and extendable (still work in progress though)
+* fully **configurable** and extendable (the latter is still work in progress though)
 
 ## Basic concepts behind this Generator
 * What belongs together should be reflected in the file-structure. Grouping files by module is generally preferable to grouping files by type.
@@ -48,6 +53,8 @@ gulp serve
 * [route](#route)
 * [e2e-test](#e2e-test)
 * [page-object](#page-object)
+
+For configuring the generators permanently [edit the .yo-rc.json](#yo-rc).
 
 ### moda
 The main generator. Sets up the basic boilerplate. Provides an interactive prompt to install the most common modules.
@@ -275,6 +282,8 @@ not implemented yet
 * `--skipInject`      skips running grunt inject after file creation
 * `--noParentFolder`  does prevent the creation of a wrapper directory with the component name for directives and controllers
 
+## <a name="yo-rc"></a>Using the .yo-rc.json for configuration
+Chances are that the default settings do not match your taste. Chances are you totally dislike some of the ideas behind this generator. 
 
 ### file pre- and suffixes
 To distinguish files (e.g. in your awesome file searcher) they're su- and prefixed by the following rules:
