@@ -11,10 +11,5 @@ util.inherits(Generator, ScriptBase);
 
 Generator.prototype.createFactoryFiles = function createFactoryFiles()
 {
-    this.isService = true;
-    this.generateSourceAndTest(
-        'factory',
-        null,
-        '-f'
-    );
+    this.generateSourceAndTest('factory');
 };

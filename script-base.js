@@ -12,7 +12,7 @@ module.exports = yeoman.generators.Base.extend({
 
         // global options
         this.option('useDefaults');
-        this.option('openInIntelliJ');
+        this.option('openInEditor');
         this.option('noParentFolder');
         this.option('skipInject');
 
@@ -74,22 +74,13 @@ module.exports = yeoman.generators.Base.extend({
         // allow creating sub-modules via reading and parsing the path argument
         if (this.targetFolder) {
             this.targetFolder = this.targetFolder
-                .replace(this.appModulesDir, '')
-                .replace(this.appModulesDir, '');
+                .replace(this.dirs.appModules, '')
+                .replace(this.dirs.app, '');
             realTargetFolder = path.join(this.targetFolder);
         } else {
-            if (this.isService) {
-                realTargetFolder = this.globalServicePath;
-            } else if (this.isFilter) {
-                realTargetFolder = this.globalFiltersPath;
-            } else if (this.isRoute) {
-                realTargetFolder = this.routesPath;
-            } else if (this.isDirective) {
-                realTargetFolder = this.globalDirectivesPath;
-            } else if (this.isController) {
-                realTargetFolder = this.globalControllersPath;
-            } else if (this.isRoute) {
-                realTargetFolder = this.routesPath;
+
+            if (this.curGenCfg.globalDir) {
+                realTargetFolder = this.curGenCfg.globalDir;
             } else {
                 realTargetFolder = '.'
             }
@@ -97,36 +88,36 @@ module.exports = yeoman.generators.Base.extend({
 
         // check if a same named parent directory should be created
         // for directives and routes
-        if (this.createDirectory && !this.options.noParentFolder && !this.neverCreateParentFolder) {
+        if (this.curGenCfg.createDirectory && !this.options.noParentFolder) {
             realTargetFolder = path.join(realTargetFolder, this._.slugify(this.name));
         }
 
         return realTargetFolder;
     },
 
-    generateSourceAndTest: function (templateName, prefix, suffix)
+    generateSourceAndTest: function (templateName)
     {
-        var realTargetFolder = this.defineTargetFolder(),
-            filesToCreate = [],
-            suffix = suffix || '',
-            prefix = prefix || '';
+        this.templateName = templateName;
+        this.curGenCfg = this.subGenerators[templateName];
 
+        var realTargetFolder = this.defineTargetFolder(),
+            filesToCreate = [];
 
         // create file paths
-        var inAppPath = path.join(this.appModulesDir, realTargetFolder);
+        var inAppPath = path.join(this.dirs.appModules, realTargetFolder);
         var generatorTargetPath = path.join(this.env.options.appPath, inAppPath);
-        var standardFileName = prefix + this.name + suffix;
+        var standardFileName = (this.curGenCfg.prefix || '') + this.name + (this.curGenCfg.suffix || '');
 
         // prepare template template and data
         if (this.createTemplate) {
-            this.tplUrl = path.join(inAppPath, standardFileName + this.tplFileExt);
+            this.tplUrl = path.join(inAppPath, standardFileName + this.fileExt.tpl);
             filesToCreate.push({
-                'tpl': 'directive.html',
-                'targetFileName': standardFileName + this.tplFileExt
+                'tpl': this.templateName + this.fileExt.tpl,
+                'targetFileName': standardFileName + this.fileExt.tpl
             });
             filesToCreate.push({
-                'tpl': 'directive.html',
-                'targetFileName': '_' + standardFileName + this.styleFileExt
+                'tpl': this.stylePrefix + this.templateName + this.fileExt.style,
+                'targetFileName': this.stylePrefix + standardFileName + this.fileExt.style
             });
         } else {
             // needs to be set for the _.templates to work
@@ -138,29 +129,28 @@ module.exports = yeoman.generators.Base.extend({
             // add service to queue
             this.svcName = this.classedName;
 
-            var svcSuffix = this.createService === 'service' ? '-s' : '-f';
             // add service or factory to queue
             filesToCreate.push({
-                'tpl': this.createService + this.scriptFileExt,
-                'targetFileName': this.name + svcSuffix + this.scriptFileExt
+                'tpl': this.createService + this.fileExt.script,
+                'targetFileName': this.name + (this.subGenerators[this.createService].suffix || '') + this.fileExt.script
             });
             // add service test to queue
             filesToCreate.push({
-                'tpl': this.createService + this.testSuffix + this.scriptFileExt,
-                'targetFileName': this.name + svcSuffix + this.testSuffix + this.scriptFileExt
+                'tpl': this.createService + this.testSuffix + this.fileExt.script,
+                'targetFileName': this.name + (this.subGenerators[this.createService].suffix || '') + this.testSuffix + this.fileExt.script
             });
         }
 
         // add main file to queue
         filesToCreate.push({
-            'tpl': templateName + this.scriptFileExt,
-            'targetFileName': standardFileName + this.scriptFileExt
+            'tpl': templateName + this.fileExt.script,
+            'targetFileName': standardFileName + this.fileExt.script
         });
 
         // add test file to queue
         filesToCreate.push({
-            'tpl': templateName + this.testSuffix + this.scriptFileExt,
-            'targetFileName': standardFileName + this.testSuffix + this.scriptFileExt
+            'tpl': templateName + this.testSuffix + this.fileExt.script,
+            'targetFileName': standardFileName + this.testSuffix + this.fileExt.script
         });
 
 
@@ -185,8 +175,8 @@ module.exports = yeoman.generators.Base.extend({
         }
 
         // run favorite ide
-        if (this.options.openInIntelliJ) {
-            this.spawnCommand('idea', this.createdFiles);
+        if (this.options.openInEditor) {
+            this.spawnCommand(this.editorCommand, this.createdFiles);
         }
     }
 });

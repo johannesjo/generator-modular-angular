@@ -11,10 +11,5 @@ util.inherits(Generator, ScriptBase);
 
 Generator.prototype.createDecoratorFiles = function createDecoratorFiles()
 {
-    this.isService = true;
-    this.generateSourceAndTest(
-        'decorator',
-        null,
-        '-decorator'
-    );
+    this.generateSourceAndTest('decorator');
 };

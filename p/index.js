@@ -11,10 +11,5 @@ util.inherits(Generator, ScriptBase);
 
 Generator.prototype.createProviderFiles = function createProviderFiles()
 {
-    this.isService = true;
-    this.generateSourceAndTest(
-        'provider',
-        null,
-        '-f'
-    );
+    this.generateSourceAndTest('provider');
 };

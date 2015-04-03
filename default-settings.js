@@ -1,15 +1,54 @@
 module.exports = {
-    scriptFileExt: '.js',
-    tplFileExt: '.html',
-    styleFileExt: '.scss',
     testSuffix: '.spec',
-    appModulesDir: 'scripts',
-    globalDir: '_main',
-    globalServicePath: '_main/global-services',
-    globalFiltersPath: '_main/global-filters',
-    globalDirectivesPath: '',
-    globalControllersPath: '',
-    routesPath: '_routes',
     testPassOnDefault: true,
-    neverCreateParentFolder: true
+    alwaysSkipDialog: false,
+    stylePrefix: '_',
+    editorCommand: 'idea',
+    fileExt: {
+        script: '.js',
+        tpl: '.html',
+        style: '.scss'
+    },
+    dirs: {
+        app: 'app',
+        appModules: 'scripts',
+        globalComponents: '_main',
+        routes: '_routes'
+    },
+    subGenerators: {
+        directive: {
+            suffix: '-d',
+            globalDir: '',
+            createDirectory: true
+        },
+        controller: {
+            suffix: '-c',
+            globalDir: '',
+            createDirectory: true
+        },
+        service: {
+            suffix: '-s',
+            globalDir: '_main/global-services'
+        },
+        factory: {
+            suffix: '-f',
+            globalDir: '_main/global-services'
+        },
+        filter: {
+            suffix: '-filter',
+            globalDir: '_main/global-filters'
+        },
+        provider: {
+            suffix: '-p',
+            globalDir: '_main/global-services'
+        },
+        decorator: {
+            suffix: '-decorator',
+            globalDir: '_main/global-services'
+        },
+        mod: {
+            prefix: '_',
+            createDirectory: true
+        }
+    }
 };

@@ -14,26 +14,20 @@ Generator.prototype.createCtrlFiles = function createCtrlFiles()
     var cb = this.async(),
         defaults = {
             createTemplate: true,
-            createService: false,
-            createDirectory: true
+            createService: false
         };
 
     var createFiles = function (props)
     {
         this.createService = props.createService;
         this.createTemplate = props.createTemplate;
-        this.createDirectory = defaults.createDirectory;
 
-        this.generateSourceAndTest(
-            'ctrl',
-            null,
-            '-c'
-        );
+        this.generateSourceAndTest('controller');
         // NOTE: never forget the callback!
         cb();
     };
 
-    if (this.options.useDefaults) {
+    if (this.options.useDefaults || this.config.get('alwaysSkipDialog')) {
         createFiles.bind(this)(defaults);
     } else {
         this.prompt(

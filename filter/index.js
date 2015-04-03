@@ -11,10 +11,5 @@ util.inherits(Generator, ScriptBase);
 
 Generator.prototype.createFilterFiles = function createFilterFiles()
 {
-    this.isService = true;
-    this.generateSourceAndTest(
-        'filter',
-        null,
-        '-filter'
-    );
+    this.generateSourceAndTest('filter');
 };
