@@ -37,6 +37,23 @@ module.exports = yeoman.generators.Base.extend({
 
     },
 
+    config: function ()
+    {
+        this.config.defaults({
+            scriptFileExt: '.js',
+            tplFileExt: '.html',
+            styleFileExt: '.scss',
+            testSuffix: '.spec',
+            appModulesDir: 'scripts',
+            globalDir: '_main',
+            globalServicePath: '_main/global-services',
+            globalFiltersPath: '_main/global-filters',
+            globalDirectivesPath: '',
+            routesPath: '_routes',
+            testPassOnDefault: true
+        });
+    },
+
     askForModules: function askForModules()
     {
         var cb = this.async();
@@ -253,7 +270,6 @@ module.exports = yeoman.generators.Base.extend({
     },
     postRun: function ()
     {
-        // TODO find a better place
         this.on('dependenciesInstalled', function ()
         {
             this.spawnCommand('gulp', ['serve']);

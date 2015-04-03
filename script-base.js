@@ -56,20 +56,19 @@ module.exports = yeoman.generators.Base.extend({
         this.sourceRoot(path.join(__dirname, sourceRoot));
 
         // additional variables
-        this.testPassOnDefault = true;
-        this.createdFiles = [];
-        this.scriptsFolder = 'scripts';
-        this.scriptFileExt = '.js';
-        this.tplFileExt = '.html';
-        this.styleFileExt = '.scss';
-        this.testSuffix = '.spec';
-        this.currentModule = path.basename(process.cwd());
 
-        this.globalDir = '_main';
-        this.globalServicePath = this.globalDir + '/global-services';
-        this.globalFiltersPath = this.globalDir + '/global-filters';
-        this.globalDirectivesPath = '';
-        this.routesPath = '_routes';
+        this.createdFiles = [];
+        this.scriptFileExt = this.config.get('scriptFileExt');
+        this.tplFileExt = this.config.get('tplFileExt');
+        this.styleFileExt = this.config.get('styleFileExt');
+        this.testSuffix = this.config.get('testSuffix');
+        this.appModulesDir = this.config.get('appModulesDir');
+        this.globalDir = this.config.get('globalDir');
+        this.globalServicePath = this.config.get('globalServicePath');
+        this.globalFiltersPath = this.config.get('globalFiltersPath');
+        this.globalDirectivesPath = this.config.get('globalDirectivesPath');
+        this.routesPath = this.config.get('routesPath');
+        this.testPassOnDefault = this.config.get('tplFileExt');
     },
 
 
@@ -80,8 +79,8 @@ module.exports = yeoman.generators.Base.extend({
         // allow creating sub-modules via reading and parsing the path argument
         if (this.targetFolder) {
             this.targetFolder = this.targetFolder
-                .replace('scripts', '')
-                .replace('app', '');
+                .replace(this.appModulesDir, '')
+                .replace(this.appModulesDir, '');
             realTargetFolder = path.join(this.targetFolder);
         } else {
             if (this.isService) {
@@ -115,7 +114,7 @@ module.exports = yeoman.generators.Base.extend({
 
 
         // create file paths
-        var inAppPath = path.join(this.scriptsFolder, realTargetFolder);
+        var inAppPath = path.join(this.appModulesDir, realTargetFolder);
         var generatorTargetPath = path.join(this.env.options.appPath, inAppPath);
         var standardFileName = prefix + this.name + suffix;
 
