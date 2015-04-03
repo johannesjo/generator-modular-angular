@@ -58,17 +58,17 @@ module.exports = yeoman.generators.Base.extend({
         // additional variables
 
         this.createdFiles = [];
-        this.scriptFileExt = this.config.get('scriptFileExt');
-        this.tplFileExt = this.config.get('tplFileExt');
-        this.styleFileExt = this.config.get('styleFileExt');
-        this.testSuffix = this.config.get('testSuffix');
-        this.appModulesDir = this.config.get('appModulesDir');
-        this.globalDir = this.config.get('globalDir');
-        this.globalServicePath = this.config.get('globalServicePath');
-        this.globalFiltersPath = this.config.get('globalFiltersPath');
-        this.globalDirectivesPath = this.config.get('globalDirectivesPath');
-        this.routesPath = this.config.get('routesPath');
-        this.testPassOnDefault = this.config.get('tplFileExt');
+        this.scriptFileExt = this.config.get('scriptFileExt') || '.js';
+        this.tplFileExt = this.config.get('tplFileExt') || '.html';
+        this.styleFileExt = this.config.get('styleFileExt') || '.scss';
+        this.testSuffix = this.config.get('testSuffix') || '.spec';
+        this.appModulesDir = this.config.get('appModulesDir') || 'scripts';
+        this.globalDir = this.config.get('globalDir') || '_main';
+        this.globalServicePath = this.config.get('globalServicePath') || '_main/global-services';
+        this.globalFiltersPath = this.config.get('globalFiltersPath') || '_main/global-filters';
+        this.globalDirectivesPath = this.config.get('globalDirectivesPath') || '';
+        this.routesPath = this.config.get('routesPath') || '_routes';
+        this.testPassOnDefault = this.config.get('tplFileExt') || true;
     },
 
 
