@@ -4,6 +4,9 @@ module.exports = {
     alwaysSkipDialog: false,
     stylePrefix: '_',
     editorCommand: 'idea',
+    uiRouter: false,
+    pathOutputStyle: 'dasherize',
+    routesFile: './app/scripts/_routes.js',
     fileExt: {
         script: '.js',
         tpl: '.html',

@@ -2,7 +2,7 @@
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var defaultSettings = require('./default-settings.js');
-var angularUtils = require('./util.js');
+var helper = require('./helper.js');
 var chalk = require('chalk');
 
 module.exports = yeoman.generators.Base.extend({
@@ -40,10 +40,9 @@ module.exports = yeoman.generators.Base.extend({
         }
         this.appname = this._.slugify(this._.humanize(this.appname));
         this.scriptAppName = bowerJson.moduleName || this._.camelize(this.appname);
-        this.cameledName = this._.camelize(this.name);
-        this.classedName = this._.classify(this.name);
-        this.sluggedName = this._.slugify(this.name);
 
+        // set all the different name versions to be used in the templates
+        this.setModuleNames(this.name);
 
         // define app path variable
         if (typeof this.env.options.appPath === 'undefined') {
@@ -66,6 +65,28 @@ module.exports = yeoman.generators.Base.extend({
         }
     },
 
+    // sets all the different name versions to be used in the templates
+    setModuleNames: function (name)
+    {
+        this.cameledName = this._.camelize(name);
+        this.classedName = this._.classify(name);
+        this.sluggedName = this._.slugify(name);
+        this.dashedName = this._.dasherize(name);
+    },
+
+    cleanUpPath: function (path)
+    {
+        path = path
+            .replace(this.dirs.appModules, '')
+            .replace(this.dirs.app, '');
+        return path;
+    },
+
+    formatNamePath: function (name)
+    {
+        var style = this.config.get('pathOutputStyle') || 'dasherize';
+        return this._[style](name);
+    },
 
     defineTargetFolder: function ()
     {
@@ -73,9 +94,7 @@ module.exports = yeoman.generators.Base.extend({
 
         // allow creating sub-modules via reading and parsing the path argument
         if (this.targetFolder) {
-            this.targetFolder = this.targetFolder
-                .replace(this.dirs.appModules, '')
-                .replace(this.dirs.app, '');
+            this.targetFolder = this.cleanUpPath(this.targetFolder);
             realTargetFolder = path.join(this.targetFolder);
         } else {
 
@@ -89,7 +108,7 @@ module.exports = yeoman.generators.Base.extend({
         // check if a same named parent directory should be created
         // for directives and routes
         if (this.curGenCfg.createDirectory && !this.options.noParentFolder) {
-            realTargetFolder = path.join(realTargetFolder, this._.slugify(this.name));
+            realTargetFolder = path.join(realTargetFolder, this.formatNamePath(this.name));
         }
 
         return realTargetFolder;
@@ -107,7 +126,7 @@ module.exports = yeoman.generators.Base.extend({
         // create file paths
         var inAppPath = path.join(this.dirs.appModules, realTargetFolder);
         var generatorTargetPath = path.join(this.env.options.appPath, inAppPath);
-        var standardFileName = (this.curGenCfg.prefix || '') + this.name + (this.curGenCfg.suffix || '');
+        var standardFileName = (this.curGenCfg.prefix || '') + this.formatNamePath(this.name) + (this.curGenCfg.suffix || '');
 
         // prepare template template and data
         if (this.createTemplate) {
@@ -133,27 +152,28 @@ module.exports = yeoman.generators.Base.extend({
             // add service or factory to queue
             filesToCreate.push({
                 'tpl': this.createService + this.fileExt.script,
-                'targetFileName': this.name + (this.subGenerators[this.createService].suffix || '') + this.fileExt.script
+                'targetFileName': this.formatNamePath(this.name) + (this.subGenerators[this.createService].suffix || '') + this.fileExt.script
             });
             // add service test to queue
             filesToCreate.push({
                 'tpl': this.createService + this.testSuffix + this.fileExt.script,
-                'targetFileName': this.name + (this.subGenerators[this.createService].suffix || '') + this.testSuffix + this.fileExt.script
+                'targetFileName': this.formatNamePath(this.name) + (this.subGenerators[this.createService].suffix || '') + this.testSuffix + this.fileExt.script
             });
         }
 
-        // add main file to queue
-        filesToCreate.push({
-            'tpl': templateName + this.fileExt.script,
-            'targetFileName': standardFileName + this.fileExt.script
-        });
+        if (!this.skipMainFiles) {
+            // add main file to queue
+            filesToCreate.push({
+                'tpl': templateName + this.fileExt.script,
+                'targetFileName': standardFileName + this.fileExt.script
+            });
 
-        // add test file to queue
-        filesToCreate.push({
-            'tpl': templateName + this.testSuffix + this.fileExt.script,
-            'targetFileName': standardFileName + this.testSuffix + this.fileExt.script
-        });
-
+            // add test file to queue
+            filesToCreate.push({
+                'tpl': templateName + this.testSuffix + this.fileExt.script,
+                'targetFileName': standardFileName + this.testSuffix + this.fileExt.script
+            });
+        }
 
         // create files and create a files array for further use
         for (var i = 0; i < filesToCreate.length; i++) {

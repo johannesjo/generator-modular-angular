@@ -2,7 +2,7 @@
 var fs = require('fs');
 var path = require('path');
 var util = require('util');
-var angularUtils = require('../util.js');
+var helper = require('../helper.js');
 var defaultSettings = require('../default-settings.js');
 var yeoman = require('yeoman-generator');
 var wiredep = require('wiredep');
@@ -124,50 +124,51 @@ module.exports = yeoman.generators.Base.extend({
             var angMods = [];
 
             if (this.animateModule) {
-                angMods.push("'ngAnimate'");
+                angMods.push('\'ngAnimate\'');
             }
 
             if (this.ariaModule) {
-                angMods.push("'ngAria'");
+                angMods.push('\'ngAria\'');
             }
 
             if (this.cookiesModule) {
-                angMods.push("'ngCookies'");
+                angMods.push('\'ngCookies\'');
             }
 
             if (this.messagesModule) {
-                angMods.push("'ngMessages'");
+                angMods.push('\'ngMessages\'');
             }
 
             if (this.resourceModule) {
-                angMods.push("'ngResource'");
+                angMods.push('\'ngResource\'');
             }
 
             if (this.routeModule) {
-                angMods.push("'ngRoute'");
+                angMods.push('\'ngRoute\'');
                 this.env.options.ngRoute = true;
             }
 
             if (this.sanitizeModule) {
-                angMods.push("'ngSanitize'");
+                angMods.push('\'ngSanitize\'');
             }
 
             if (this.touchModule) {
-                angMods.push("'ngTouch'");
+                angMods.push('\'ngTouch\'');
             }
 
             if (this.uiRouterModule) {
-                angMods.push("'ui.router'");
+                angMods.push('\'ui.router\'');
+                this.config.set('\'uiRouter', true);
                 this.env.options.uiRouter = true;
             }
 
             if (this.ngMaterialModule) {
-                angMods.push("'ngMaterial'");
+                angMods.push('\'ngMaterial\'');
                 this.env.options.ngMaterial = true;
             }
 
             if (this.ngFabFormModule) {
-                angMods.push("'ngFabForm'");
+                angMods.push('\'ngFabForm\'');
             }
 
             if (angMods.length) {

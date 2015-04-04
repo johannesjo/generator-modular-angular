@@ -6,11 +6,13 @@ describe('Controller: <%= classedName %><%= nameSuffix %>', function () {
     beforeEach(module('<%= scriptAppName %>'));
 
     var <%= classedName %><%= nameSuffix %>;
+    var scope;
 
     // Initialize the controller and a mock scope
     beforeEach(inject(function ($controller, $rootScope) {
+        scope = $rootScope.$new();
         <%= classedName %><%= nameSuffix %> = $controller('<%= classedName %><%= nameSuffix %>', {
-        // place here mocked dependencies
+             // place mocked dependencies here
         });
     }));
 

@@ -7,15 +7,12 @@
  * Routes module. All app states are defined here.
  */
 
-angular.module('<%= scriptAppName %>.routes', [])
+angular.module('<%= scriptAppName %>')
     .config(function ($stateProvider)
     {
         'use strict';
 
         $stateProvider
-            .state('main', {
-                url: '/'
-                // ,templateUrl: 'some-tpl.html',
-                // controller: 'MainCtrl'
-            });
+            /* STATES-NEEDLE - DO NOT REMOVE THIS */;
+
     });

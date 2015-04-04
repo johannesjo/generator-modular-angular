@@ -55,6 +55,7 @@
     "templates",
     "script-base.js",
     "util.js",
+    "helper.js",
     "default-settings.js"
   ],
   "devDependencies": {
