@@ -209,8 +209,8 @@ module.exports = yeoman.generators.Base.extend({
         this.template('app/_app.js', 'app/scripts/_app.js');
         this.template('app/_app.spec.js', 'app/scripts/_app.spec.js');
         if (this.env.options.uiRouter) {
-            this.template('app/_routes.js', 'app/scripts/_routes.js');
-            this.template('app/_routes.spec.js', 'app/scripts/_routes.spec.js');
+            this.template('app/routes.js', 'app/scripts/routes.js');
+            this.template('app/routes.spec.js', 'app/scripts/routes.spec.js');
         }
     },
 

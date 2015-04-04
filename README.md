@@ -434,6 +434,9 @@ app/
     scripts/
       _app.js
       _app.spec.js
+      routes.js // if using ui.router
+      routes.spec.js // if using ui.router
+      _routes/ // if using ui.router
 e2e-tests/
     po/         // page-objects
     example.e2e.js
