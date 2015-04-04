@@ -54,7 +54,7 @@
     "s",
     "templates",
     "script-base.js",
-    "utils.js",
+    "util.js",
     "default-settings.js"
   ],
   "devDependencies": {
