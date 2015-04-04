@@ -267,7 +267,75 @@ app/scripts/my-path/my-decorator-decorator.spec.js
 ```
 
 ### route
-not implemented yet
+Interactively creates a route (state) from a state-name. Requires `ui.router` to be installed during app-creation.
+**usage:**
+
+```
+yo moda:r my-state
+```
+
+**output:**
+
+```
+// if you choose to create a controller for the route (default:true)
+app/scripts/_routes/my-state/my-state-c.js
+app/scripts/_routes/my-state/my-state-c.spec.js
+// If you choose the template option (default:true)
+app/scripts/_routes/my-state/my-state-c.html
+app/scripts/_routes/my-state/_my-state-c.scss
+// If you choose service for the service or factory option (default:false)
+app/scripts/_routes/my-state/my-state-s.js
+app/scripts/_routes/my-state/my-state-s.spec.js
+// If you choose factory
+app/scripts/_routes/my-state/my-state-f.js
+app/scripts/_routes/my-state/my-state-f.spec.js
+```
+Furthermore the state is injected into the `routes.js` if present:
+```
+.state('my-state', {
+    url: '/my-state',
+    // if you choose the controller option
+    controller: 'MyStateCtrl',
+    // if you choose the template option
+    templateUrl: 'scripts/_routes/my-state/my-state-c.html'
+})
+/* STATES-NEEDLE - DO NOT REMOVE THIS */;
+```
+
+Setting the default routes directory can be done by editing the .yo-rc.json
+
+You can also create sub-states like this:
+```
+yo moda:r my-par-state.my-state
+```
+
+**output:**
+
+```
+// if you choose to create a controller for the route (default:true)
+app/scripts/_routes/my-par-state/my-state/my-state-c.js
+app/scripts/_routes/my-par-state/my-state/my-state-c.spec.js
+// If you choose the template option (default:true)
+app/scripts/_routes/my-par-state/my-state/my-state-c.html
+app/scripts/_routes/my-par-state/my-state/_my-state-c.scss
+// If you choose service for the service or factory option (default:false)
+app/scripts/_routes/my-par-state/my-state/my-state-s.js
+app/scripts/_routes/my-par-state/my-state/my-state-s.spec.js
+// If you choose factory
+app/scripts/_routes/my-par-state/my-state/my-state-f.js
+app/scripts/_routes/my-par-state/my-state/my-state-f.spec.js
+```
+Furthermore the state is injected into the `routes.js` if present:
+```
+.state('my-par-state.my-state', {
+    url: '/my-state',
+    // if you choose the controller option
+    controller: 'MyStateCtrl',
+    // if you choose the template option
+    templateUrl: 'scripts/_routes/my-par-state/my-state/my-state-c.html'
+})
+/* STATES-NEEDLE - DO NOT REMOVE THIS */;
+```
 
 ### e2e-test 
 not implemented yet
@@ -304,6 +372,18 @@ stylePrefix: '_',
 // command launched when using the --openInEditor flag. The command 
 // looks like this <%= editorCommand %> file-created1.ext file-created2.ext etc.
 editorCommand: 'idea', 
+
+// default style of path names, e.g. for dasherize:
+// yo moda:c MyRoute
+// => my-route-c.js
+pathOutputStyle: 'dasherize',
+
+// if ui router is enabled or not. If you want to enable this option,
+// make sure you also have dirs.routes and routesFile defined
+uiRouter: false,
+
+// the file where the states get injected
+routesFile: './app/scripts/_routes.js',
 
 // file extensions used. At the moment there are only templates 
 // available for those specified per default. So don't change them
