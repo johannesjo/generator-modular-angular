@@ -1,18 +1,18 @@
 {
   "name": "generator-moda",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "A truly modular yeoman generator for AngularJS all device apps.",
   "keywords": [
     "yeoman-generator",
     "scaffold",
-    "framework",
-    "component",
     "front-end",
     "app",
     "angular",
     "modular",
     "sass",
-    "scss"
+    "scss",
+    "cordova",
+    "gulp"
   ],
   "author": "johannesjo",
   "repository": {
@@ -38,7 +38,24 @@
     "test": "istanbul cover _mocha -- -R list"
   },
   "files": [
-    "app"
+    "app",
+    "c",
+    "constant",
+    "d",
+    "decorator",
+    "f",
+    "filter",
+    "m",
+    "mod",
+    "p",
+    "route",
+    "r",
+    "sr",
+    "s",
+    "templates",
+    "script-base.js",
+    "utils.js",
+    "default-settings.js"
   ],
   "devDependencies": {
     "coveralls": "^2.11.2",
