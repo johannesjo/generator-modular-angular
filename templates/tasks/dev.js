@@ -17,6 +17,7 @@ var watch = require('gulp-watch');
 var runSequence = require('run-sequence').use(gulp);
 
 var jshint = require('gulp-jshint');
+var jscs = require('gulp-jscs');
 var karma = require('gulp-karma');
 var webdriver_standalone = require('gulp-protractor').webdriver_standalone;
 var protractor = require('gulp-protractor').protractor;
@@ -63,7 +64,7 @@ gulp.task('watch', function ()
     });
     watch(config.scriptsAllF, function ()
     {
-        gulp.start('jshint');
+        gulp.start('lint');
     });
 
     watch(config.allHtmlF, function ()
@@ -99,9 +100,7 @@ gulp.task('sass', function (done)
         .pipe(gulp.dest(config.styles))
         .pipe(sass())
         .on('error', swallowError)
-        .pipe(gulp.dest(config.styles))
         .pipe(connect.reload())
-        .pipe(gulp.dest(config.styles))
         .on('end', done);
 });
 
@@ -117,7 +116,7 @@ gulp.task('connect', function ()
 
 gulp.task('html', function ()
 {
-    return gulp.src(config.allHtmlF)
+    gulp.src(config.allHtmlF)
         .pipe(connect.reload());
 });
 
@@ -195,7 +194,7 @@ gulp.task('protractor', function ()
         });
 });
 
-gulp.task('jshint', function ()
+gulp.task('lint', function ()
 {
     gulp.src([
         config.scriptsAllF,
@@ -204,7 +203,8 @@ gulp.task('jshint', function ()
         './gulpfile.js'
     ])
         .pipe(jshint())
-        .pipe(jshint.reporter('jshint-stylish'));
+        .pipe(jshint.reporter('jshint-stylish'))
+        .pipe(jscs());
 });
 
 

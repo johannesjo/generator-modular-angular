@@ -6,6 +6,7 @@ var helper = require('../helper.js');
 var defaultSettings = require('../default-settings.js');
 var yeoman = require('yeoman-generator');
 var wiredep = require('wiredep');
+var https = require('https');
 var chalk = require('chalk');
 
 module.exports = yeoman.generators.Base.extend({
@@ -176,6 +177,50 @@ module.exports = yeoman.generators.Base.extend({
             }
 
             cb();
+        }.bind(this));
+    },
+
+    askForCodingStyle: function askForModules()
+    {
+        var cb = this.async();
+
+        var prompts = [{
+            type: 'list',
+            name: 'jscsCfg',
+            message: 'What javascript coding style would you like to use (JSCS - see: http://jscs.info/)?',
+            choices: [
+                {
+                    value: 'emptyCfg',
+                    name: 'empty configuration file'
+                },
+                {
+                    value: 'manualCfg',
+                    name: 'configure via --auto-configure'
+                }
+            ]
+        }];
+
+        this.prompt(prompts, function (props)
+        {
+            var that = this;
+
+            fs.writeFile('./.jscsrc', '{}', function (err)
+            {
+                if (err) {
+                    return console.log(err);
+                }
+                if (props.jscsCfg === 'manualCfg') {
+                    var jscsrcPath = path.join('./.jscsrc')
+                    that.spawnCommand('jscs', ['--auto-configure', jscsrcPath])
+                        .on('close', function ()
+                        {
+                            cb();
+                        });
+                } else {
+                    cb();
+                }
+            });
+
         }.bind(this));
     },
 
