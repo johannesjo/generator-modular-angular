@@ -123,11 +123,16 @@ gulp.task('html', function ()
 
 gulp.task('wiredep', function ()
 {
-    gulp.src([config.karmaConf, config.mainFile], {base: './'})
+    gulp.src([config.mainFile], {base: './'})
         .pipe(wiredep({
-            exclude: [
-                // TODO inject excluded
-            ],
+            exclude: [],
+            devDependencies: false
+        }))
+        .pipe(gulp.dest('./'));
+
+    gulp.src([config.karmaConf], {base: './'})
+        .pipe(wiredep({
+            exclude: [],
             devDependencies: true
         }))
         .pipe(gulp.dest('./'));
