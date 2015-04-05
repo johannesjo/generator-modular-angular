@@ -177,11 +177,12 @@ module.exports = yeoman.generators.Base.extend({
 
         // create files and create a files array for further use
         for (var i = 0; i < filesToCreate.length; i++) {
+            var outputFile = path.join(generatorTargetPath, filesToCreate[i].targetFileName);
             yeoman.generators.Base.prototype.template.apply(this, [
                 filesToCreate[i].tpl,
-                path.join(generatorTargetPath, filesToCreate[i].targetFileName)
+                outputFile
             ]);
-            this.createdFiles.push(filesToCreate);
+            this.createdFiles.push(outputFile);
         }
 
         this.afterFileCreationHook();
@@ -190,14 +191,14 @@ module.exports = yeoman.generators.Base.extend({
 
     afterFileCreationHook: function ()
     {
+        // run favorite ide (first to smooth the experiance)
+        if (this.options.openInEditor) {
+            this.spawnCommand(this.editorCommand, this.createdFiles);
+        }
+
         // inject all files after creation
         if (!this.options.skipInject) {
             this.spawnCommand('gulp', ['inject']);
-        }
-
-        // run favorite ide
-        if (this.options.openInEditor) {
-            this.spawnCommand(this.editorCommand, this.createdFiles);
         }
     }
 });
