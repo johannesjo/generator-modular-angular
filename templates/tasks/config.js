@@ -15,9 +15,12 @@ module.exports = (function ()
         e2eBaseUrl: 'http://localhost:8080/',
         styles: base + '/styles/',
         stylesF: [
+            base + '/styles/**/_*.{scss,sass,less}',
+            scripts + '/**/*.{scss,sass,less}'
+        ],
+        stylesAllF: [
             base + '/styles/**/*.{scss,sass,less}',
-            scripts + '/**/*.{scss,sass,less}',
-            '!' + sass + '/main.scss'
+            scripts + '/**/*.{scss,sass,less}'
         ],
         scripts: base + '/scripts/',
         scriptsF: [

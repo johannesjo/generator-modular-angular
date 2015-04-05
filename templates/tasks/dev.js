@@ -97,11 +97,11 @@ gulp.task('sass', function (done)
                 }
             }
         ))
-        .pipe(gulp.dest(config.styles))
         .pipe(sass())
+        .pipe(gulp.dest(config.styles))
         .on('error', swallowError)
-        .pipe(connect.reload())
-        .on('end', done);
+        .on('end', done)
+        .pipe(connect.reload());
 });
 
 
@@ -212,6 +212,3 @@ gulp.task('e2e', [
     'connect',
     'protractor'
 ]);
-
-
-
