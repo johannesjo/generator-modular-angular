@@ -16,7 +16,7 @@ describe('Directive: <%= cameledName %><%= nameSuffix %>', function ()
 
     it('should do something', inject(function ($compile)
     {
-        element = angular.element('<<%= _.dasherize(name) %>></<%= _.dasherize(name) %>>');
+        element = $compile('<<%= _.dasherize(name) %>></<%= _.dasherize(name) %>>');
         expect(true).toBe(<%= testPassOnDefault %>);
     }));
 });
