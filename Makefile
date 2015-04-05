@@ -17,7 +17,7 @@ test-full:
 	npm install -g yo bower generator-moda
 	yes | yo moda --skip-install
 	npm cache clean
-	npm install
+	travis_retry npm install
 	bower install
 	gulp injectAll
 	gulp testSingle
