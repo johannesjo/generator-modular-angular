@@ -8,6 +8,6 @@ before_script:
 - npm install -g istanbul
 - npm install -g mocha
 
-script: make test-cov
+script: make test-full
 after_success:
 - make coveralls
