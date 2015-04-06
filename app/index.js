@@ -160,7 +160,7 @@ module.exports = yeoman.generators.Base.extend({
 
             if (this.uiRouterModule) {
                 angMods.push('\'ui.router\'');
-                this.config.set('\'uiRouter', true);
+                this.config.set('uiRouter', true);
                 this.env.options.uiRouter = true;
             }
 
