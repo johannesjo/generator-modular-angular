@@ -84,7 +84,7 @@ module.exports = yeoman.generators.Base.extend({
                 }, {
                     value: 'ngFabFormModule',
                     name: 'ng-fab-form (form helper)',
-                    checked: true
+                    checked: false
                 }, {
                     value: 'messagesModule',
                     name: 'angular-messages.js (included with ngFabForm)',
