@@ -58,13 +58,53 @@ module.exports = yeoman.generators.Base.extend({
         // additional variables
         this.createdFiles = [];
 
+        // init here, although its double the trouble for now
+        this.init();
+    },
+
+    init: function ()
+    {
+        console.log('SET PROPS');
+        console.log('______________________________________');
+
+        function extend(defaultCfg, newCfg)
+        {
+
+        }
+
         // get either default or from config
         for (var prop in defaultSettings) {
             if (defaultSettings.hasOwnProperty(prop)) {
-                this[prop] = this.config.get(prop) || defaultSettings[prop];
+                var newCfgProp = this.config.get(prop);
+
+                if (defaultSettings[prop] !== null && typeof defaultSettings[prop] === 'object') {
+                    if (newCfgProp !== null && typeof newCfgProp === 'object') {
+                        if (!this[prop]) {
+                            this[prop] = {};
+                        }
+                        for (var subProp in defaultSettings[prop]) {
+
+                            this[prop][subProp] = this.config.get(prop) && this.config.get(prop)[subProp] || defaultSettings[prop][subProp];
+                        }
+                    } else if (!newCfgProp) {
+                        this[prop] = defaultSettings[prop];
+                        // TODO maybe save config
+                    } else {
+                        this[prop] = defaultSettings[prop];
+                        throw('config for ' + prop + ' malformed - using defaults');
+                    }
+                } else {
+                    // if it is really set to false or null
+                    if (newCfgProp === false || newCfgProp === null) {
+                        this[prop] = newCfgProp;
+                    } else {
+                        this[prop] = newCfgProp || defaultSettings[prop];
+                    }
+                }
             }
         }
     },
+
 
     // sets all the different name versions to be used in the templates
     setModuleNames: function (name)
@@ -123,7 +163,7 @@ module.exports = yeoman.generators.Base.extend({
         this.nameSuffix = this.curGenCfg.nameSuffix || '';
 
         var realTargetFolder = this.defineTargetFolder(),
-            th = [];
+            filesToCreate = [];
 
         // create file paths
         var inAppPath = path.join(this.dirs.appModules, realTargetFolder);
@@ -133,11 +173,11 @@ module.exports = yeoman.generators.Base.extend({
         // prepare template template and data
         if (this.createTemplate) {
             this.tplUrl = path.join(inAppPath, standardFileName + this.fileExt.tpl);
-            th.push({
+            filesToCreate.push({
                 'tpl': this.templateName + this.fileExt.tpl,
                 'targetFileName': standardFileName + this.fileExt.tpl
             });
-            th.push({
+            filesToCreate.push({
                 'tpl': this.stylePrefix + this.templateName + this.fileExt.style,
                 'targetFileName': this.stylePrefix + standardFileName + this.fileExt.style
             });
@@ -152,12 +192,12 @@ module.exports = yeoman.generators.Base.extend({
             this.svcName = this.classedName;
 
             // add service or factory to queue
-            th.push({
+            filesToCreate.push({
                 'tpl': this.createService + this.fileExt.script,
                 'targetFileName': this.formatNamePath(this.name) + (this.subGenerators[this.createService].suffix || '') + this.fileExt.script
             });
             // add service test to queue
-            th.push({
+            filesToCreate.push({
                 'tpl': this.createService + this.testSuffix + this.fileExt.script,
                 'targetFileName': this.formatNamePath(this.name) + (this.subGenerators[this.createService].suffix || '') + this.testSuffix + this.fileExt.script
             });
@@ -165,23 +205,23 @@ module.exports = yeoman.generators.Base.extend({
 
         if (!this.skipMainFiles) {
             // add main file to queue
-            th.push({
+            filesToCreate.push({
                 'tpl': templateName + this.fileExt.script,
                 'targetFileName': standardFileName + this.fileExt.script
             });
 
             // add test file to queue
-            th.push({
+            filesToCreate.push({
                 'tpl': templateName + this.testSuffix + this.fileExt.script,
                 'targetFileName': standardFileName + this.testSuffix + this.fileExt.script
             });
         }
 
         // create files and create a files array for further use
-        for (var i = 0; i < th.length; i++) {
-            var outputFile = path.join(generatorTargetPath, th[i].targetFileName);
+        for (var i = 0; i < filesToCreate.length; i++) {
+            var outputFile = path.join(generatorTargetPath, filesToCreate[i].targetFileName);
             this.fs.copyTpl(
-                this.templatePath(th[i].tpl),
+                this.templatePath(filesToCreate[i].tpl),
                 this.destinationPath(outputFile),
                 this
             );
@@ -190,7 +230,6 @@ module.exports = yeoman.generators.Base.extend({
 
         this.afterFileCreationHook();
     },
-
 
     afterFileCreationHook: function ()
     {
