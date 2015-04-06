@@ -5,6 +5,7 @@ var defaultSettings = require('./default-settings.js');
 var helper = require('./helper.js');
 var chalk = require('chalk');
 var _s = require('underscore.string');
+var _ = require('lodash');
 
 module.exports = yeoman.generators.Base.extend({
     constructor: function ()
@@ -67,42 +68,10 @@ module.exports = yeoman.generators.Base.extend({
         console.log('SET PROPS');
         console.log('______________________________________');
 
-        function extend(defaultCfg, newCfg)
-        {
-
-        }
 
         // get either default or from config
-        for (var prop in defaultSettings) {
-            if (defaultSettings.hasOwnProperty(prop)) {
-                var newCfgProp = this.config.get(prop);
-
-                if (defaultSettings[prop] !== null && typeof defaultSettings[prop] === 'object') {
-                    if (newCfgProp !== null && typeof newCfgProp === 'object') {
-                        if (!this[prop]) {
-                            this[prop] = {};
-                        }
-                        for (var subProp in defaultSettings[prop]) {
-
-                            this[prop][subProp] = this.config.get(prop) && this.config.get(prop)[subProp] || defaultSettings[prop][subProp];
-                        }
-                    } else if (!newCfgProp) {
-                        this[prop] = defaultSettings[prop];
-                        // TODO maybe save config
-                    } else {
-                        this[prop] = defaultSettings[prop];
-                        throw('config for ' + prop + ' malformed - using defaults');
-                    }
-                } else {
-                    // if it is really set to false or null
-                    if (newCfgProp === false || newCfgProp === null) {
-                        this[prop] = newCfgProp;
-                    } else {
-                        this[prop] = newCfgProp || defaultSettings[prop];
-                    }
-                }
-            }
-        }
+        _.merge(defaultSettings, this.config.getAll());
+        _.merge(this, defaultSettings);
     },
 
 
