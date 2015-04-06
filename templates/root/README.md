@@ -1,4 +1,4 @@
-# <%= _.slugify(_.humanize(appname)) %>
+# <%= appname %>
 
 This project is generated with [yo angular modular generator](https://github.com/johannes/generator-modular-angular)
 version <%= pkg.version %>.

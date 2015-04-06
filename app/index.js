@@ -6,8 +6,9 @@ var helper = require('../helper.js');
 var defaultSettings = require('../default-settings.js');
 var yeoman = require('yeoman-generator');
 var wiredep = require('wiredep');
-var https = require('https');
 var chalk = require('chalk');
+var _s = require('underscore.string');
+
 
 module.exports = yeoman.generators.Base.extend({
     constructor: function ()
@@ -17,9 +18,9 @@ module.exports = yeoman.generators.Base.extend({
         // get app name
         this.argument('appname', {type: String, required: false});
         this.appname = this.appname || path.basename(process.cwd());
-        this.appname = this._.camelize(this._.slugify(this._.humanize(this.appname)));
-        this.slugAppName = this._.slugify(this.appname);
-        this.humanizedAppName = this._.humanize(this.appname);
+        this.appname = _s.camelize(_s.slugify(_s.humanize(this.appname)));
+        this.slugAppName = _s.slugify(this.appname);
+        this.humanizedAppName = _s.humanize(this.appname);
         this.scriptAppName = this.appname;
 
 

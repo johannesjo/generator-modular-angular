@@ -4,6 +4,7 @@ var yeoman = require('yeoman-generator');
 var defaultSettings = require('./default-settings.js');
 var helper = require('./helper.js');
 var chalk = require('chalk');
+var _s = require('underscore.string');
 
 module.exports = yeoman.generators.Base.extend({
     constructor: function ()
@@ -38,8 +39,8 @@ module.exports = yeoman.generators.Base.extend({
         } else {
             this.appname = path.basename(process.cwd());
         }
-        this.appname = this._.slugify(this._.humanize(this.appname));
-        this.scriptAppName = bowerJson.moduleName || this._.camelize(this.appname);
+        this.appname = _s.slugify(_s.humanize(this.appname));
+        this.scriptAppName = bowerJson.moduleName || _s.camelize(this.appname);
 
         // set all the different name versions to be used in the templates
         this.setModuleNames(this.name);
@@ -68,10 +69,11 @@ module.exports = yeoman.generators.Base.extend({
     // sets all the different name versions to be used in the templates
     setModuleNames: function (name)
     {
-        this.cameledName = this._.camelize(name);
-        this.classedName = this._.classify(name);
-        this.sluggedName = this._.slugify(name);
-        this.dashedName = this._.dasherize(name);
+        this.cameledName = _s.camelize(name);
+        this.classedName = _s.classify(name);
+        this.sluggedName = _s.slugify(name);
+        this.dashedName = _s.dasherize(name);
+        this.humanizedName = _s.humanize(name);
     },
 
     cleanUpPath: function (path)
@@ -85,7 +87,7 @@ module.exports = yeoman.generators.Base.extend({
     formatNamePath: function (name)
     {
         var style = this.config.get('pathOutputStyle') || 'dasherize';
-        return this._[style](name);
+        return _s[style](name);
     },
 
     defineTargetFolder: function ()
@@ -140,7 +142,7 @@ module.exports = yeoman.generators.Base.extend({
                 'targetFileName': this.stylePrefix + standardFileName + this.fileExt.style
             });
         } else {
-            // needs to be set for the _.templates to work
+            // needs to be set for the _s.templates to work
             this.tplUrl = false;
         }
 
@@ -178,10 +180,11 @@ module.exports = yeoman.generators.Base.extend({
         // create files and create a files array for further use
         for (var i = 0; i < filesToCreate.length; i++) {
             var outputFile = path.join(generatorTargetPath, filesToCreate[i].targetFileName);
-            yeoman.generators.Base.prototype.template.apply(this, [
-                filesToCreate[i].tpl,
-                outputFile
-            ]);
+            this.fs.copyTpl(
+                this.templatePath(filesToCreate[i].tpl),
+                this.destinationPath(outputFile),
+                this
+            );
             this.createdFiles.push(outputFile);
         }
 

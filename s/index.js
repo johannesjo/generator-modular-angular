@@ -1,15 +1,10 @@
 'use strict';
-var util = require('util');
-var ScriptBase = require('../script-base.js');
+var ScriptBase = require('../sub-generator-base.js');
 
+module.exports = ScriptBase.extend({
+    createFactoryFiles: function createFactoryFiles()
+    {
+        this.generateSourceAndTest('service');
+    }
+});
 
-var Generator = module.exports = function Generator()
-{
-    ScriptBase.apply(this, arguments);
-};
-util.inherits(Generator, ScriptBase);
-
-Generator.prototype.createServiceFiles = function createServiceFiles()
-{
-    this.generateSourceAndTest('service');
-};
