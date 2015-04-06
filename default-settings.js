@@ -6,7 +6,7 @@ module.exports = {
     editorCommand: 'idea',
     uiRouter: false,
     pathOutputStyle: 'dasherize',
-    routesFile: './app/scripts/routes.js',
+    routesFile: 'app/scripts/routes.js',
     fileExt: {
         script: '.js',
         tpl: '.html',

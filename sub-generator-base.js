@@ -123,7 +123,7 @@ module.exports = yeoman.generators.Base.extend({
         this.nameSuffix = this.curGenCfg.nameSuffix || '';
 
         var realTargetFolder = this.defineTargetFolder(),
-            filesToCreate = [];
+            th = [];
 
         // create file paths
         var inAppPath = path.join(this.dirs.appModules, realTargetFolder);
@@ -133,11 +133,11 @@ module.exports = yeoman.generators.Base.extend({
         // prepare template template and data
         if (this.createTemplate) {
             this.tplUrl = path.join(inAppPath, standardFileName + this.fileExt.tpl);
-            filesToCreate.push({
+            th.push({
                 'tpl': this.templateName + this.fileExt.tpl,
                 'targetFileName': standardFileName + this.fileExt.tpl
             });
-            filesToCreate.push({
+            th.push({
                 'tpl': this.stylePrefix + this.templateName + this.fileExt.style,
                 'targetFileName': this.stylePrefix + standardFileName + this.fileExt.style
             });
@@ -152,12 +152,12 @@ module.exports = yeoman.generators.Base.extend({
             this.svcName = this.classedName;
 
             // add service or factory to queue
-            filesToCreate.push({
+            th.push({
                 'tpl': this.createService + this.fileExt.script,
                 'targetFileName': this.formatNamePath(this.name) + (this.subGenerators[this.createService].suffix || '') + this.fileExt.script
             });
             // add service test to queue
-            filesToCreate.push({
+            th.push({
                 'tpl': this.createService + this.testSuffix + this.fileExt.script,
                 'targetFileName': this.formatNamePath(this.name) + (this.subGenerators[this.createService].suffix || '') + this.testSuffix + this.fileExt.script
             });
@@ -165,23 +165,23 @@ module.exports = yeoman.generators.Base.extend({
 
         if (!this.skipMainFiles) {
             // add main file to queue
-            filesToCreate.push({
+            th.push({
                 'tpl': templateName + this.fileExt.script,
                 'targetFileName': standardFileName + this.fileExt.script
             });
 
             // add test file to queue
-            filesToCreate.push({
+            th.push({
                 'tpl': templateName + this.testSuffix + this.fileExt.script,
                 'targetFileName': standardFileName + this.testSuffix + this.fileExt.script
             });
         }
 
         // create files and create a files array for further use
-        for (var i = 0; i < filesToCreate.length; i++) {
-            var outputFile = path.join(generatorTargetPath, filesToCreate[i].targetFileName);
+        for (var i = 0; i < th.length; i++) {
+            var outputFile = path.join(generatorTargetPath, th[i].targetFileName);
             this.fs.copyTpl(
-                this.templatePath(filesToCreate[i].tpl),
+                this.templatePath(th[i].tpl),
                 this.destinationPath(outputFile),
                 this
             );

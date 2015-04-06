@@ -1,20 +1,18 @@
 'use strict';
 var ScriptBase = require('../sub-generator-base.js');
+var helper = require('../helper.js');
 var path = require('path');
+var fs = require('fs');
+var chalk = require('chalk');
 
 module.exports = ScriptBase.extend({
-    createRouteFiles: function createRouteFiles()
+    calcFoldersAndStates: function calcFoldersAndStates()
     {
-        var cb = this.async();
-        var defaults = {
-            createTemplate: true,
-            createService: false,
-            createCtrl: true
-        };
-        var ctrlSubGen = this.subGenerators.controller;
+        // get from config
+        this.subGen = this.subGenerators.controller;
 
         // the state name is the argument
-        var stateName = this.name;
+        this.stateName = this.name;
 
         // create path string from name
         var PARENT_STATES_REG_EXP = new RegExp('([^\\.]+)\\.', 'g');
@@ -35,36 +33,57 @@ module.exports = ScriptBase.extend({
 
         // names need to be reset
         this.setModuleNames(this.name);
+    },
+
+    createRouterFileIfNotPresent: function (props)
+    {
+        var that = this;
+        var done = this.async();
+
+        // check if routes file does exist and create it if not
+        if (that.uiRouter && that.routesFile) {
+            fs.stat(that.routesFile, function (err, stat)
+            {
+                if (err) {
+                    that.fs.copyTpl(
+                        that.templatePath('routes' + that.fileExt.script),
+                        that.destinationPath(that.routesFile),
+                        that
+                    );
+                    that.log.writeln(chalk.yellow('creating routes file at ' + that.routesFile + ' as none was present at the specified location'));
+                    done();
+                } else {
+                    done();
+                }
+            });
+        } else {
+            done();
+        }
+    },
 
 
-        var createFiles = function (props)
+    askForOptions: function ()
+    {
+        var done = this.async();
+        var defaults = {
+            createTemplate: true,
+            createService: false,
+            createCtrl: true
+        };
+
+        function createControllerFiles(props)
         {
             this.createService = props.createService;
             this.createTemplate = props.createTemplate;
             this.skipMainFiles = !props.createCtrl;
-
+            this.createController = props.createCtrl;
+            // create controller files
             this.generateSourceAndTest('controller');
-
-            if (this.uiRouter) {
-                var routeUrl = '/' + this.formatNamePath(this.name),
-                    tplUrl = this.tplUrl,
-                    ctrl = !!props.createCtrl && this.classedName + (ctrlSubGen.nameSuffix || '');
-
-                helper.injectRoute(
-                    path.join(this.config.get('routesFile')),
-                    stateName,
-                    routeUrl,
-                    tplUrl,
-                    ctrl,
-                    this
-                );
-            }
-            // NOTE: never forget the callback!
-            cb();
-        };
+            done();
+        }
 
         if (this.options.useDefaults || this.config.get('alwaysSkipDialog')) {
-            createFiles.bind(this)(defaults);
+            createControllerFiles.bind(this)(defaults);
         } else {
             this.prompt(
                 [
@@ -101,7 +120,28 @@ module.exports = ScriptBase.extend({
                         ]
                     }
                 ],
-                createFiles.bind(this));
+                createControllerFiles.bind(this));
+
         }
+    },
+
+
+    injectStates: function (props)
+    {
+        this.on('end', function ()
+        {
+            var routeUrl = '/' + this.formatNamePath(this.name),
+                tplUrl = this.tplUrl,
+                ctrl = !!this.createController && this.classedName + (this.subGen.nameSuffix || '');
+
+            helper.injectRoute(
+                this.routesFile,
+                this.stateName,
+                routeUrl,
+                tplUrl,
+                ctrl,
+                this
+            );
+        });
     }
 });
