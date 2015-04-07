@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/johannesjo/generator-modular-angular.svg)](https://travis-ci.org/johannesjo/generator-modular-angular)
+[![Build Status](https://travis-ci.org/johannesjo/generator-modular-angular.svg?branch=master)](https://travis-ci.org/johannesjo/generator-modular-angular)
 [![NPM version](http://img.shields.io/npm/v/generator-moda.svg?style=flat-square)](https://npmjs.org/package/generator-moda)
 [![Coverage Status](https://coveralls.io/repos/johannesjo/generator-modular-angular/badge.svg?branch=master)](https://coveralls.io/r/johannesjo/generator-modular-angular?branch=master)
 [![Dependency Status](https://david-dm.org/johannesjo/generator-modular-angular.svg)](https://david-dm.org/johannesjo/generator-modular-angular)
