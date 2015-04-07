@@ -7,8 +7,9 @@ var chalk = require('chalk');
 var defaultSettings = require('../default-settings.js');
 
 module.exports = ScriptBase.extend({
-    inizializing: function ()
+    initializing: function ()
     {
+        // needs to be called manually
         this.init();
 
         // the state name is the argument
@@ -34,6 +35,7 @@ module.exports = ScriptBase.extend({
         // names need to be reset
         this.setModuleNames(this.name);
     },
+
     prompting: function ()
     {
         var done = this.async();
@@ -45,10 +47,12 @@ module.exports = ScriptBase.extend({
 
         function createControllerFiles(props)
         {
+            // set context vars
             this.createService = props.createService;
             this.createTemplate = props.createTemplate;
             this.skipMainFiles = !props.createCtrl;
             this.createController = props.createCtrl;
+
             // create controller files
             this.generateSourceAndTest('controller');
             done();
@@ -95,6 +99,7 @@ module.exports = ScriptBase.extend({
                 createControllerFiles.bind(this));
         }
     },
+
     writing: function (props)
     {
         var that = this;

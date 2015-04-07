@@ -7,17 +7,20 @@ var chalk = require('chalk');
 var _s = require('underscore.string');
 var _ = require('lodash');
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = yeoman.generators.NamedBase.extend({
     constructor: function ()
     {
+        // super constructor needs to be called manually
+        // as the constructor-function is overwritten by this
         yeoman.generators.NamedBase.apply(this, arguments);
 
-        // global options
+        // define global options
         this.option('useDefaults');
         this.option('openInEditor');
         this.option('noParentFolder');
         this.option('skipInject');
 
+        // define arguments
         this.argument('targetFolder', {
             type: String,
             required: false,
@@ -25,10 +28,39 @@ module.exports = yeoman.generators.Base.extend({
         });
 
 
-        /*************************************
-         **** other global templating vars ***
-         ************************************/
+        // set all the different name versions to be used in the templates
+        this.setModuleNames(this.name);
 
+        // set app name
+        this.setAppVariables();
+
+
+        // set sources root (for file-templates)
+        var sourceRoot = '/templates/app';
+        this.sourceRoot(path.join(__dirname, sourceRoot));
+
+        // additional variables
+        this.createdFiles = [];
+
+        // init here, although its double the trouble for now
+        //this.mergeConfig();
+    },
+
+    // parent initialize function
+    init: function ()
+    {
+        this.mergeConfig();
+    },
+
+    mergeConfig: function ()
+    {
+        // get either default or from config
+        _.merge(defaultSettings, this.config.getAll());
+        _.merge(this, defaultSettings);
+    },
+
+    setAppVariables: function ()
+    {
         // define app name variables
         var bowerJson = {};
         try {
@@ -43,35 +75,11 @@ module.exports = yeoman.generators.Base.extend({
         this.appname = _s.slugify(_s.humanize(this.appname));
         this.scriptAppName = bowerJson.moduleName || _s.camelize(this.appname);
 
-        // set all the different name versions to be used in the templates
-        this.setModuleNames(this.name);
-
         // define app path variable
         if (typeof this.env.options.appPath === 'undefined') {
             this.env.options.appPath = this.options.appPath || bowerJson.appPath || 'app';
             this.options.appPath = this.env.options.appPath;
         }
-
-        // set sources root (for file-templates)
-        var sourceRoot = '/templates/app';
-        this.sourceRoot(path.join(__dirname, sourceRoot));
-
-        // additional variables
-        this.createdFiles = [];
-
-        // init here, although its double the trouble for now
-        this.init();
-    },
-
-    init: function ()
-    {
-        console.log('SET PROPS');
-        console.log('______________________________________');
-
-
-        // get either default or from config
-        _.merge(defaultSettings, this.config.getAll());
-        _.merge(this, defaultSettings);
     },
 
 
