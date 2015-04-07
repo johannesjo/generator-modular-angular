@@ -131,4 +131,73 @@ describe('moda Service generator', function ()
                 });
         });
     });
+
+    describe('with local config for file extension, global path and name-suffix', function ()
+    {
+        var testArguments = 'test-name';
+        var expectedContent = [
+            ['app/scripts/services/test-name-service.js', /TestNameService/],
+            ['app/scripts/services/test-name-service.js', /module\('tmp'\)/],
+            ['app/scripts/services/test-name-service.spec.js', /TestNameService/]
+        ];
+        var expected = [
+            'app/scripts/services/test-name-service.js',
+            'app/scripts/services/test-name-service.spec.js'
+
+        ];
+        var noFile = [
+            'app/scripts/services/test-name-f.js',
+            'app/scripts/test-name-service.js',
+            'app/scripts/services/test-name-d.html',
+            'app/scripts/services/_test-name-d.scss'
+        ];
+
+        var nonExpected = [
+            ['app/scripts/services/test-name-service.js', /testNameService/]
+        ];
+
+        var options = {
+            'skipInject': true
+        };
+
+        var runGen;
+
+        beforeEach(function ()
+        {
+            runGen = helpers
+                .run(path.join(__dirname, '../s'))
+                .inDir(path.join(__dirname, '.tmp'))
+        });
+
+        it('creates expected files', function (done)
+        {
+            runGen
+                .withLocalConfig({
+                    subGenerators: {
+                        service: {
+                            nameSuffix: 'Service',
+                            suffix: '-service',
+                            globalDir: 'services'
+                        }
+                    }
+                })
+                .withArguments(testArguments)
+                .withOptions(options).on('end', function ()
+                {
+                    assert.file([].concat(
+                        expected
+                    ));
+                    assert.noFile([].concat(
+                        noFile
+                    ));
+                    assert.fileContent([].concat(
+                        expectedContent
+                    ));
+                    assert.noFileContent([].concat(
+                        nonExpected
+                    ));
+                    done();
+                });
+        });
+    });
 });

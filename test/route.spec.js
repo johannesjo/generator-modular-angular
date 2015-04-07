@@ -307,6 +307,8 @@ describe('moda Route generator', function ()
         var expected = [
             routesDir + 'par-state/sub-state/sub-state-c.js',
             routesDir + 'par-state/sub-state/sub-state-c.spec.js',
+            routesDir + 'par-state/sub-state/sub-state-c.html',
+            routesDir + 'par-state/sub-state/_sub-state-c.scss',
             routesFile
         ];
 
@@ -341,7 +343,8 @@ describe('moda Route generator', function ()
                     dirs: {routes: '_routes'}
                 })
                 .withPrompts({
-                    createTemplate: true
+                    createTemplate: true,
+                    createCtrl: true
                 })
                 .withOptions(options).on('end', function ()
                 {

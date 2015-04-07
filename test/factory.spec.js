@@ -6,10 +6,13 @@ var assert = require('yeoman-generator').assert;
 
 describe('moda Factory generator', function ()
 {
+    var generatorPath = '../f';
+
+
     // not testing the actual run of generators yet
     it('can be required without throwing', function ()
     {
-        this.app = require('../f');
+        this.app = require(generatorPath);
     });
 
     describe('basic file creation', function ()
@@ -44,7 +47,7 @@ describe('moda Factory generator', function ()
         beforeEach(function ()
         {
             runGen = helpers
-                .run(path.join(__dirname, '../f'))
+                .run(path.join(__dirname, generatorPath))
                 .inDir(path.join(__dirname, '.tmp'))
         });
 
@@ -105,13 +108,83 @@ describe('moda Factory generator', function ()
         beforeEach(function ()
         {
             runGen = helpers
-                .run(path.join(__dirname, '../f'))
+                .run(path.join(__dirname, generatorPath))
                 .inDir(path.join(__dirname, '.tmp'))
         });
 
         it('creates expected files', function (done)
         {
             runGen
+                .withArguments(testArguments)
+                .withOptions(options).on('end', function ()
+                {
+                    assert.file([].concat(
+                        expected
+                    ));
+                    assert.noFile([].concat(
+                        noFile
+                    ));
+                    assert.fileContent([].concat(
+                        expectedContent
+                    ));
+                    assert.noFileContent([].concat(
+                        nonExpected
+                    ));
+                    done();
+                });
+        });
+    });
+
+    describe('with local config for file extension, global path and name-suffix', function ()
+    {
+        var testArguments = 'test-name';
+        var expectedContent = [
+            ['app/scripts/factories/test-name-factory.js', /TestNameFactory/],
+            ['app/scripts/factories/test-name-factory.js', /module\('tmp'\)/],
+            ['app/scripts/factories/test-name-factory.spec.js', /TestNameFactory/]
+        ];
+        var expected = [
+            'app/scripts/factories/test-name-factory.js',
+            'app/scripts/factories/test-name-factory.spec.js'
+
+        ];
+        var noFile = [
+            'app/scripts/_main/global-services/test-name-f.js',
+            'app/scripts/_main/global-services/test-name-factory.js',
+            'app/scripts/test-name-factory.js',
+            'app/scripts/factories/test-name-d.html',
+            'app/scripts/factories/_test-name-d.scss'
+        ];
+
+        var nonExpected = [
+            ['app/scripts/factories/test-name-factory.js', /testNameFactory/]
+        ];
+
+        var options = {
+            'skipInject': true
+        };
+
+        var runGen;
+
+        beforeEach(function ()
+        {
+            runGen = helpers
+                .run(path.join(__dirname, generatorPath))
+                .inDir(path.join(__dirname, '.tmp'))
+        });
+
+        it('creates expected files', function (done)
+        {
+            runGen
+                .withLocalConfig({
+                    subGenerators: {
+                        factory: {
+                            nameSuffix: 'Factory',
+                            suffix: '-factory',
+                            globalDir: 'factories'
+                        }
+                    }
+                })
                 .withArguments(testArguments)
                 .withOptions(options).on('end', function ()
                 {
