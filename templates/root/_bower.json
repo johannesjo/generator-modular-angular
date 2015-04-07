@@ -15,6 +15,7 @@
   "dependencies": {
     "json3": "latest",
     "es5-shim": "latest",
+    "animate.css-scss": "latest",
     "angular": "^<%= ngVer %>"<% if (animateModule) { %>,
     "angular-animate": "^<%= ngVer %>"<% } %><% if (ariaModule) { %>,
     "angular-aria": "^<%= ngVer %>"<% } %><% if (cookiesModule) { %>,
