@@ -302,7 +302,7 @@ describe('moda Route generator', function ()
         var expectedContent = [
             [routesDir + 'par-state/sub-state/sub-state-c.js', /SubStateCtrl/],
             [routesDir + 'par-state/sub-state/sub-state-c.js', /module\('tmp'\)/],
-            //[routesFile, /subState/]
+            [routesFile, /subState/]
         ];
         var expected = [
             routesDir + 'par-state/sub-state/sub-state-c.js',
