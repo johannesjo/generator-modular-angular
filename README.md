@@ -423,7 +423,7 @@ subGenerators: {
         // => Controller-name = 'BlaCtrl'
         nameSuffix: 'Ctrl',
         globalDir: '',
-        createDirectory: true
+        createDirectory: true,
     },
     service: {
         suffix: '-s',
@@ -449,6 +449,26 @@ subGenerators: {
         // there are also prefixes available
         prefix: '_',
         createDirectory: true
+    }
+}
+```
+
+### overwrite templates via .yo-rc.json
+Using a simple syntax templates can be overwritten inside the .yo-rc.json:
+```
+"subGenerators": {
+    "directive": {
+        "tpl": {
+            // the html file, if any for that sub-generatr
+            "tpl": "<div>I love divs</div>"     
+            // the test file            
+            "spec": "console.log('empty tests are the best');"
+            // the main script file
+            // notice that all common variables are also 
+            // available here
+            "script": "angular.module(<%= scriptAppName %>).directive('<%= cameledName %><%= nameSuffix %>',
+            "style": ".<%=sluggedName %>{color:green}
+        }
     }
 }
 ```

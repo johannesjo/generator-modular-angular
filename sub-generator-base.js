@@ -4,6 +4,7 @@ var yeoman = require('yeoman-generator');
 var defaultSettings = require('./default-settings.js');
 var helper = require('./helper.js');
 var chalk = require('chalk');
+var fs = require('fs');
 var _s = require('underscore.string');
 var _ = require('lodash');
 
@@ -55,8 +56,11 @@ module.exports = yeoman.generators.NamedBase.extend({
     mergeConfig: function ()
     {
         // get either default or from config
-        _.merge(defaultSettings, this.config.getAll());
-        _.merge(this, defaultSettings);
+
+        // create a clone to avoid testing issues
+        var defaultCfg = _.cloneDeep(defaultSettings);
+        _.merge(defaultCfg, this.config.getAll());
+        _.merge(this, defaultCfg);
     },
 
     setAppVariables: function ()
@@ -151,12 +155,12 @@ module.exports = yeoman.generators.NamedBase.extend({
         if (this.createTemplate) {
             this.tplUrl = path.join(inAppPath, standardFileName + this.fileExt.tpl);
             filesToCreate.push({
-                'tpl': this.templateName + this.fileExt.tpl,
-                'targetFileName': standardFileName + this.fileExt.tpl
+                tpl: this.templateName + this.fileExt.tpl,
+                targetFileName: standardFileName + this.fileExt.tpl
             });
             filesToCreate.push({
-                'tpl': this.stylePrefix + this.templateName + this.fileExt.style,
-                'targetFileName': this.stylePrefix + standardFileName + this.fileExt.style
+                tpl: this.stylePrefix + this.templateName + this.fileExt.style,
+                targetFileName: this.stylePrefix + standardFileName + this.fileExt.style
             });
         } else {
             // needs to be set for the _s.templates to work
@@ -170,42 +174,87 @@ module.exports = yeoman.generators.NamedBase.extend({
 
             // add service or factory to queue
             filesToCreate.push({
-                'tpl': this.createService + this.fileExt.script,
-                'targetFileName': this.formatNamePath(this.name) + (this.subGenerators[this.createService].suffix || '') + this.fileExt.script
+                tpl: this.createService + this.fileExt.script,
+                targetFileName: this.formatNamePath(this.name) + (this.subGenerators[this.createService].suffix || '') + this.fileExt.script,
+                gen: this.createService
             });
             // add service test to queue
             filesToCreate.push({
-                'tpl': this.createService + this.testSuffix + this.fileExt.script,
-                'targetFileName': this.formatNamePath(this.name) + (this.subGenerators[this.createService].suffix || '') + this.testSuffix + this.fileExt.script
+                tpl: this.createService + this.testSuffix + this.fileExt.script,
+                targetFileName: this.formatNamePath(this.name) + (this.subGenerators[this.createService].suffix || '') + this.testSuffix + this.fileExt.script,
+                gen: this.createService
             });
         }
 
         if (!this.skipMainFiles) {
             // add main file to queue
             filesToCreate.push({
-                'tpl': templateName + this.fileExt.script,
-                'targetFileName': standardFileName + this.fileExt.script
+                tpl: templateName + this.fileExt.script,
+                targetFileName: standardFileName + this.fileExt.script
             });
 
             // add test file to queue
             filesToCreate.push({
-                'tpl': templateName + this.testSuffix + this.fileExt.script,
-                'targetFileName': standardFileName + this.testSuffix + this.fileExt.script
+                tpl: templateName + this.testSuffix + this.fileExt.script,
+                targetFileName: standardFileName + this.testSuffix + this.fileExt.script
             });
         }
 
         // create files and create a files array for further use
         for (var i = 0; i < filesToCreate.length; i++) {
             var outputFile = path.join(generatorTargetPath, filesToCreate[i].targetFileName);
-            this.fs.copyTpl(
-                this.templatePath(filesToCreate[i].tpl),
-                this.destinationPath(outputFile),
-                this
-            );
             this.createdFiles.push(outputFile);
+
+            var customTpl = this.getCustomTpl(filesToCreate[i]);
+            if (customTpl) {
+                this.writeCustomTpl(customTpl, outputFile);
+            } else {
+                this.fs.copyTpl(
+                    this.templatePath(filesToCreate[i].tpl),
+                    this.destinationPath(outputFile),
+                    this
+                );
+            }
+        }
+        this.afterFileCreationHook();
+    },
+
+    getCustomTpl: function (fileToCreate)
+    {
+        var customTpl;
+        var curGenCfg = null;
+        var SPEC_REG_EX = new RegExp(this.testSuffix + '\\' + this.fileExt.script + '$');
+        var SCRIPTS_REG_EX = new RegExp(this.fileExt.script + '$');
+        var TPL_REG_EX = new RegExp(this.fileExt.tpl + '$');
+        var STYLE_REG_EX = new RegExp(this.fileExt.style + '$');
+
+        if (fileToCreate.gen) {
+            curGenCfg = this.subGenerators[fileToCreate.gen];
+        } else {
+            curGenCfg = this.curGenCfg;
         }
 
-        this.afterFileCreationHook();
+        if (curGenCfg.tpl) {
+            if (fileToCreate.tpl.match(SPEC_REG_EX)) {
+                customTpl = curGenCfg.tpl['spec'];
+            } else if (fileToCreate.tpl.match(SCRIPTS_REG_EX)) {
+                customTpl = curGenCfg.tpl['script'];
+            } else if (fileToCreate.tpl.match(TPL_REG_EX)) {
+                customTpl = curGenCfg.tpl['tpl'];
+            } else if (fileToCreate.tpl.match(STYLE_REG_EX)) {
+                customTpl = curGenCfg.tpl['style'];
+            }
+
+            if (customTpl && typeof customTpl === 'string') {
+                return customTpl;
+            }
+        }
+    },
+
+    writeCustomTpl: function (customTpl, targetDir)
+    {
+        var tpl = _.template(customTpl, {})(this);
+        this.fs.write(targetDir, tpl);
     },
 
     afterFileCreationHook: function ()
