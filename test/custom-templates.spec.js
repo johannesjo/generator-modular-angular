@@ -75,76 +75,76 @@ describe('moda custom file templates via .yo-rc.json', function ()
                 });
         });
 
-//        it('has common variables available', function (done)
-//        {
-//            runGen
-//                .withArguments(testArguments)
-//                .withLocalConfig({
-//                    subGenerators: {
-//                        directive: {
-//                            tpl: {
-//                                tpl: '<%=cameledName %>|<%=classedName %>|<%=sluggedName %>|<%=dashedName %>|<%=humanizedName %>'
-//                            }
-//                        }
-//                    }
-//                })
-//                .withOptions(options).on('end', function ()
-//                {
-//                    assert.file([].concat(
-//                        expected
-//                    ));
-//                    assert.fileContent([
-//                        ['app/scripts/test-name/test-name-d.html', 'testName|TestName|test-name|test-name|Test name']
-//                    ]);
-//                    done();
-//                });
-//        });
-//
-//
-//        it('works with services created from directives', function (done)
-//        {
-//            runGen
-//                .withArguments(testArguments)
-//                .withOptions({
-//                    'skipInject': true
-//                })
-//                .withPrompts({
-//                    createService: 'service'
-//                })
-//                .withLocalConfig({
-//                    subGenerators: {
-//                        directive: {
-//                            tpl: {
-//                                tpl: 'HTML',
-//                                script: 'JS',
-//                                style: 'SCSS',
-//                                spec: 'SPEC',
-//                            }
-//                        },
-//                        service: {
-//                            tpl: {
-//                                script: 'SERVICE_JS',
-//                                spec: 'SERVICE_JS_SPEC'
-//                            }
-//                        }
-//                    }
-//                })
-//                .on('end', function ()
-//                {
-//                    assert.file([].concat(
-//                        expected
-//                    ));
-//                    assert.fileContent([
-//                        ['app/scripts/test-name/test-name-d.js', 'JS'],
-//                        ['app/scripts/test-name/test-name-d.spec.js', 'SPEC'],
-//                        ['app/scripts/test-name/test-name-d.html', 'HTML'],
-//                        ['app/scripts/test-name/_test-name-d.scss', 'SCSS'],
-//                        ['app/scripts/test-name/test-name-s.js', 'SERVICE_JS'],
-//                        ['app/scripts/test-name/test-name-s.spec.js', 'SERVICE_JS_SPEC'],
-//                    ]);
-//
-//                    done();
-//                });
-//        });
+        it('has common variables available', function (done)
+        {
+            runGen
+                .withArguments(testArguments)
+                .withLocalConfig({
+                    subGenerators: {
+                        directive: {
+                            tpl: {
+                                tpl: '<%=cameledName %>|<%=classedName %>|<%=sluggedName %>|<%=dashedName %>|<%=humanizedName %>'
+                            }
+                        }
+                    }
+                })
+                .withOptions(options).on('end', function ()
+                {
+                    assert.file([].concat(
+                        expected
+                    ));
+                    assert.fileContent([
+                        ['app/scripts/test-name/test-name-d.html', 'testName|TestName|test-name|test-name|Test name']
+                    ]);
+                    done();
+                });
+        });
+
+
+        it('works with services created from directives', function (done)
+        {
+            runGen
+                .withArguments(testArguments)
+                .withOptions({
+                    'skipInject': true
+                })
+                .withPrompts({
+                    createService: 'service'
+                })
+                .withLocalConfig({
+                    subGenerators: {
+                        directive: {
+                            tpl: {
+                                tpl: 'HTML',
+                                script: 'JS',
+                                style: 'SCSS',
+                                spec: 'SPEC',
+                            }
+                        },
+                        service: {
+                            tpl: {
+                                script: 'SERVICE_JS',
+                                spec: 'SERVICE_JS_SPEC'
+                            }
+                        }
+                    }
+                })
+                .on('end', function ()
+                {
+                    assert.file([].concat(
+                        expected
+                    ));
+                    assert.fileContent([
+                        ['app/scripts/test-name/test-name-d.js', 'JS'],
+                        ['app/scripts/test-name/test-name-d.spec.js', 'SPEC'],
+                        ['app/scripts/test-name/test-name-d.html', 'HTML'],
+                        ['app/scripts/test-name/_test-name-d.scss', 'SCSS'],
+                        ['app/scripts/test-name/test-name-s.js', 'SERVICE_JS'],
+                        ['app/scripts/test-name/test-name-s.spec.js', 'SERVICE_JS_SPEC'],
+                    ]);
+
+                    done();
+                });
+        });
     });
 });
