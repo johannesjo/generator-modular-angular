@@ -51,6 +51,7 @@ module.exports = yeoman.generators.NamedBase.extend({
     init: function ()
     {
         this.mergeConfig();
+        this.overWriteTplPathIfSet();
     },
 
     mergeConfig: function ()
@@ -61,6 +62,18 @@ module.exports = yeoman.generators.NamedBase.extend({
         var defaultCfg = _.cloneDeep(defaultSettings);
         _.merge(defaultCfg, this.config.getAll());
         _.merge(this, defaultCfg);
+    },
+
+    overWriteTplPathIfSet: function ()
+    {
+
+        if (this.customTemplatesPath) {
+            if (fs.existsSync(this.customTemplatesPath)) {
+                this.sourceRoot(this.customTemplatesPath);
+            } else {
+                throw (new Error('custom template path ' + this.customTemplatesPath + ' does not exist. Check your .yo-rc.json.'));
+            }
+        }
     },
 
     setAppVariables: function ()
@@ -205,9 +218,9 @@ module.exports = yeoman.generators.NamedBase.extend({
             var outputFile = path.join(generatorTargetPath, filesToCreate[i].targetFileName);
             this.createdFiles.push(outputFile);
 
-            var customTpl = this.getCustomTpl(filesToCreate[i]);
-            if (customTpl) {
-                this.writeCustomTpl(customTpl, outputFile);
+            var customYoRcTpl = this.getCustomTplFromYoRc(filesToCreate[i]);
+            if (customYoRcTpl) {
+                this.writeCustomYoRcTpl(customYoRcTpl, outputFile);
             } else {
                 this.fs.copyTpl(
                     this.templatePath(filesToCreate[i].tpl),
@@ -219,9 +232,9 @@ module.exports = yeoman.generators.NamedBase.extend({
         this.afterFileCreationHook();
     },
 
-    getCustomTpl: function (fileToCreate)
+    getCustomTplFromYoRc: function (fileToCreate)
     {
-        var customTpl;
+        var customYoRcTpl;
         var curGenCfg = null;
         var SPEC_REG_EX = new RegExp(this.testSuffix + '\\' + this.fileExt.script + '$');
         var SCRIPTS_REG_EX = new RegExp(this.fileExt.script + '$');
@@ -236,24 +249,24 @@ module.exports = yeoman.generators.NamedBase.extend({
 
         if (curGenCfg.tpl) {
             if (fileToCreate.tpl.match(SPEC_REG_EX)) {
-                customTpl = curGenCfg.tpl['spec'];
+                customYoRcTpl = curGenCfg.tpl['spec'];
             } else if (fileToCreate.tpl.match(SCRIPTS_REG_EX)) {
-                customTpl = curGenCfg.tpl['script'];
+                customYoRcTpl = curGenCfg.tpl['script'];
             } else if (fileToCreate.tpl.match(TPL_REG_EX)) {
-                customTpl = curGenCfg.tpl['tpl'];
+                customYoRcTpl = curGenCfg.tpl['tpl'];
             } else if (fileToCreate.tpl.match(STYLE_REG_EX)) {
-                customTpl = curGenCfg.tpl['style'];
+                customYoRcTpl = curGenCfg.tpl['style'];
             }
 
-            if (customTpl && typeof customTpl === 'string') {
-                return customTpl;
+            if (customYoRcTpl && typeof customYoRcTpl === 'string') {
+                return customYoRcTpl;
             }
         }
     },
 
-    writeCustomTpl: function (customTpl, targetDir)
+    writeCustomYoRcTpl: function (customYoRcTpl, targetDir)
     {
-        var tpl = _.template(customTpl, {})(this);
+        var tpl = _.template(customYoRcTpl, {})(this);
         this.fs.write(targetDir, tpl);
     },
 
