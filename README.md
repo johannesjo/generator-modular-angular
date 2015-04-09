@@ -357,6 +357,8 @@ Chances are that the default settings do not match your taste. Chances are you t
  
 The default configuration looks like this:
 ```
+// .yo-rc.json
+
 // appended suffix for test files
 testSuffix: '.spec',
 
@@ -571,6 +573,7 @@ Yap, its possible. I wrote a [wiki-article](https://github.com/johannesjo/genera
 ### overwrite templates via .yo-rc.json
 Using a simple syntax templates can be overwritten inside the .yo-rc.json:
 ```
+// .yo-rc.json
 "subGenerators": {
     "directive": {
         "tpl": {
@@ -602,7 +605,7 @@ If you place a service.js and a service.spec.js in the `your-app/yo-rc-templates
 
 
 ### variables available in templates
-The templates are compiled via [underscore templates](http://underscorejs.org/#template)  there are some additional variables available which might be useful to you:
+The templates are compiled via [underscore templates](http://underscorejs.org/#template). There are some additional variables available which might be useful to you:
 
 *  `<%= cameledName %>`: cameled name, e.g.: `yo moda:s test-name` would return `testName` 
 *  `<%= classedName %>`: classed name, e.g.: `yo moda:s test-name` would return `TestName` 
@@ -615,6 +618,7 @@ The templates are compiled via [underscore templates](http://underscorejs.org/#t
 
 In addition you can use basically all variables set in the .yo-rc.json. If you want to define your own ones it is smart to use a specific property for that, e.g.
 ```
+// .yo-rc.json
 {
     // basic config vars
     // ...
