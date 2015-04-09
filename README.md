@@ -37,7 +37,7 @@ gulp serve
 * **total injection**: basically everything you create is automatically injected where it needs to be and removed when its gone.
 * **gulp and libsass speedified**: never thought I wouldn't miss grunt
 * **super modular**: no more controller madness by design
-* fully **configurable** and extendable (the latter is still work in progress though)
+* fully **configurable** and **extendable** - use [your own configuration](#yo-rc) and [your own templates](#custom-templates)
 
 ## Basic concepts behind this Generator
 * What belongs together should be reflected in the file-structure. Grouping files by module is generally preferable to grouping files by type.
@@ -453,25 +453,7 @@ subGenerators: {
 }
 ```
 
-### overwrite templates via .yo-rc.json
-Using a simple syntax templates can be overwritten inside the .yo-rc.json:
-```
-"subGenerators": {
-    "directive": {
-        "tpl": {
-            // the html file, if any for that sub-generatr
-            "tpl": "<div>I love divs</div>"     
-            // the test file            
-            "spec": "console.log('empty tests are the best');"
-            // the main script file
-            // notice that all common variables are also 
-            // available here
-            "script": "angular.module(<%= scriptAppName %>).directive('<%= cameledName %><%= nameSuffix %>',
-            "style": ".<%=sluggedName %>{color:green}
-        }
-    }
-}
-```
+You can also [use your own templates](#custom-templates)!
 
 ## default file pre- and suffixes
 To distinguish files (e.g. in your awesome file searcher) they're su- and prefixed by the following rules:
@@ -583,3 +565,62 @@ After that you should build your current state via `gulp build` then you can run
 ## how to set up your generator to run with intellij, webstorm, phpstorm, etc
 Yap, its possible. I wrote a [wiki-article](https://github.com/johannesjo/generator-modular-angular/wiki/How-to-integrate-the-generator-with-Jetbrains-products-on-Ubuntu) on how I did it on Ubuntu with IntelliJ. And for those who didn't know: There is a [video by John Lindquist](https://www.youtube.com/watch?v=KBueufmUgdw) for those of you lucky enough having no path issues with node on your machine.
 
+
+## <a name="custom-templates">using your own templates
+
+### overwrite templates via .yo-rc.json
+Using a simple syntax templates can be overwritten inside the .yo-rc.json:
+```
+"subGenerators": {
+    "directive": {
+        "tpl": {
+            // the html file, if any for that sub-generatr
+            "tpl": "<div>I love divs</div>"     
+            // the test file            
+            "spec": "console.log('empty tests are the best');"
+            // the main script file
+            // notice that all common variables are also 
+            // available here
+            "script": "angular.module(<%= scriptAppName %>).directive('<%= cameledName %><%= nameSuffix %>',
+            "style": ".<%=sluggedName %>{color:green}
+        }
+    }
+}
+```
+### overwrite templates via `customTemplatesPath`
+If you want to make more than some small adjustments, than you might prefer setting a custom template path.
+The `customTemplatesPath` can be specified from the project root directory (which is determined by where the .yo-rc.json is)
+```
+"customTemplatesPath": "yo-rc-templates"
+```
+or even use a absolute path, e.g.:
+```
+"customTemplatesPath": "/home/user/barney/templates-that-not-suck"
+```
+
+If you place a service.js and a service.spec.js in the `your-app/yo-rc-templates/`-folder. Those templates would be used, instead of default ones. If you do this make sure that [all the files](https://github.com/johannesjo/generator-modular-angular/tree/master/templates/app) of the sub-generators you want to use are present there.
+
+
+### variables available in templates
+The templates are compiled via [underscore templates](http://underscorejs.org/#template)  there are some additional variables available which might be useful to you:
+
+*  `<%= cameledName %>`: cameled name, e.g.: `yo moda:s test-name` would return `testName` 
+*  `<%= classedName %>`: classed name, e.g.: `yo moda:s test-name` would return `TestName` 
+*  `<%= sluggedName %>`: slugged name, e.g.: `yo moda:s test-name` would return `test-name` 
+*  `<%= dashedName %>`: dashed name, e.g.: `yo moda:s test-name` would return `test-name` 
+*  `<%= nameSuffix %>`: the suffix defined for the current template in the .yo-rc.json, e.g.: `yo moda:c test-name` would return `Ctrl` with the default config
+*  `<%= svcName %>`: the full name of a service created with `yo moda:c` or `yo moda:d`, e.g.: `yo moda:d test-name` would return `TestName` with the default settings. 
+*  `<%= scriptAppName %>`: name of the app as used in the module declaration of the _app.js
+*  `<%= createdFiles %>`: an array with objects with the created files and the used templates by the current sub-generator
+
+In addition you can use basically all variables set in the .yo-rc.json. If you want to define your own ones it is smart to use a specific property for that, e.g.
+```
+{
+    // basic config vars
+    // ...
+    "yourVariables": {
+        "someVar": "someVal",
+        "someOtherVar": "someVal",
+    }
+}
+```
