@@ -15,8 +15,16 @@ Creating a generator is much about best practise and much about ones personal ta
 
 Credits to the [generator-angular](https://github.com/yeoman/generator-angular) team. Their code helped me to get started and some of the file-templates are very similiar.
 
+I want this to be really good, so I would be excited to [hear about your thoughts and what possible features you might be missing](https://github.com/johannesjo/generator-modular-angular/issues). Any other kind of help is also highly appreciated :)
+
 ## Getting started
-I assume that you have all the good tools already installed (node, bower, yeoman, gulp) in a proper way. Just run:
+I'm assuming that you have [node](https://github.com/joyent/node) already installed in a proper way. 
+
+Install [bower](https://github.com/bower/bower) and [yeoman](http://yeoman.io/) if not done already:
+```
+npm install -g bower yeoman
+```
+Install the generator:
 ```
 npm install -g generator-moda
 ```
@@ -28,21 +36,59 @@ Run it!
 ```
 yo moda [app-name]
 ```
-Then wait........  finally:
+Then wait........  finally run:
 ```
 gulp serve
 ```
+for development.
+
 
 ## Features
-* **total injection**: basically everything you create is automatically injected where it needs to be and removed when its gone.
-* **gulp and libsass speedified**: never thought I wouldn't miss grunt
-* **super modular**: no more controller madness by design
+* **total injection**: Basically everything you create is automatically injected where it needs to be and removed when its gone. Creating a new scss-file? No problem it's in your main.scss! Deleting an unused component? It's gone from your index.html.
+* **gulp and libsass speedified**: It's amazing how much faster both are compared to their counterparts.
+* **super modular**: No more controller madness by design. 
 * fully **configurable** and **extendable** - use [your own configuration](#yo-rc) and [your own templates](#custom-templates)
+*  **cordova-prepared**: [Your cordova-build](#setup-hybrid-build) is just on step away. Building multiplatform mobile apps has never been so easy.
+* and of course all the basics:
+  * livereload, sass-compilation, jshint (optional), jscs, and testing on runtime
+  * minification via `ng-annotate`, `imagemin`, `htmlmin`, `cssmin`
+  * unit-testing and end-to-end testing via karma runner
+  * pick your modules on creation (`ui.router`, `ngMaterial` or one of the base components, you name it)
+
+## Why choose this generator over another?
+While offering the most common features of popular angularjs-generators there are three unique selling points: 
+
+The first one is the feature of  **auto-injection**. As I said: I hate repition. And while other generators offer you also some kind of auto-injection they usually require you to use their generators for that, which also means you still need to manually change those when a file changes or is deleted. Not with `moda` you not. This feature works for bower-components, your javascript-files, your tests and also your scss-components.
+
+The second one is the **configurability**. It's super easy to adjust everything to your liking. Don't like the templates? No problem, use your own! Don't like the the file-names produced? Just make some simple changes in the .yo-rc.json. Best of all: The changes you make can be stored on a project level, so all developers in your team (can) use the same generator output.
+
+The third one is **the cordova integration**. While technically not stunningly complicated to do, I know many developers who shy away before building hybrid apps, as they don't know how easy it is to do. And while I like ionic and while I'm thankful for what they did for hybrid-app development, I don't like that you that your kind of limted to mobile only and that you kind of have to use their components. The latter produces comparably fat apps and leaves you a little bit lost, if something doesn't work as expected. But it's just JavaScript and CSS run in a container wrapped by cordova after all, so using bootrap or your own components should work just as fine.
+
+Finally it is safe to say that I'm really dedicated to this project. I'm an Angular and node developer for years know and I want this to be really good. I plan to spend lots of hours of my free time to improve it as the time goes on. So if you miss anything, don't like something chances are very good that I'm going to change that.
 
 ## Basic concepts behind this Generator
 * What belongs together should be reflected in the file-structure. Grouping files by module is generally preferable to grouping files by type.
 * Directives are the way to go. Build components all the way. They're sexy enclosed logic and expressive. Chances are you'll reuse them and it is no problem if it is only in your current app.
 * Use controllers economically. They will be gone in Angular 2.0 and honestly - I'm not too sad about it. Use them on a page-level (if your app has something like that) to get data for your views or for very minor and very specific logic.
+
+## The gulp tasks
+As per default the following tasks are available at your convenience:
+
+* `gulp`: The development task. Runs all the injectors on file-change, file-creation or file-deletion. Unit-tests are run in parallel, as well as the sass-compilation. 
+* `gulp injectAll`: Runs all the injectors once.
+* `gulp build`: Minifies your JavaScript via ng-annotate, your css, your images and your html files and copies everything to the www-folder.  
+* `gulp test`: Runs your unit tests with the keep-alive option. 
+* `gulp testSingle`: Runs your unit tests once. 
+* `gulp e2e`: Runs your end to end tests once. 
+
+The mobile tasks require a little preparation described in the next section.
+
+* `gulp buildCordova`: Runs the build task followed by a cordova-build.
+* `gulp emulate`: Runs the build task and your app in the android-sdk emulator.   
+* `gulp run`: Runs the build task and your app on your device if connected. 
+* `gulp releaseCordova`: Create release version of your app and copies the binaries to the release folder.
+
+All tasks can be edited freely and can be found in the /tasks folder.
 
 ## Sub-Generators
 * [moda](#moda) (aka [moda:app](#app))
@@ -56,7 +102,7 @@ gulp serve
 * [e2e-test](#e2e-test)
 * [page-object](#page-object)
 
-For configuring the generators permanently [edit the .yo-rc.json](#yo-rc).
+For configuring the generators on a project-level [edit the .yo-rc.json](#yo-rc).
 
 ### moda
 The main generator. Sets up the basic boilerplate. Provides an interactive prompt to install the most common modules.
@@ -533,27 +579,8 @@ tasks/
     dev.js
 www/          // dist folder - ignored
 ```
-
-## The gulp tasks
-As per default the following tasks are available at your convenience:
-
-* `gulp`: The development task. Runs all the injectors (wiredep, for the scss files and for your JavaScript-project files) on file-change, file-creation or file-deletion. Unit-tests are run in parallel, as well as the sass-compilation. 
-* `gulp injectAll`: Runs all the injectors once.
-* `gulp build`: Minifies your JavaScript via ng-annotate, your css, your images and your html files and copies everything to the www-folder.  
-* `gulp test`: Runs your unit tests with the keep-alive option. 
-* `gulp testSingle`: Runs your unit tests once. 
-* `gulp e2e`: Runs your end to end tests once. 
-
-The mobile tasks require a little preparation described in the next section.
-
-* `gulp buildCordova`: Runs the build task followed by a cordova-build.
-* `gulp emulate`: Runs the build task and your app in the emulator.   
-* `gulp run`: Runs the build task and your app on your device if connected. 
-* `gulp releaseCordova`: Create release version of your app and copies the binaries to the release folder.
-
-All tasks can be edited freely and can be found in the /tasks folder.
  
-## Setting up the hybrid build
+## <a name="setup-hybrid-build">Setting up the hybrid build
 Compiling your app to a hybrid app requires a little bit of configuration and you need to have cordova installed. Fortunately [that is quite easy](http://cordova.apache.org/docs/en/4.0.0/guide_cli_index.md.html#The%20Command-Line%20Interface).
 
 If everything is in place, you need to add the platforms you want to build your app on. For Android you would run:
