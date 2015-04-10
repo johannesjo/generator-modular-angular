@@ -8,6 +8,7 @@ describe('moda generator', function ()
     var alwaysExpected = [
         '.editorconfig',
         '.gitignore',
+        '.gitattributes',
         'package.json',
         'bower.json',
         '.bowerrc',
