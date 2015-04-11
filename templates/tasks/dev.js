@@ -164,17 +164,20 @@ gulp.task('html', function ()
 
 gulp.task('wiredep', function ()
 {
-    gulp.src([config.mainFile], {base: './'})
-        .pipe(wiredep({
-            devDependencies: false
-        }))
-        .pipe(gulp.dest('./'))
-        .pipe(reload({stream: true}));
-
     gulp.src([config.karmaConf], {base: './'})
         .pipe(wiredep({
             devDependencies: true
         }))
+        // required as weird workaround for not messing up the files
+        .pipe(gulp.dest(config.tmp))
+        .pipe(gulp.dest('./'));
+
+    return gulp.src([config.mainFile], {base: './'})
+        .pipe(wiredep({
+            devDependencies: false
+        }))
+        // required as weird workaround for not messing up the files
+        .pipe(gulp.dest(config.tmp))
         .pipe(gulp.dest('./'));
 });
 
