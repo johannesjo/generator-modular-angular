@@ -13,6 +13,15 @@ test-mocha:
 
 test-full:
 	istanbul cover _mocha -- -R spec $(TESTS)
+	rm -rf *
+	npm install -g yo bower generator-moda
+	yes | yo moda --skip-install
+	npm cache clean
+	npm install
+	bower install
+	gulp injectAll
+	gulp testSingle
+	gulp build
 
 istanbul:
 	istanbul cover _mocha -- -R spec $(TESTS)
