@@ -12,7 +12,7 @@ module.exports = (function ()
         mainFile: base + '/index.html',
         mainSassFile: sass + '/main.scss',
         routesFiles: base + '/scripts/_routes.js',
-        e2eBaseUrl: 'http://localhost:8080/',
+        e2eBaseUrl: 'http://localhost:3000/',
         styles: base + '/styles/',
         stylesF: [
             base + '/styles/**/_*.{scss,sass,less}',

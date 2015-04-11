@@ -1,21 +1,18 @@
-describe('test', function ()
+'use strict';
+
+describe('The home view', function ()
 {
-    var somePage = require('./po/some-page.po.js');
+    var page;
 
-    var test = {
-        ifSomething: function (something)
-        {
-            expect(true).toBeTruthy(something);
-        }
-    };
-
-
-    describe('test', function ()
+    beforeEach(function ()
     {
-        it('is a test', function ()
-        {
-            somePage.goTo();
-            test.ifSomething(true);
-        });
+        browser.get('http://localhost:3000/index.html');
+        page = require('./home.po');
     });
+
+    it('runs e2e tests', function ()
+    {
+        expect(page.body.count()).toBeGreaterThan(1);
+    });
+
 });
