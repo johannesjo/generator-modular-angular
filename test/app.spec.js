@@ -19,7 +19,7 @@ describe('moda generator', function ()
         '.travis.yml',
         'karma.conf.js',
         'karma-e2e.conf.js',
-        'app/index.html',
+        'app/index.html ',
         'app/scripts/_app.js',
         'app/scripts/_app.spec.js',
         'tasks/config.js',
