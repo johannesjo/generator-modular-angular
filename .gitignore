@@ -8,3 +8,4 @@ dist/example
 *.DS_*
 npm-debug.log
 coverage/
+.test-instance/

@@ -1,4 +1,6 @@
 TESTS = test/**/*.spec.js
+INSTANCE_TESTS_DIR = .test-instance
+INSTANCE_TESTS = test-app/**/*.spec.js
 REPORTER = spec
 COVERAGE_REPORT = ./coverage/lcov.info
 COVERALLS = ./node_modules/coveralls/bin/coveralls.js
@@ -42,3 +44,14 @@ check:
 
 clean:
 	rm -rf ./coverage
+
+test-app:
+	istanbul cover _mocha -- -R spec $(INSTANCE_TESTS)
+
+app-instance:
+	rm -rf $(INSTANCE_TESTS_DIR)/
+	mkdir $(INSTANCE_TESTS_DIR)
+	cd $(INSTANCE_TESTS_DIR) && echo "CDing into $(INSTANCE_TESTS_DIR)" && \
+	yes | yo moda --skip-install && \
+	npm install && \
+	bower install
