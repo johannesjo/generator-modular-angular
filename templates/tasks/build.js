@@ -27,7 +27,7 @@ gulp.task('build', function (callback)
         'wiredepBuild',
         'injectAll',
         'testSingle',
-        'jshint',
+        'lint',
         'sass',
         'minFiles',
         'copy',
