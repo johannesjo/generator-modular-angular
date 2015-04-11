@@ -16,16 +16,13 @@ var wiredep = require('wiredep').stream;
 var inj = require('gulp-inject');
 
 var browserSync = require('browser-sync');
-var reload      = browserSync.reload;
+var reload = browserSync.reload;
 var watch = require('gulp-watch');
 var runSequence = require('run-sequence').use(gulp);
 
 var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
 var karma = require('gulp-karma');
-var webdriver_standalone = require('gulp-protractor').webdriver_standalone;
-var protractor = require('gulp-protractor').protractor;
-gulp.task('webdriver_standalone', webdriver_standalone);
 
 
 function swallowError(error)
@@ -40,20 +37,21 @@ gulp.task('default', function ()
     runSequence(
         'injectAll',
         'buildStyles',
-        'browserSync',
         'test',
+        'browserSync',
         'watch'
     );
 });
 gulp.task('serve', ['default']);
 gulp.task('server', ['default']);
 
-gulp.task('injectAll', function ()
+gulp.task('injectAll', function (callback)
 {
     runSequence(
         'wiredep',
         'injectScripts',
-        'injectStyles'
+        'injectStyles',
+        callback
     );
 });
 
@@ -126,8 +124,7 @@ gulp.task('injectScripts', function ()
                 addRootSlash: false
             }
         ))
-        .pipe(gulp.dest(config.base))
-        .pipe(reload({stream: true}));
+        .pipe(gulp.dest(config.base));
 });
 
 
@@ -169,14 +166,13 @@ gulp.task('wiredep', function ()
 {
     gulp.src([config.mainFile], {base: './'})
         .pipe(wiredep({
-            exclude: [],
             devDependencies: false
         }))
-        .pipe(gulp.dest('./'));
+        .pipe(gulp.dest('./'))
+        .pipe(reload({stream: true}));
 
     gulp.src([config.karmaConf], {base: './'})
         .pipe(wiredep({
-            exclude: [],
             devDependencies: true
         }))
         .pipe(gulp.dest('./'));
@@ -212,21 +208,6 @@ gulp.task('testSingle', function ()
         });
 });
 
-
-gulp.task('protractor', function ()
-{
-    // Be sure to return the stream
-    gulp.src('.nonononoNOTHING')
-        .pipe(protractor({
-            configFile: './karma-e2e.conf.js',
-            args: ['--baseUrl', e2eBaseUrl]
-        }))
-        .on('error', function (e)
-        {
-            throw e;
-        });
-});
-
 gulp.task('lint', function ()
 {
     gulp.src([
@@ -239,9 +220,3 @@ gulp.task('lint', function ()
         .pipe(jshint.reporter('jshint-stylish'))
         .pipe(jscs());
 });
-
-
-gulp.task('e2e', [
-    'browserSync',
-    'protractor'
-]);
