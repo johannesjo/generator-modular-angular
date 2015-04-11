@@ -26,7 +26,8 @@ describe('moda generator', function ()
         'tasks/cordova.js',
         'tasks/deploy.js',
         'tasks/build.js',
-        'tasks/dev.js'
+        'tasks/dev.js',
+        'tasks/e2e.js'
     ];
 
     var alwaysExpectedContent = [

@@ -283,6 +283,7 @@ module.exports = yeoman.generators.Base.extend({
         this.template('tasks/build.js', 'tasks/build.js');
         this.template('tasks/dev.js', 'tasks/dev.js');
         this.template('tasks/deploy.js', 'tasks/deploy.js');
+        this.template('tasks/e2e.js', 'tasks/e2e.js');
 
         // TODO make cordova optional
         this.template('tasks/cordova.js', 'tasks/cordova.js');
