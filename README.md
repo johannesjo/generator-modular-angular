@@ -22,7 +22,7 @@ I'm assuming that you have [node](https://github.com/joyent/node) already instal
 
 Install [bower](https://github.com/bower/bower) and [yeoman](http://yeoman.io/) if not done already:
 ```
-npm install -g bower yeoman
+npm install -g bower yo
 ```
 Install the generator:
 ```
