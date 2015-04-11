@@ -262,30 +262,30 @@ module.exports = yeoman.generators.Base.extend({
 
     packageFiles: function packageFiles()
     {
-        this.template('root/_bower.json', 'bower.json', {}, {});
-        this.template('root/_bowerrc', '.bowerrc', {}, {});
-        this.template('root/_package.json', 'package.json', {}, {});
-        this.template('root/_gulpfile.js', 'gulpfile.js', {}, {});
-        this.template('root/_config.xml', 'config.xml', {}, {});
-        this.template('root/_gitignore', '.gitignore', {}, {});
-        this.template('root/_gitattributes', '.gitattributes', {}, {});
-        this.template('root/_editorconfig', '.editorconfig', {}, {});
-        this.template('root/_jshintrc', '.jshintrc', {}, {});
-        this.template('root/README.md', 'README.md', {}, {});
-        this.template('root/_travis.yml', 'travis.yml', {}, {});
-        this.template('root/_karma.conf.js', 'karma.conf.js', {}, {});
-        this.template('root/_karma-e2e.conf.js', 'karma-e2e.conf.js', {}, {});
+        this.template('root/_bower.json', 'bower.json');
+        this.template('root/_bowerrc', '.bowerrc');
+        this.template('root/_package.json', 'package.json');
+        this.template('root/_gulpfile.js', 'gulpfile.js');
+        this.template('root/_config.xml', 'config.xml');
+        this.template('root/_gitignore', '.gitignore');
+        this.template('root/_gitattributes', '.gitattributes');
+        this.template('root/_editorconfig', '.editorconfig');
+        this.template('root/_jshintrc', '.jshintrc');
+        this.template('root/README.md', 'README.md');
+        this.template('root/_travis.yml', '.travis.yml');
+        this.template('root/_karma.conf.js', 'karma.conf.js');
+        this.template('root/_karma-e2e.conf.js', 'karma-e2e.conf.js');
     },
 
     tasks: function packageFiles()
     {
-        this.template('tasks/config.js', 'tasks/config.js', {}, {});
-        this.template('tasks/build.js', 'tasks/build.js', {}, {});
-        this.template('tasks/dev.js', 'tasks/dev.js', {}, {});
-        this.template('tasks/deploy.js', 'tasks/deploy.js', {}, {});
+        this.template('tasks/config.js', 'tasks/config.js');
+        this.template('tasks/build.js', 'tasks/build.js');
+        this.template('tasks/dev.js', 'tasks/dev.js');
+        this.template('tasks/deploy.js', 'tasks/deploy.js');
 
         // TODO make cordova optional
-        this.template('tasks/cordova.js', 'tasks/cordova.js', {}, {});
+        this.template('tasks/cordova.js', 'tasks/cordova.js');
     },
 
     install: function packageFiles()
