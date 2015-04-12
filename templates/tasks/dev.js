@@ -69,7 +69,6 @@ gulp.task('watch', function ()
     {
         gulp.start('lint');
     });
-
     watch(config.allHtmlF, function ()
     {
         gulp.start('html');
@@ -140,6 +139,7 @@ gulp.task('sass', function ()
             browsers: ['last 2 versions']
         }))
         .pipe(sourcemaps.write())
+        .pipe(gulp.dest(config.tmp))
         .pipe(outputFolder)
         .pipe(reload({stream: true}))
         .on('error', swallowError)
@@ -164,7 +164,7 @@ gulp.task('html', function ()
 
 gulp.task('wiredep', function ()
 {
-    gulp.src([config.karmaConf], {base: './'})
+    gulp.src(config.karmaConf, {base: './'})
         .pipe(wiredep({
             devDependencies: true
         }))
@@ -172,7 +172,7 @@ gulp.task('wiredep', function ()
         .pipe(gulp.dest(config.tmp))
         .pipe(gulp.dest('./'));
 
-    return gulp.src([config.mainFile], {base: './'})
+    return gulp.src(config.mainFile, {base: './'})
         .pipe(wiredep({
             devDependencies: false
         }))

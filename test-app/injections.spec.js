@@ -10,6 +10,8 @@ describe('gulp inject', function ()
 {
     var instancePath = path.join(__dirname, '../.test-instance');
     var gulp = '$(which gulp)';
+    this.timeout(20000);
+
 
     describe('styles', function ()
     {
@@ -38,7 +40,6 @@ describe('gulp inject', function ()
 
             beforeEach(function (done)
             {
-                this.timeout(10000);
                 fs.truncateSync(mainScss);
                 fs.writeFileSync(mainScss, '// inject:sass\n\n// endinject');
                 exec(injectStylesCmd, {
@@ -49,7 +50,7 @@ describe('gulp inject', function ()
                 });
             });
 
-            it('creates expected files', function ()
+            it('adds imports for default files', function ()
             {
                 assert.file([].concat(
                     expected
@@ -67,14 +68,6 @@ describe('gulp inject', function ()
         var injectScriptsCmd = gulp + ' injectScripts';
         var cachedMainFileContent;
 
-        it('default index.html has the proper needles', function ()
-        {
-            assert.fileContent([
-                [mainHtml, /<!-- inject:js -->/],
-                [mainHtml, /<!-- endinject -->/]
-            ]);
-        });
-
         describe('scripts into index.html', function ()
         {
             var expectedContent = [
@@ -87,7 +80,6 @@ describe('gulp inject', function ()
 
             beforeEach(function (done)
             {
-                this.timeout(10000);
                 cachedMainFileContent = fs.readFileSync(mainHtml, 'utf8');
                 fs.truncateSync(mainHtml);
                 fs.writeFileSync(mainHtml, '<!-- inject:js -->\n<!-- endinject -->');
@@ -102,10 +94,11 @@ describe('gulp inject', function ()
             afterEach(function ()
             {
                 // restore old html
+                fs.truncateSync(mainHtml);
                 fs.writeFileSync(mainHtml, cachedMainFileContent);
             });
 
-            it('creates expected files', function ()
+            it('adds imports for script files', function ()
             {
                 assert.file([].concat(
                     expected
@@ -124,15 +117,7 @@ describe('gulp inject', function ()
         var wiredepCmd = gulp + ' wiredep';
         var cachedMainFileContent;
 
-        it('default index.html has the proper needles', function ()
-        {
-            assert.fileContent([
-                [mainHtml, /<!-- bower:js -->/],
-                [mainHtml, /<!-- endbower -->/]
-            ]);
-        });
-
-        describe('components into index.html', function ()
+        describe('bower-components into index.html', function ()
         {
             var expectedContent = [
                 [mainHtml, /bower_components\/angular\/angular\.js/],
@@ -148,7 +133,6 @@ describe('gulp inject', function ()
 
             beforeEach(function (done)
             {
-                this.timeout(20000);
                 cachedMainFileContent = fs.readFileSync(mainHtml, 'utf8');
                 fs.truncateSync(mainHtml);
                 fs.writeFileSync(mainHtml, '<!-- bower:js -->\n<!-- endbower -->');
@@ -163,10 +147,11 @@ describe('gulp inject', function ()
             afterEach(function ()
             {
                 // restore old html
+                fs.truncateSync(mainHtml);
                 fs.writeFileSync(mainHtml, cachedMainFileContent);
             });
 
-            it('creates expected files', function ()
+            it('adds imports for bower-components', function ()
             {
                 assert.file([].concat(
                     expected

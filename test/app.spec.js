@@ -37,6 +37,10 @@ describe('moda generator', function ()
         ['package.json', /gulp/],
         ['app/styles/main.scss', /\/\/ inject:sass/],
         ['app/styles/main.scss', /\/\/ endinject/],
+        ['app/index.html', /<!-- inject:js -->/],
+        ['app/index.html', /<!-- endinject -->/],
+        ['app/index.html', /<!-- bower:js -->/],
+        ['app/index.html', /<!-- endbower -->/]
     ];
 
 
