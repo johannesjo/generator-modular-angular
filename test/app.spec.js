@@ -34,7 +34,9 @@ describe('moda generator', function ()
         ['gulpfile.js', /tasks/],
         ['app/index.html', /main\.css/],
         ['bower.json', /angular/],
-        ['package.json', /gulp/]
+        ['package.json', /gulp/],
+        ['app/styles/main.scss', /\/\/ inject:sass/],
+        ['app/styles/main.scss', /\/\/ endinject/],
     ];
 
 

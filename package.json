@@ -63,6 +63,7 @@
   ],
   "devDependencies": {
     "coveralls": "^2.11.2",
+    "gulp": "^3.8.11",
     "istanbul": "^0.3.13",
     "mocha": "^2.2.1",
     "mocha-lcov-reporter": "0.0.2",
