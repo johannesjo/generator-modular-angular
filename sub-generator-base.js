@@ -89,8 +89,8 @@ module.exports = yeoman.generators.NamedBase.extend({
         } else {
             this.appname = path.basename(process.cwd());
         }
-        this.appname = _s.slugify(_s.humanize(this.appname));
-        this.scriptAppName = bowerJson.moduleName || _s.camelize(this.appname);
+        this.appname = _s.camelize(_s.slugify(_s.humanize(this.appname)));
+        this.scriptAppName = bowerJson.moduleName || this.appname;
 
         // define app path variable
         if (typeof this.env.options.appPath === 'undefined') {

@@ -2,7 +2,7 @@ describe('<%= scriptAppName %>.routes', function ()
 {
     'use strict';
 
-    beforeEach(module('<%= scriptAppName %>.routes'));
+    beforeEach(module('<%= scriptAppName %>'));
 
     it('should be defined', function ()
     {

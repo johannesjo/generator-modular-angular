@@ -1,5 +1,5 @@
 {
-  "name": "sol",
+  "name": "<%= scriptAppName %>",
   "version": "0.0.0",
   "description": "",
   "main": "gulpfile.js",
