@@ -54,6 +54,9 @@ test-node-module:
 	npm cache clean
 	npm install
 	bower install
+	yes | yo moda:r hello-route
+	yes | yo moda:d hello-directive
+	yes | yo moda:s hello-service
 	gulp injectAll
 	gulp testSingle
 	gulp build
