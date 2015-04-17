@@ -279,7 +279,7 @@ module.exports = yeoman.generators.NamedBase.extend({
 
         // inject all files after creation
         if (!this.options.skipInject) {
-            this.spawnCommand('gulp', ['inject']);
+            this.spawnCommand('gulp', ['injectAll']);
         }
     }
 });
