@@ -9,7 +9,7 @@ test: test-mocha
 
 test-mocha:
 	@NODE_ENV=test mocha \
-	    --timeout 200 \
+		--timeout 200 \
 		--reporter $(REPORTER) \
 		$(TESTS)
 
@@ -48,15 +48,17 @@ app-instance:
 	bower install
 
 test-node-module:
-	rm -rf *
+	rm -rf $(INSTANCE_TESTS_DIR)/
+	mkdir $(INSTANCE_TESTS_DIR)
 	npm install -g yo bower generator-moda
-	yes | yo moda --skip-install
-	npm cache clean
-	npm install
-	bower install
-	yes | yo moda:r hello-route
-	yes | yo moda:d hello-directive
-	yes | yo moda:s hello-service
-	gulp injectAll
-	gulp testSingle
+	cd $(INSTANCE_TESTS_DIR) && echo "CDing into $(INSTANCE_TESTS_DIR)" && \
+	yes | yo moda --skip-install && \
+	npm cache clean && \
+	npm install && \
+	bower install && \
+	gulp injectAll && \
+	yes | yo moda:r hello-route && \
+	yes | yo moda:d hello-directive && \
+	yes | yo moda:s hello-service && \
+	gulp testSingle && \
 	gulp build
