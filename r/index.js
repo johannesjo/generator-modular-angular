@@ -116,15 +116,16 @@ module.exports = ScriptBase.extend({
                         that.destinationPath(that.routesFile),
                         that
                     );
-                    that.log.writeln(chalk.yellow('creating routes file at ' + that.routesFile + ' as none was present at the specified location'));
+                    that.log.writeln(chalk.yellow('Creating routes file at ' + that.routesFile + ' as none was present at the specified location'));
                     that.injectIntoRoutesFile = true;
                     done();
                 } else {
-                    that.injectIntoRoutesFile = false;
+                    that.injectIntoRoutesFile = true;
                     done();
                 }
             });
         } else {
+            this.log.writeln(chalk.yellow('No routes file provided in config or injection deactivated'));
             done();
         }
     },
