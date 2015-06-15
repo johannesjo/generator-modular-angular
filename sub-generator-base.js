@@ -47,13 +47,19 @@ module.exports = yeoman.generators.NamedBase.extend({
         //this.mergeConfig();
     },
 
-    // parent initialize function
+    /**
+     *  parent initialize function, inherited by sub-gens
+     */
     init: function ()
     {
         this.mergeConfig();
         this.overWriteTplPathIfSet();
     },
 
+    /**
+     * helper function to merge default settings with the ones
+     * provided by the .yo-rc.json
+     */
     mergeConfig: function ()
     {
         // get either default or from config
@@ -64,6 +70,10 @@ module.exports = yeoman.generators.NamedBase.extend({
         _.merge(this, defaultCfg);
     },
 
+    /**
+     * allows overwriting of the template path of the generator
+     * so users can specifiy their own template path
+     */
     overWriteTplPathIfSet: function ()
     {
         if (this.customTemplatesPath) {
@@ -75,6 +85,10 @@ module.exports = yeoman.generators.NamedBase.extend({
         }
     },
 
+    /**
+     * set the app variables, e.g. the name of the app in the
+     * different required formats such as camelized or slugified
+     */
     setAppVariables: function ()
     {
         // define app name variables
@@ -98,8 +112,9 @@ module.exports = yeoman.generators.NamedBase.extend({
         }
     },
 
-
-    // sets all the different name versions to be used in the templates
+    /**
+     * sets all the different name versions to be used in the templates
+     */
     setModuleNames: function (name)
     {
         this.cameledName = _s.camelize(name);
@@ -109,6 +124,11 @@ module.exports = yeoman.generators.NamedBase.extend({
         this.humanizedName = _s.humanize(name);
     },
 
+    /**
+     * helper function to get rid of potential parent paths
+     * @param path{string}
+     * @returns {string}
+     */
     cleanUpPath: function (path)
     {
         path = path
@@ -117,12 +137,22 @@ module.exports = yeoman.generators.NamedBase.extend({
         return path;
     },
 
+    /**
+     * helper function to format the path names to the preferred
+     * style as configured in the .yo-rc.json
+     * @param name{string}
+     * @returns {string}
+     */
     formatNamePath: function (name)
     {
         var style = this.config.get('pathOutputStyle') || 'dasherize';
         return _s[style](name);
     },
 
+    /**
+     *
+     * @returns {string}
+     */
     defineTargetFolder: function ()
     {
         var realTargetFolder;
@@ -149,6 +179,10 @@ module.exports = yeoman.generators.NamedBase.extend({
         return realTargetFolder;
     },
 
+    /**
+     * main file-creation pipeline function
+     * @param templateName
+     */
     generateSourceAndTest: function (templateName)
     {
         this.templateName = templateName;
@@ -231,6 +265,12 @@ module.exports = yeoman.generators.NamedBase.extend({
         this.afterFileCreationHook();
     },
 
+    /**
+     * checks for custom templates defined in the .yo-rc.json
+     * if set they will be used instead of the default ones
+     * @param fileToCreate
+     * @returns {string}
+     */
     getCustomTplFromYoRc: function (fileToCreate)
     {
         var customYoRcTpl;
@@ -246,6 +286,7 @@ module.exports = yeoman.generators.NamedBase.extend({
             curGenCfg = this.curGenCfg;
         }
 
+        // WHY is this necessary??
         if (curGenCfg.tpl) {
             if (fileToCreate.tpl.match(SPEC_REG_EX)) {
                 customYoRcTpl = curGenCfg.tpl['spec'];
@@ -263,12 +304,21 @@ module.exports = yeoman.generators.NamedBase.extend({
         }
     },
 
+    /**
+     * helper function used to create files by using the custom
+     * template string and underscores templating language
+     * @param customYoRcTpl{string}
+     * @param targetDir{string}
+     */
     writeCustomYoRcTpl: function (customYoRcTpl, targetDir)
     {
         var tpl = _.template(customYoRcTpl, {})(this);
         this.fs.write(targetDir, tpl);
     },
 
+    /**
+     * things done after all files are created
+     */
     afterFileCreationHook: function ()
     {
         // run favorite ide (first to smooth the experiance)
