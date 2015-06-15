@@ -12,6 +12,7 @@ describe('Controller: <%= classedName %><%= nameSuffix %>', function () {
     beforeEach(inject(function ($controller, $rootScope) {
         scope = $rootScope.$new();
         <%= classedName %><%= nameSuffix %> = $controller('<%= classedName %><%= nameSuffix %>', {
+             $scope: scope
              // place mocked dependencies here
         });
     }));
