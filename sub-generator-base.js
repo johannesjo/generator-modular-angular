@@ -187,7 +187,6 @@ module.exports = yeoman.generators.NamedBase.extend({
     {
         this.templateName = templateName;
         this.curGenCfg = this.subGenerators[templateName];
-        this.nameSuffix = this.curGenCfg.nameSuffix || '';
 
         var realTargetFolder = this.defineTargetFolder(),
             filesToCreate = [];
@@ -248,15 +247,26 @@ module.exports = yeoman.generators.NamedBase.extend({
 
         // create files and create a files array for further use
         for (var i = 0; i < filesToCreate.length; i++) {
-            var outputFile = path.join(generatorTargetPath, filesToCreate[i].targetFileName);
+            var fileToCreate = filesToCreate[i];
+            var outputFile = path.join(generatorTargetPath, fileToCreate.targetFileName);
+            var customYoRcTpl = this.getCustomTplFromYoRc(fileToCreate);
+
+            // add to created files array
             this.createdFiles.push(outputFile);
 
-            var customYoRcTpl = this.getCustomTplFromYoRc(filesToCreate[i]);
+            // set name suffix accordingly to template
+            if (fileToCreate.gen) {
+                this.nameSuffix = fileToCreate.gen.nameSuffix || '';
+            } else {
+                this.nameSuffix = this.curGenCfg.nameSuffix || '';
+            }
+
+
             if (customYoRcTpl) {
                 this.writeCustomYoRcTpl(customYoRcTpl, outputFile);
             } else {
                 this.fs.copyTpl(
-                    this.templatePath(filesToCreate[i].tpl),
+                    this.templatePath(fileToCreate.tpl),
                     this.destinationPath(outputFile),
                     this
                 );

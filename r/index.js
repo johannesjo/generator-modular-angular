@@ -100,7 +100,7 @@ module.exports = ScriptBase.extend({
         }
     },
 
-    writing: function ()
+    writing: function (props)
     {
         var that = this;
         var done = this.async();
