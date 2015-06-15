@@ -174,7 +174,10 @@ describe('moda Route generator', function ()
             routesDir + 'par-state/sub-state/_sub-state-c.scss'
         ];
 
-        var nonExpected = [];
+        var nonExpected = [
+            [routesDir + 'par-state/sub-state/sub-state-s.js', /SubStateCtrl/],
+            [routesDir + 'par-state/sub-state/sub-state-s.spec.js', /SubStateCtrl/],
+        ];
 
         var options = {
             'skipInject': true
@@ -219,7 +222,6 @@ describe('moda Route generator', function ()
     });
 
     // TODO withLocalConfig is not working yet correctly
-
     describe('the routes directory should be configurable', function ()
     {
 

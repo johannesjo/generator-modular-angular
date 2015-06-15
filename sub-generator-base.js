@@ -66,7 +66,6 @@ module.exports = yeoman.generators.NamedBase.extend({
 
     overWriteTplPathIfSet: function ()
     {
-
         if (this.customTemplatesPath) {
             if (fs.existsSync(this.customTemplatesPath)) {
                 this.sourceRoot(this.customTemplatesPath);
