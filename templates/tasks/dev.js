@@ -134,7 +134,7 @@ gulp.task('sass', function ()
 
     sources
         .pipe(sourcemaps.init())
-        .pipe(sass())
+        .pipe(sass({errLogToConsole: true}))
         .pipe(autoprefixer({
             browsers: ['last 2 versions']
         }))
