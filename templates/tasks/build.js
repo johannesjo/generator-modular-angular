@@ -14,6 +14,7 @@ var minifyHtml = require('gulp-minify-html');
 var minifyCss = require('gulp-minify-css');
 var useref = require('gulp-useref');
 var ngAnnotate = require('gulp-ng-annotate');
+var uglify = require('gulp-uglify');
 var imagemin = require('gulp-imagemin');
 var runSequence = require('run-sequence').use(gulp);
 var wiredep = require('wiredep').stream;
@@ -79,6 +80,7 @@ gulp.task('minFiles', function ()
     return gulp.src(config.mainFile)
         .pipe(assets)
         .pipe(gulpif('*.js', ngAnnotate()))
+        .pipe(gulpif('*.js', uglify()))
         .pipe(gulpif('*.css', minifyCss()))
         .pipe(assets.restore())
         .pipe(useref())
