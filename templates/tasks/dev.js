@@ -136,9 +136,9 @@ gulp.task('sass', function ()
         .pipe(sourcemaps.init())
         .pipe(sass({errLogToConsole: true}))
         .pipe(autoprefixer({
-            browsers: ['last 2 versions']
+            browsers: ['> 1%']
         }))
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(config.tmp))
         .pipe(outputFolder)
         .pipe(reload({stream: true}))
