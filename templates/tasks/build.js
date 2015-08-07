@@ -49,7 +49,7 @@ gulp.task('wiredepBuild', function ()
 
 gulp.task('cleanDist', function ()
 {
-    return del(config.dist);
+    return del.sync(config.dist);
 });
 
 

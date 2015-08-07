@@ -10,78 +10,52 @@ var gulp = require('gulp');
  */
 
 var plugins = ['org.apache.cordova.file'];
-var testPlatform = 'android';
 
 var path = require('path');
-var pkg = require('../package.json');
-var cordova_lib = require('cordova-lib');
-var cdv = cordova_lib.cordova.raw;
+var shell = require('gulp-shell');
 var runSequence = require('run-sequence').use(gulp);
 var symlink = require('gulp-symlink');
+var argv = require('yargs').argv;
 
+function platformArg() {
+    return (argv.platform || config.defaultPlatform);
+}
 
-gulp.task('buildCordova', function ()
-{
+gulp.task('cordovaDev', function () {
     runSequence(
-        'build',
-        function ()
-        {
-            process.chdir(config.dist);
-            return cdv.build();
-        }
+        'cleanDist',
+        'symlinkApp',
+        'cordovaEmulate'
     );
 });
 
 
-gulp.task('run', function (cb)
-{
+gulp.task('cordovaDevOnDevice', function () {
     runSequence(
-       'build',
-        function ()
-        {
-            process.chdir(config.dist);
-            return cdv.run({platforms: [testPlatform], options: ['--device']});
-        }
+        'cleanDist',
+        'symlinkApp',
+        'cordovaRun'
     );
 });
 
 
-gulp.task('emulate', function ()
-{
-    runSequence(
-       'build',
-        function ()
-        {
-            process.chdir(config.dist);
-            return cdv.emulate({platforms: [testPlatform]});
-        }
-    );
-});
+gulp.task('cordovaEmulate', shell.task([
+    config.cordovaPath + ' emulate ' + platformArg() + ' -l -s -c'
+]));
 
 
-gulp.task('releaseCordova', function ()
-{
-    runSequence(
-        'build',
-        'releaseCordovaReal',
-        function ()
-        {
-            gulp.src('./platforms/android/ant-build/*.apk')
-                .pipe(gulp.dest('./release/android/'));
-        }
-    );
-});
-
-gulp.task('releaseCordovaReal', function ()
-{
-    process.chdir(config.dist);
-    return cdv.build({options: ['--release']});
-});
+gulp.task('cordovaRun', shell.task([
+    config.cordovaPath + ' run ' + platformArg() + ' -l -s -c'
+]));
 
 
-gulp.task('symlinkApp', function ()
-{
+gulp.task('symlinkApp', function () {
     gulp.src(config.base)
         .pipe(symlink(config.dist));
 });
+
+
+gulp.task('buildCordova', shell.task([
+    config.cordovaPath + ' build ' + platformArg() + ''
+]));
 
