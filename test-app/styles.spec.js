@@ -40,7 +40,7 @@ describe('gulp buildStyles', function ()
             [mainCss, /\.styles/],
             [mainCss, /\.scripts/],
             [mainCss, /color: blue;/],
-            [mainCss, /sourceMappingURL=data:application\/json;base64/]
+            [mainCss, /sourceMappingURL=main\.css\.map/]
         ];
 
         beforeEach(function (done)
