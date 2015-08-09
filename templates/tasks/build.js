@@ -19,11 +19,12 @@ var imagemin = require('gulp-imagemin');
 var runSequence = require('run-sequence').use(gulp);
 var wiredep = require('wiredep').stream;
 
+var merge = require('merge-stream');
+
 
 // main task
-gulp.task('build', function (callback)
-{
-    return runSequence(
+gulp.task('build', function (callback) {
+    runSequence(
         'cleanDist',
         'wiredepBuild',
         'injectAll',
@@ -35,8 +36,7 @@ gulp.task('build', function (callback)
         callback);
 });
 
-gulp.task('wiredepBuild', function ()
-{
+gulp.task('wiredepBuild', function () {
     return gulp.src([config.karmaConf, config.mainFile], {base: './'})
         .pipe(wiredep({
             exclude: [
@@ -47,35 +47,34 @@ gulp.task('wiredepBuild', function ()
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('cleanDist', function ()
-{
+gulp.task('cleanDist', function () {
     return del.sync(config.dist);
 });
 
 
-gulp.task('copy', function ()
-{
-    gulp.src(config.htmlF, {base: config.base})
+gulp.task('copy', function () {
+    var html = gulp.src(config.htmlF, {base: config.base})
         .pipe(minifyHtml({
             conditionals: true
         }))
         .pipe(gulp.dest(config.dist));
 
-    gulp.src(config.fontsF, {base: config.base})
+    var fonts = gulp.src(config.fontsF, {base: config.base})
         .pipe(gulp.dest(config.dist));
 
     // TODO this ain't perfect
-    return gulp.src(config.imagesF, {base: config.base})
+    var images = gulp.src(config.imagesF, {base: config.base})
         .pipe(imagemin({
             progressive: true,
             svgoPlugins: [{removeViewBox: false}]
         }))
         .pipe(gulp.dest(config.dist));
+
+    return merge(html, fonts, images);
 });
 
 
-gulp.task('minFiles', function ()
-{
+gulp.task('minFiles', function () {
     var assets = useref.assets();
     return gulp.src(config.mainFile)
         .pipe(assets)
