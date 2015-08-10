@@ -4,7 +4,6 @@
 var config = require('./config');
 var gulp = require('gulp');
 
-var karma = require('gulp-karma');
 var protractor = require('gulp-protractor');
 var browserSync = require('browser-sync');
 

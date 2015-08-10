@@ -24,7 +24,7 @@ var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
 var KarmaServer = require('karma').Server;
 
-var gulpNgConfig = require('gulp-ng-config');
+//var gulpNgConfig = require('gulp-ng-config');
 
 var merge = require('merge-stream');
 
