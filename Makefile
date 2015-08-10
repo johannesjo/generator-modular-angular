@@ -13,7 +13,7 @@ test-mocha:
 		--reporter $(REPORTER) \
 		$(TESTS)
 
-test-full: istanbul app-instance test-app-instance test-node-module
+test-full: istanbul create-app-instance test-app-instance test-node-module
 
 istanbul:
 	istanbul cover _mocha -- -R spec $(TESTS)
@@ -38,10 +38,11 @@ clean:
 test-app-instance:
 	istanbul cover _mocha -- -R spec $(INSTANCE_TESTS)
 
-app-instance:
+create-app-instance:
 	rm -rf $(INSTANCE_TESTS_DIR)/
 	mkdir $(INSTANCE_TESTS_DIR)
-	npm install -g yo bower generator-moda
+	npm install -g yo bower
+	npm link
 	cd $(INSTANCE_TESTS_DIR) && echo "CDing into $(INSTANCE_TESTS_DIR)" && \
 	yes | yo moda --skip-install && \
 	npm install && \
