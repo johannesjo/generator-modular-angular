@@ -11,8 +11,7 @@ var _s = require('underscore.string');
 
 
 module.exports = yeoman.generators.Base.extend({
-    constructor: function ()
-    {
+    constructor: function () {
         yeoman.generators.Base.apply(this, arguments);
 
         // get app name
@@ -36,17 +35,13 @@ module.exports = yeoman.generators.Base.extend({
 
         this.pkg = require('../package.json');
         this.sourceRoot(path.join(__dirname, '../templates'));
-
-
     },
 
-    config: function ()
-    {
+    config: function () {
         this.config.defaults(defaultSettings);
     },
 
-    askForModules: function askForModules()
-    {
+    askForModules: function askForModules() {
         var cb = this.async();
 
         var prompts = [{
@@ -102,10 +97,8 @@ module.exports = yeoman.generators.Base.extend({
             ]
         }];
 
-        this.prompt(prompts, function (props)
-        {
-            var hasMod = function (mod)
-            {
+        this.prompt(prompts, function (props) {
+            var hasMod = function (mod) {
                 // prevent test errors if no values mocked
                 if (props && props.modules) {
                     return props.modules.indexOf(mod) !== -1;
@@ -181,8 +174,7 @@ module.exports = yeoman.generators.Base.extend({
         }.bind(this));
     },
 
-    askForCodingStyle: function askForModules()
-    {
+    askForCodingStyle: function askForModules() {
         var cb = this.async();
 
         var prompts = [{
@@ -201,20 +193,17 @@ module.exports = yeoman.generators.Base.extend({
             ]
         }];
 
-        this.prompt(prompts, function (props)
-        {
+        this.prompt(prompts, function (props) {
             var that = this;
 
-            fs.writeFile('./.jscsrc', '{}', function (err)
-            {
+            fs.writeFile('./.jscsrc', '{}', function (err) {
                 if (err) {
                     return console.log(err);
                 }
                 if (props.jscsCfg === 'manualCfg') {
                     var jscsrcPath = path.join('./.jscsrc')
                     that.spawnCommand('jscs', ['--auto-configure', jscsrcPath])
-                        .on('close', function ()
-                        {
+                        .on('close', function () {
                             cb();
                         });
                 } else {
@@ -225,16 +214,14 @@ module.exports = yeoman.generators.Base.extend({
         }.bind(this));
     },
 
-    readIndex: function readIndex()
-    {
+    readIndex: function readIndex() {
         this.ngRoute = this.env.options.ngRoute;
         this.uiRouter = this.env.options.uiRouter;
         this.ngMaterial = this.env.options.ngMaterial;
         this.indexFile = this.engine(this.read('index.html'), this);
     },
 
-    cssFiles: function bootstrapFiles()
-    {
+    cssFiles: function bootstrapFiles() {
         this.fs.copy(
             this.templatePath('styles/**/*'),
             this.destinationPath(path.join(this.appPath, 'styles/')
@@ -242,14 +229,12 @@ module.exports = yeoman.generators.Base.extend({
         );
     },
 
-    createIndexHtml: function createIndexHtml()
-    {
+    createIndexHtml: function createIndexHtml() {
         this.indexFile = this.indexFile.replace(/&apos;/g, "'");
         this.write(path.join(this.appPath, 'index.html'), this.indexFile);
     },
 
-    appJs: function appJs()
-    {
+    appJs: function appJs() {
         this.angularModules = this.env.options.angularDeps;
 
         this.template('app/_app.js', 'app/scripts/_app.js');
@@ -260,8 +245,7 @@ module.exports = yeoman.generators.Base.extend({
         }
     },
 
-    packageFiles: function packageFiles()
-    {
+    packageFiles: function packageFiles() {
         this.template('root/_bower.json', 'bower.json');
         this.template('root/_bowerrc', '.bowerrc');
         this.template('root/_package.json', 'package.json');
@@ -277,8 +261,10 @@ module.exports = yeoman.generators.Base.extend({
         this.template('root/_karma-e2e.conf.js', 'karma-e2e.conf.js');
     },
 
-    tasks: function packageFiles()
-    {
+    tasks: function packageFiles() {
+        // fixing lodash issue with ngconfig
+        this.ngConfModulePlaceholder = '<%= module %>';
+
         this.template('tasks/config.js', 'tasks/config.js');
         this.template('tasks/build.js', 'tasks/build.js');
         this.template('tasks/dev.js', 'tasks/dev.js');
@@ -289,16 +275,13 @@ module.exports = yeoman.generators.Base.extend({
         this.template('tasks/cordova.js', 'tasks/cordova.js');
     },
 
-    install: function packageFiles()
-    {
-        this.on('end', function ()
-        {
+    install: function packageFiles() {
+        this.on('end', function () {
             //save configuration
             this.config.save();
             if (!this.options['skip-install']) {
                 this.installDependencies({
-                    callback: function ()
-                    {
+                    callback: function () {
                         // Emit a new event - dependencies installed
                         this.emit('dependenciesInstalled');
                     }.bind(this)
@@ -306,10 +289,8 @@ module.exports = yeoman.generators.Base.extend({
             }
         });
     },
-    postRun: function ()
-    {
-        this.on('dependenciesInstalled', function ()
-        {
+    postRun: function () {
+        this.on('dependenciesInstalled', function () {
             this.spawnCommand('gulp', ['serve']);
         });
     }

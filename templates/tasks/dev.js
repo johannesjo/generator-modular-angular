@@ -38,7 +38,7 @@ gulp.task('default', function (cb) {
     gulp.start('test');
 
     runSequence(
-        'ngConfig',
+        //'ngConfigDev',
         'injectAll',
         'buildStyles',
         'browserSync',
@@ -215,12 +215,12 @@ gulp.task('lint', function () {
 });
 
 
-gulp.task('ngConfig', function () {
-    return gulp.src(config.scripts + 'constants.json')
-        .pipe(gulpNgConfig('bweArgumentarium.config', {
-            wrap: '(function () {\n\'use strict\';\n/*jshint ignore:start*/\n return <%= module %> /*jshint ignore:end*/\n})();',
-            environment: 'dev'
-        }))
-        .pipe(gulp.dest(config.scripts))
-});
+//gulp.task('ngConfigDev', function () {
+//    return gulp.src(config.scripts + 'constants.json')
+//        .pipe(gulpNgConfig('config', {
+//            wrap: '(function () {\n\'use strict\';\n/*jshint ignore:start*/\n return <%= ngConfModulePlaceholder %> /*jshint ignore:end*/\n})();',
+//            environment: 'dev'
+//        }))
+//        .pipe(gulp.dest(config.scripts))
+//});
 
