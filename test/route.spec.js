@@ -8,7 +8,7 @@ var fs = require('fs');
 describe('moda Route generator', function ()
 {
     var generatorPath = '../r',
-        routesDir = 'app/scripts/_routes/';
+        routesDir = 'app/scripts/routes/';
 
 
     // not testing the actual run of generators yet
@@ -342,7 +342,7 @@ describe('moda Route generator', function ()
                 .withLocalConfig({
                     uiRouter: true,
                     routesFile: routesFile,
-                    dirs: {routes: '_routes'}
+                    dirs: {routes: 'routes'}
                 })
                 .withPrompts({
                     createTemplate: true,

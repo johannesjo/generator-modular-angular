@@ -16,13 +16,13 @@ describe('moda Service generator', function ()
     {
         var testArguments = 'test-name';
         var expectedContent = [
-            ['app/scripts/_main/global-services/test-name-s.js', /TestName/],
-            ['app/scripts/_main/global-services/test-name-s.js', /module\('tmp'\)/],
-            ['app/scripts/_main/global-services/test-name-s.spec.js', /TestName/]
+            ['app/scripts/main/global-services/test-name-s.js', /TestName/],
+            ['app/scripts/main/global-services/test-name-s.js', /module\('tmp'\)/],
+            ['app/scripts/main/global-services/test-name-s.spec.js', /TestName/]
         ];
         var expected = [
-            'app/scripts/_main/global-services/test-name-s.js',
-            'app/scripts/_main/global-services/test-name-s.spec.js'
+            'app/scripts/main/global-services/test-name-s.js',
+            'app/scripts/main/global-services/test-name-s.spec.js'
         ];
 
         var noFile = [
@@ -32,7 +32,7 @@ describe('moda Service generator', function ()
         ];
 
         var nonExpected = [
-            ['app/scripts/_main/global-services/test-name-s.js', /testName/]
+            ['app/scripts/main/global-services/test-name-s.js', /testName/]
         ];
 
         var options = {

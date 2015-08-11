@@ -17,13 +17,13 @@ describe('moda Decorator generator', function ()
     {
         var testArguments = 'test-name';
         var expectedContent = [
-            ['app/scripts/_main/global-services/test-name-decorator.js', /TestName/],
-            ['app/scripts/_main/global-services/test-name-decorator.js', /module\('tmp'\)/],
-            ['app/scripts/_main/global-services/test-name-decorator.spec.js', /TestName/]
+            ['app/scripts/main/global-services/test-name-decorator.js', /TestName/],
+            ['app/scripts/main/global-services/test-name-decorator.js', /module\('tmp'\)/],
+            ['app/scripts/main/global-services/test-name-decorator.spec.js', /TestName/]
         ];
         var expected = [
-            'app/scripts/_main/global-services/test-name-decorator.js',
-            'app/scripts/_main/global-services/test-name-decorator.spec.js'
+            'app/scripts/main/global-services/test-name-decorator.js',
+            'app/scripts/main/global-services/test-name-decorator.spec.js'
         ];
 
         var noFile = [
@@ -33,7 +33,7 @@ describe('moda Decorator generator', function ()
         ];
 
         var nonExpected = [
-            ['app/scripts/_main/global-services/test-name-decorator.js', /testName/]
+            ['app/scripts/main/global-services/test-name-decorator.js', /testName/]
         ];
 
         var options = {
