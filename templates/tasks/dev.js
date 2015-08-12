@@ -9,7 +9,7 @@ var gulp = require('gulp');
  *
  */
 
-var sass = require('gulp-sass');
+var sass = require('gulp-sass').sync;
 var autoprefixer = require('gulp-autoprefixer');
 var sourcemaps = require('gulp-sourcemaps');
 var wiredep = require('wiredep').stream;
@@ -24,21 +24,18 @@ var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
 var KarmaServer = require('karma').Server;
 
-//var gulpNgConfig = require('gulp-ng-config');
+var gulpNgConfig = require('gulp-ng-config');
 
 var merge = require('merge-stream');
+var plumber = require('gulp-plumber');
 
-function swallowError(error) {
-    console.log(error.toString());
-    this.emit('end');
-}
 
 // main task
 gulp.task('default', function (cb) {
     gulp.start('test');
 
     runSequence(
-        //'ngConfigDev',
+        'ngConfig',
         'injectAll',
         'buildStyles',
         'browserSync',
@@ -49,6 +46,7 @@ gulp.task('default', function (cb) {
 gulp.task('serve', ['default']);
 gulp.task('server', ['default']);
 
+
 gulp.task('injectAll', function (callback) {
     runSequence(
         'wiredep',
@@ -57,6 +55,7 @@ gulp.task('injectAll', function (callback) {
         callback
     );
 });
+
 
 gulp.task('watch', function (cb) {
     watch(config.stylesF, function () {
@@ -92,6 +91,7 @@ gulp.task('buildStyles', function (cb) {
         cb
     );
 });
+
 
 gulp.task('injectStyles', function () {
     var sources = gulp.src(config.stylesF, {read: false});
@@ -136,6 +136,12 @@ gulp.task('sass', function () {
     var outputFolder = gulp.dest(config.styles);
 
     return sources
+        .pipe(plumber({
+            handleError: function (err) {
+                console.log(err);
+                this.emit('end');
+            }
+        }))
         .pipe(sourcemaps.init())
         .pipe(sass({errLogToConsole: true}))
         .pipe(autoprefixer({
@@ -144,9 +150,9 @@ gulp.task('sass', function () {
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(config.tmp))
         .pipe(outputFolder)
-        .pipe(browserSync.stream())
-        .on('error', swallowError)
+        .pipe(browserSync.stream());
 });
+
 
 gulp.task('browserSync', function () {
     browserSync({
@@ -156,6 +162,7 @@ gulp.task('browserSync', function () {
         }
     });
 });
+
 
 gulp.task('html', function () {
     return gulp.src(config.allHtmlF)
@@ -193,6 +200,7 @@ gulp.task('test', function (done) {
     }, done).start();
 });
 
+
 gulp.task('testSingle', function (done) {
     new KarmaServer({
         configFile: __dirname + '/../karma.conf.js',
@@ -201,6 +209,7 @@ gulp.task('testSingle', function (done) {
         singleRun: true
     }, done).start();
 });
+
 
 gulp.task('lint', function () {
     return gulp.src([
