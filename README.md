@@ -84,7 +84,7 @@ As per default the following tasks are available at your convenience:
 The mobile tasks require a little preparation described in the next section.
 
 * `gulp cordovaDev`: Symlinks your app-folder to www and runs the emulator for easy live development. 
-* `gulp cordovaDevOnDevice`: Symlinks your app-folder to www and runs it on your device if connected. 
+* `gulp cordovaRun`: Symlinks your app-folder to www and runs it on your device if connected. 
 
 Of course there are also all the [standard cordova commands](https://cordova.apache.org/docs/en/4.0.0/guide_cli_index.md.html) available as well. If you want to build a release run:
  ```

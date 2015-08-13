@@ -34,28 +34,28 @@ gulp.task('cordovaDev', function (cb) {
     runSequence(
         'cleanDist',
         'symlinkApp',
-        'cordovaServer',
-        //'browserSync',
-        'cordovaEmulate',
-        //'ngConfigDev',
+        'ngConfig',
         'injectAll',
         'buildStyles',
+        'browserSync',
+        'cordovaServer',
+        'cordovaEmulate',
         ['watchForCordova', 'watch'],
         cb
     );
 });
 
 
-gulp.task('cordovaDevOnDevice', function (cb) {
+gulp.task('cordovaRun', function (cb) {
     runSequence(
         'cleanDist',
         'symlinkApp',
-        'cordovaServer',
-        //'browserSync',
-        'cordovaRun',
-        //'ngConfigDev',
+        'ngConfig',
         'injectAll',
         'buildStyles',
+        'browserSync',
+        'cordovaServer',
+        'cordovaRunOnDevice',
         ['watchForCordova', 'watch'],
         cb
     );
@@ -89,13 +89,13 @@ gulp.task('cordovaEmulate', shell.task([
 ]));
 
 
-gulp.task('cordovaRun', shell.task([
+gulp.task('cordovaRunOnDevice', shell.task([
     config.cordovaPath + ' run ' + platformArg() + ' -l -s -c'
 ]));
 
 
 gulp.task('symlinkApp', function () {
-    gulp.src(config.base)
+    return gulp.src(config.base)
         .pipe(symlink(config.dist));
 });
 
