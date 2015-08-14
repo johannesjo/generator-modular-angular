@@ -9,6 +9,7 @@ var gulp = require('gulp');
  *
  */
 
+
 var sass = require('gulp-sass').sync;
 var autoprefixer = require('gulp-autoprefixer');
 var sourcemaps = require('gulp-sourcemaps');
@@ -28,7 +29,7 @@ var gulpNgConfig = require('gulp-ng-config');
 
 var merge = require('merge-stream');
 var plumber = require('gulp-plumber');
-
+var sort = require('gulp-natural-sort');
 
 // main task
 gulp.task('default', function (cb) {
@@ -94,7 +95,8 @@ gulp.task('buildStyles', function (cb) {
 
 
 gulp.task('injectStyles', function () {
-    var sources = gulp.src(config.stylesF, {read: false});
+    var sources = gulp.src(config.stylesF, {read: false})
+        .pipe(sort());
     var target = gulp.src(config.mainSassFile);
     var outputFolder = gulp.dest(config.styles);
 
@@ -118,7 +120,8 @@ gulp.task('injectStyles', function () {
 
 
 gulp.task('injectScripts', function () {
-    var sources = gulp.src(config.scriptsF, {read: false});
+    var sources = gulp.src(config.scriptsF, {read: true})
+        .pipe(sort());
     var target = gulp.src(config.mainFile);
     return target
         .pipe(inj(sources,
