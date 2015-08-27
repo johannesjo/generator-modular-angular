@@ -33,6 +33,8 @@ gulp.task('build', function (callback) {
         'sass',
         'minFiles',
         'copy',
+        // reset config
+        'ngConfig',
         callback);
 });
 
