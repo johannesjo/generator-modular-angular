@@ -227,7 +227,7 @@ gulp.task('lint', function () {
 });
 
 
-//gulp.task('ngConfigDev', function () {
+//gulp.task('ngConfig', function () {
 //    return gulp.src(config.scripts + 'constants.json')
 //        .pipe(gulpNgConfig('config', {
 //            wrap: '(function () {\n\'use strict\';\n/*jshint ignore:start*/\n return <%= ngConfModulePlaceholder %> /*jshint ignore:end*/\n})();',

@@ -237,11 +237,11 @@ module.exports = yeoman.generators.Base.extend({
     appJs: function appJs() {
         this.angularModules = this.env.options.angularDeps;
 
-        this.template('app/_app.js', 'app/scripts/_app.js');
-        this.template('app/_app.spec.js', 'app/scripts/_app.spec.js');
+        this.template('app/_app.js', this.appPath + '/scripts/_app.js');
+        this.template('app/_app.spec.js', this.appPath + '/scripts/_app.spec.js');
         if (this.env.options.uiRouter) {
-            this.template('app/routes.js', 'app/scripts/routes.js');
-            this.template('app/routes.spec.js', 'app/scripts/routes.spec.js');
+            this.template('app/routes.js', this.appPath + '/scripts/routes.js');
+            this.template('app/routes.spec.js', this.appPath + '/scripts/routes.spec.js');
         }
     },
 
