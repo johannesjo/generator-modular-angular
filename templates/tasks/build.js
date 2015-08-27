@@ -34,7 +34,7 @@ gulp.task('build', function (callback) {
         'minFiles',
         'copy',
         // reset config
-        'ngConfig',
+        //'ngConfig',
         callback);
 });
 

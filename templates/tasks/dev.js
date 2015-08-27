@@ -36,7 +36,7 @@ gulp.task('default', function (cb) {
     gulp.start('test');
 
     runSequence(
-        'ngConfig',
+        //'ngConfig',
         'injectAll',
         'buildStyles',
         'browserSync',
