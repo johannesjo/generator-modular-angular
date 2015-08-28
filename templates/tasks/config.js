@@ -1,5 +1,4 @@
-module.exports = (function ()
-{
+module.exports = (function () {
     'use strict';
 
     // config vars
@@ -8,6 +7,8 @@ module.exports = (function ()
     var sass = base + '/styles';
 
     var data = {
+        cordovaPath: 'cordova',
+        defaultPlatform: 'ios',
         base: base,
         mainFile: base + '/index.html',
         mainSassFile: sass + '/main.scss',

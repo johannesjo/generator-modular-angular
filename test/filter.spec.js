@@ -17,13 +17,13 @@ describe('moda Filter generator', function ()
     {
         var testArguments = 'test-name';
         var expectedContent = [
-            ['app/scripts/_main/global-filters/test-name-filter.js', /testName/],
-            ['app/scripts/_main/global-filters/test-name-filter.js', /module\('tmp'\)/],
-            ['app/scripts/_main/global-filters/test-name-filter.spec.js', /testName/]
+            ['app/scripts/main/global-filters/test-name-filter.js', /testName/],
+            ['app/scripts/main/global-filters/test-name-filter.js', /module\('tmp'\)/],
+            ['app/scripts/main/global-filters/test-name-filter.spec.js', /testName/]
         ];
         var expected = [
-            'app/scripts/_main/global-filters/test-name-filter.js',
-            'app/scripts/_main/global-filters/test-name-filter.spec.js'
+            'app/scripts/main/global-filters/test-name-filter.js',
+            'app/scripts/main/global-filters/test-name-filter.spec.js'
         ];
 
         var noFile = [
@@ -33,7 +33,7 @@ describe('moda Filter generator', function ()
         ];
 
         var nonExpected = [
-            ['app/scripts/_main/global-filters/test-name-filter.js', /TestName/]
+            ['app/scripts/main/global-filters/test-name-filter.js', /TestName/]
         ];
 
         var options = {

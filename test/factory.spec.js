@@ -19,13 +19,13 @@ describe('moda Factory generator', function ()
     {
         var testArguments = 'test-name';
         var expectedContent = [
-            ['app/scripts/_main/global-services/test-name-f.js', /TestName/],
-            ['app/scripts/_main/global-services/test-name-f.js', /module\('tmp'\)/],
-            ['app/scripts/_main/global-services/test-name-f.spec.js', /TestName/]
+            ['app/scripts/main/global-services/test-name-f.js', /TestName/],
+            ['app/scripts/main/global-services/test-name-f.js', /module\('tmp'\)/],
+            ['app/scripts/main/global-services/test-name-f.spec.js', /TestName/]
         ];
         var expected = [
-            'app/scripts/_main/global-services/test-name-f.js',
-            'app/scripts/_main/global-services/test-name-f.spec.js'
+            'app/scripts/main/global-services/test-name-f.js',
+            'app/scripts/main/global-services/test-name-f.spec.js'
         ];
 
         var noFile = [
@@ -35,7 +35,7 @@ describe('moda Factory generator', function ()
         ];
 
         var nonExpected = [
-            ['app/scripts/_main/global-services/test-name-f.js', /testName/]
+            ['app/scripts/main/global-services/test-name-f.js', /testName/]
         ];
 
         var options = {
@@ -149,8 +149,8 @@ describe('moda Factory generator', function ()
 
         ];
         var noFile = [
-            'app/scripts/_main/global-services/test-name-f.js',
-            'app/scripts/_main/global-services/test-name-factory.js',
+            'app/scripts/main/global-services/test-name-f.js',
+            'app/scripts/main/global-services/test-name-factory.js',
             'app/scripts/test-name-factory.js',
             'app/scripts/factories/test-name-d.html',
             'app/scripts/factories/_test-name-d.scss'

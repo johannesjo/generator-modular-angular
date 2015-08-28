@@ -16,14 +16,14 @@ describe('moda custom file templates from folder', function ()
 
     var testArguments = 'test-name';
     var expectedContent = [
-        ['app/scripts/_main/global-services/test-name-s.js', /SERVICE/],
-        ['app/scripts/_main/global-services/test-name-s.spec.js', /SPEC/],
-        ['app/scripts/_main/global-services/test-name-s.js', /TestName/],
-        ['app/scripts/_main/global-services/test-name-s.spec.js', /TestName/]
+        ['app/scripts/main/global-services/test-name-s.js', /SERVICE/],
+        ['app/scripts/main/global-services/test-name-s.spec.js', /SPEC/],
+        ['app/scripts/main/global-services/test-name-s.js', /TestName/],
+        ['app/scripts/main/global-services/test-name-s.spec.js', /TestName/]
     ];
     var expected = [
-        'app/scripts/_main/global-services/test-name-s.js',
-        'app/scripts/_main/global-services/test-name-s.spec.js'
+        'app/scripts/main/global-services/test-name-s.js',
+        'app/scripts/main/global-services/test-name-s.spec.js'
     ];
 
     var options = {

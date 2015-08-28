@@ -15,8 +15,8 @@ module.exports = {
     dirs: {
         app: 'app',
         appModules: 'scripts',
-        globalComponents: '_main',
-        routes: '_routes'
+        globalComponents: 'main',
+        routes: 'routes'
     },
     subGenerators: {
         directive: {
@@ -32,23 +32,23 @@ module.exports = {
         },
         service: {
             suffix: '-s',
-            globalDir: '_main/global-services'
+            globalDir: 'main/global-services'
         },
         factory: {
             suffix: '-f',
-            globalDir: '_main/global-services'
+            globalDir: 'main/global-services'
         },
         filter: {
             suffix: '-filter',
-            globalDir: '_main/global-filters'
+            globalDir: 'main/global-filters'
         },
         provider: {
             suffix: '-p',
-            globalDir: '_main/global-services'
+            globalDir: 'main/global-services'
         },
         decorator: {
             suffix: '-decorator',
-            globalDir: '_main/global-services'
+            globalDir: 'main/global-services'
         },
         mod: {
             prefix: '_',

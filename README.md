@@ -83,10 +83,16 @@ As per default the following tasks are available at your convenience:
 
 The mobile tasks require a little preparation described in the next section.
 
-* `gulp buildCordova`: Runs the build task followed by a cordova-build.
-* `gulp emulate`: Runs the build task and your app in the android-sdk emulator.   
-* `gulp run`: Runs the build task and your app on your device if connected. 
-* `gulp releaseCordova`: Create release version of your app and copies the binaries to the release folder.
+* `gulp cordovaDev`: Symlinks your app-folder to www and runs the emulator for easy live development. 
+* `gulp cordovaRun`: Symlinks your app-folder to www and runs it on your device if connected. 
+
+Of course there are also all the [standard cordova commands](https://cordova.apache.org/docs/en/4.0.0/guide_cli_index.md.html) available as well. If you want to build a release run:
+ ```
+ gulp build
+ cordova build android --release
+ ```
+
+For all cordova related commands there is an optional platform parameter you can use to specify the platform for the cordova task. E.g. `gulp cordovaDev --platform=android` to run the android emulator. Alternatively you can edit the config.js to change the default platform.
 
 All tasks can be edited freely and can be found in the /tasks folder.
 

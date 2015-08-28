@@ -17,13 +17,13 @@ describe('moda Provider generator', function ()
     {
         var testArguments = 'test-name';
         var expectedContent = [
-            ['app/scripts/_main/global-services/test-name-p.js', /TestName/],
-            ['app/scripts/_main/global-services/test-name-p.js', /module\('tmp'\)/],
-            ['app/scripts/_main/global-services/test-name-p.spec.js', /TestName/]
+            ['app/scripts/main/global-services/test-name-p.js', /TestName/],
+            ['app/scripts/main/global-services/test-name-p.js', /module\('tmp'\)/],
+            ['app/scripts/main/global-services/test-name-p.spec.js', /TestName/]
         ];
         var expected = [
-            'app/scripts/_main/global-services/test-name-p.js',
-            'app/scripts/_main/global-services/test-name-p.spec.js'
+            'app/scripts/main/global-services/test-name-p.js',
+            'app/scripts/main/global-services/test-name-p.spec.js'
         ];
 
         var noFile = [
@@ -33,7 +33,7 @@ describe('moda Provider generator', function ()
         ];
 
         var nonExpected = [
-            ['app/scripts/_main/global-services/test-name-p.js', /testName/]
+            ['app/scripts/main/global-services/test-name-p.js', /testName/]
         ];
 
         var options = {
