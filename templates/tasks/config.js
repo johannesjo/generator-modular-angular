@@ -39,7 +39,7 @@ module.exports = (function ()
         imagesF: base + '/images/**/*.*',
         fonts: base + '/fonts/',
         fontsF: base + '/fonts/**/*.*',
-        tmp: './tmp',
+        tmp: './.tmp',
         dist: 'www',
         wwwDestination: '',
         karmaConf: './karma.conf.js',
