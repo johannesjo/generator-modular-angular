@@ -8,9 +8,11 @@
  */
 
 angular.module('<%= scriptAppName %>')
-    .config(function ($stateProvider)
+    .config(function ($stateProvider, $urlRouterProvider)
     {
         'use strict';
+
+        $urlRouterProvider.otherwise('/');
 
         $stateProvider
             /* STATES-NEEDLE - DO NOT REMOVE THIS */;
