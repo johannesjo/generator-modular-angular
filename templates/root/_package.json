@@ -48,7 +48,6 @@
     "protractor": "^2.1.0",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.1.0",
-    "vinyl-ftp": "^0.4.4",
     "wiredep": "^3.0.0-beta",
     "yargs": "^3.18.0"
   },
