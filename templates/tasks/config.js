@@ -9,6 +9,7 @@ module.exports = (function () {
     var data = {
         cordovaPath: 'cordova',
         defaultPlatform: 'ios',
+        excludedBowerComponents: ['es5-shim', 'json3'],
         base: base,
         mainFile: base + '/index.html',
         mainSassFile: sass + '/main.scss',

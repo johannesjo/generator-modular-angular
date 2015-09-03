@@ -176,7 +176,8 @@ gulp.task('html', function () {
 gulp.task('wiredep', function () {
     var karmaKonf = gulp.src(config.karmaConf, {base: './'})
         .pipe(wiredep({
-            devDependencies: true
+            devDependencies: true,
+            exclude: config.excludedBowerComponents
         }))
         // required as weird workaround for not messing up the files
         .pipe(gulp.dest(config.tmp))
@@ -184,7 +185,8 @@ gulp.task('wiredep', function () {
 
     var indexHtml = gulp.src(config.mainFile, {base: './'})
         .pipe(wiredep({
-            devDependencies: false
+            devDependencies: false,
+            exclude: config.excludedBowerComponents
         }))
         // required as weird workaround for not messing up the files
         .pipe(gulp.dest(config.tmp))
