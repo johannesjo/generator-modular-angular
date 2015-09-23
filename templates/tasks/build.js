@@ -57,7 +57,10 @@ gulp.task('cleanDist', function () {
 gulp.task('copy', function () {
     var html = gulp.src(config.htmlF, {base: config.base})
         .pipe(minifyHtml({
-            conditionals: true
+            conditionals: true,
+            loose: true,
+            empty: true,
+            quotes: true
         }))
         .pipe(gulp.dest(config.dist));
 
