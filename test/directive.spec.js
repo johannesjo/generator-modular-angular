@@ -20,7 +20,7 @@ describe('moda Directive generator', function ()
             ['app/scripts/test-name/test-name-d.js', /module\('tmp'\)/],
             ['app/scripts/test-name/test-name-d.js', /scripts\/test-name\/test-name-d\.html/],
             ['app/scripts/test-name/test-name-d.spec.js', /\('<test-name><\/test-name>'\)/],
-            ['app/scripts/test-name/test-name-d.html', /class="test-name"/],
+            ['app/scripts/test-name/test-name-d.html', /testName/],
         ];
         var expected = [
             'app/scripts/test-name/test-name-d.js',
@@ -85,7 +85,7 @@ describe('moda Directive generator', function ()
             ['app/scripts/test-path/test-name/test-name-d.js', /module\('tmp'\)/],
             ['app/scripts/test-path/test-name/test-name-d.js', /scripts\/test-path\/test-name\/test-name-d\.html/],
             ['app/scripts/test-path/test-name/test-name-d.spec.js', /\('<test-name><\/test-name>'\)/],
-            ['app/scripts/test-path/test-name/test-name-d.html', /class="test-name"/],
+            ['app/scripts/test-path/test-name/test-name-d.html', /testName/],
         ];
         var expected = [
             'app/scripts/test-path/test-name/test-name-d.js',
