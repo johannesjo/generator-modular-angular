@@ -8,6 +8,7 @@ var yeoman = require('yeoman-generator');
 var wiredep = require('wiredep');
 var chalk = require('chalk');
 var _s = require('underscore.string');
+var _ = require('underscore');
 
 
 module.exports = yeoman.generators.Base.extend({
@@ -124,55 +125,55 @@ module.exports = yeoman.generators.Base.extend({
             var angMods = [];
 
             if (this.animateModule) {
-                angMods.push('\'ngAnimate\'');
+                angMods.push('ngAnimate');
             }
 
             if (this.ariaModule) {
-                angMods.push('\'ngAria\'');
+                angMods.push('ngAria');
             }
 
             if (this.cookiesModule) {
-                angMods.push('\'ngCookies\'');
+                angMods.push('ngCookies');
             }
 
             if (this.messagesModule) {
-                angMods.push('\'ngMessages\'');
+                angMods.push('ngMessages');
             }
 
             if (this.resourceModule) {
-                angMods.push('\'ngResource\'');
+                angMods.push('ngResource');
             }
 
             if (this.routeModule) {
-                angMods.push('\'ngRoute\'');
+                angMods.push('ngRoute');
                 this.env.options.ngRoute = true;
             }
 
             if (this.sanitizeModule) {
-                angMods.push('\'ngSanitize\'');
+                angMods.push('ngSanitize');
             }
 
             if (this.touchModule) {
-                angMods.push('\'ngTouch\'');
+                angMods.push('ngTouch');
             }
 
             if (this.uiRouterModule) {
-                angMods.push('\'ui.router\'');
+                angMods.push('ui.router');
                 this.config.set('uiRouter', true);
                 this.env.options.uiRouter = true;
             }
 
             if (this.ngMaterialModule) {
-                angMods.push('\'ngMaterial\'');
+                angMods.push('ngMaterial');
                 this.env.options.ngMaterial = true;
             }
 
             if (this.ngFabFormModule) {
-                angMods.push('\'ngFabForm\'');
+                angMods.push('ngFabForm');
             }
 
             if (angMods.length) {
-                this.env.options.angularDeps = '\n    ' + angMods.join(',\n    ') + '\n  ';
+                this.env.options.angularDeps = angMods;
             }
 
             cb();
@@ -247,7 +248,6 @@ module.exports = yeoman.generators.Base.extend({
     appJs: function appJs()
     {
         this.angularModules = this.env.options.angularDeps;
-
         this.template('app/_app.js', this.appPath + '/scripts/_app.js');
         this.template('app/_app.spec.js', this.appPath + '/scripts/_app.spec.js');
         if (this.env.options.uiRouter) {
