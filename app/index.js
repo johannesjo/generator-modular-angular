@@ -230,6 +230,11 @@ module.exports = yeoman.generators.Base.extend({
         this.ngMaterial = this.env.options.ngMaterial;
     },
 
+    createIndexHtml: function createIndexHtml()
+    {
+        this.template('index.html', this.appPath + '/index.html');
+    },
+
     cssFiles: function bootstrapFiles()
     {
         this.fs.copy(
@@ -237,11 +242,6 @@ module.exports = yeoman.generators.Base.extend({
             this.destinationPath(path.join(this.appPath, 'styles/')
             )
         );
-    },
-
-    createIndexHtml: function createIndexHtml()
-    {
-        this.template('index.html', this.appPath + '/index.html');
     },
 
     appJs: function appJs()
