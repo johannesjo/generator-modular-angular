@@ -200,7 +200,7 @@ module.exports = yeoman.generators.NamedBase.extend({
         if (this.createTemplate) {
             this.tplUrl = path.join(inAppPath, standardFileName + this.fileExt.tpl)
                 // windows fix for url path
-                .replace('\\', '/');
+                .replace(/\\/g, '/');
             filesToCreate.push({
                 tpl: this.templateName + this.fileExt.tpl,
                 targetFileName: standardFileName + this.fileExt.tpl
