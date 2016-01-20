@@ -5,6 +5,7 @@ describe('Directive: <%= cameledName %><%= nameSuffix %>', function ()
 
     // load the directive's module
     beforeEach(module('<%= scriptAppName %>'));
+    beforeEach(module('templates'));
 
     var element,
         scope;
