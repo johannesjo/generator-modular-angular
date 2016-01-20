@@ -50,7 +50,7 @@ module.exports = function (config)
         ],
 
         preprocessors: {
-            //'**/app/scripts/*/*.js': 'coverage',
+            //'**/app/scripts/**/!(*spec).js': 'coverage',
             '**/app/scripts/**/*.html': 'ng-html2js'
         },
 
