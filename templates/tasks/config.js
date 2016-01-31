@@ -1,4 +1,5 @@
-module.exports = (function () {
+module.exports = (function ()
+{
     'use strict';
 
     // config vars
@@ -7,6 +8,7 @@ module.exports = (function () {
     var sass = base + '/styles';
 
     var data = {
+        browserSyncPort: 3000,
         cordovaPath: 'cordova',
         defaultPlatform: 'ios',
         excludedBowerComponents: ['es5-shim', 'json3'],
