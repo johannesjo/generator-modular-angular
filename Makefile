@@ -41,7 +41,7 @@ test-app-instance:
 create-app-instance:
 	rm -rf $(INSTANCE_TESTS_DIR)/
 	mkdir $(INSTANCE_TESTS_DIR)
-	npm install -g yo bower
+	npm install -g yo bower node-gyp
 	npm link
 	cd $(INSTANCE_TESTS_DIR) && echo "CDing into $(INSTANCE_TESTS_DIR)" && \
 	yes | yo moda --skip-install && \
@@ -51,7 +51,7 @@ create-app-instance:
 test-node-module:
 	rm -rf $(INSTANCE_TESTS_DIR)/
 	mkdir $(INSTANCE_TESTS_DIR)
-	npm install -g yo bower generator-moda
+	npm install -g yo bower generator-moda node-gyp
 	cd $(INSTANCE_TESTS_DIR) && echo "CDing into $(INSTANCE_TESTS_DIR)" && \
 	yes | yo moda --skip-install && \
 	npm cache clean && \
