@@ -20,7 +20,7 @@
     "gulp-imagemin": "latest",
     "gulp-inject": "latest",
     "gulp-jscs": "latest",
-    "gulp-jshint": "latest",
+    "gulp-jshint": "^2.0.0",
     "gulp-livereload": "latest",
     "gulp-minify-css": "latest",
     "gulp-minify-html": "latest",
