@@ -1,4 +1,4 @@
-{<% var ngVer = "1.3.15" %>
+{<% var ngVer = "latest" %>
   "name": "<%= scriptAppName %>",
   "version": "0.0.0",
   "authors": [
@@ -25,8 +25,8 @@
     "angular-route": "^<%= ngVer %>"<% } %><% if (sanitizeModule) { %>,
     "angular-sanitize": "^<%= ngVer %>"<% } %><% if (touchModule) { %>,
     "angular-touch": "^<%= ngVer %>"<% } %><% if (uiRouterModule) { %>,
-    "angular-ui-router": "^0.2.13"<% } %><% if (ngMaterialModule) { %>,
-    "angular-material": "^0.8.0"<% } %><% if (ngFabFormModule) { %>,
+    "angular-ui-router": "latest"<% } %><% if (ngMaterialModule) { %>,
+    "angular-material": "latest"<% } %><% if (ngFabFormModule) { %>,
     "ng-fab-form": "latest"<% } %>
 },
   "devDependencies": {
