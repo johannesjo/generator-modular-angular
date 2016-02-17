@@ -80,13 +80,10 @@ gulp.task('copy', function () {
 
 
 gulp.task('minFiles', function () {
-    var assets = useref.assets();
     return gulp.src(config.mainFile)
-        .pipe(assets)
         .pipe(gulpif('*.js', ngAnnotate()))
         .pipe(gulpif('*.js', uglify()))
         .pipe(gulpif('*.css', minifyCss()))
-        .pipe(assets.restore())
         .pipe(useref())
         .pipe(gulp.dest(config.dist));
 });
