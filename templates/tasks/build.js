@@ -16,14 +16,15 @@ var useref = require('gulp-useref');
 var ngAnnotate = require('gulp-ng-annotate');
 var uglify = require('gulp-uglify');
 var imagemin = require('gulp-imagemin');
-var runSequence = require('run-sequence').use(gulp);
+var runSequence = require('run-sequence')
+    .use(gulp);
 var wiredep = require('wiredep').stream;
 
 var merge = require('merge-stream');
 
 
 // main task
-gulp.task('build', function (callback) {
+gulp.task('build', function(callback) {
     runSequence(
         'cleanDist',
         'wiredepBuild',
@@ -38,7 +39,7 @@ gulp.task('build', function (callback) {
         callback);
 });
 
-gulp.task('wiredepBuild', function () {
+gulp.task('wiredepBuild', function() {
     return gulp.src([config.karmaConf, config.mainFile], {base: './'})
         .pipe(wiredep({
             exclude: [
@@ -49,12 +50,12 @@ gulp.task('wiredepBuild', function () {
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('cleanDist', function () {
+gulp.task('cleanDist', function() {
     return del.sync(config.dist);
 });
 
 
-gulp.task('copy', function () {
+gulp.task('copy', function() {
     var html = gulp.src(config.htmlF, {base: config.base})
         .pipe(minifyHtml({
             conditionals: true,
@@ -79,7 +80,7 @@ gulp.task('copy', function () {
 });
 
 
-gulp.task('minFiles', function () {
+gulp.task('minFiles', function() {
     return gulp.src(config.mainFile)
         .pipe(useref())
         .pipe(gulpif('*.js', ngAnnotate()))

@@ -13,7 +13,8 @@ var plugins = ['org.apache.cordova.file'];
 
 var path = require('path');
 var shell = require('gulp-shell');
-var runSequence = require('run-sequence').use(gulp);
+var runSequence = require('run-sequence')
+    .use(gulp);
 var symlink = require('gulp-symlink');
 var argv = require('yargs').argv;
 
@@ -28,7 +29,7 @@ function platformArg() {
     return (argv.platform || config.defaultPlatform);
 }
 
-gulp.task('cordovaDev', function (cb) {
+gulp.task('cordovaDev', function(cb) {
     //gulp.start('test');
 
     runSequence(
@@ -46,7 +47,7 @@ gulp.task('cordovaDev', function (cb) {
 });
 
 
-gulp.task('cordovaRun', function (cb) {
+gulp.task('cordovaRun', function(cb) {
     runSequence(
         'cleanDist',
         'symlinkApp',
@@ -62,7 +63,7 @@ gulp.task('cordovaRun', function (cb) {
 });
 
 
-gulp.task('watchForCordova', function () {
+gulp.task('watchForCordova', function() {
     livereload.listen();
     var projectFiles = config.base + '/**/*.*';
     return gulp.src(projectFiles)
@@ -72,13 +73,14 @@ gulp.task('watchForCordova', function () {
 });
 
 
-gulp.task('cordovaServer', function () {
+gulp.task('cordovaServer', function() {
     var port = 8000;
     var url = "http://localhost:" + port + "/";
     http.createServer(ecstatic({
-        root: "platforms",
-        cache: 0
-    })).listen(port);
+            root: "platforms",
+            cache: 0
+        }))
+        .listen(port);
 
     gutil.log(gutil.colors.blue("HTTP server listening on " + port));
 });
@@ -94,7 +96,7 @@ gulp.task('cordovaRunOnDevice', shell.task([
 ]));
 
 
-gulp.task('symlinkApp', function () {
+gulp.task('symlinkApp', function() {
     return gulp.src(config.base)
         .pipe(symlink(config.dist));
 });

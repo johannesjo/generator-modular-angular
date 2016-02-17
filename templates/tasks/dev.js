@@ -19,7 +19,8 @@ var inj = require('gulp-inject');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var watch = require('gulp-watch');
-var runSequence = require('run-sequence').use(gulp);
+var runSequence = require('run-sequence')
+    .use(gulp);
 
 var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
@@ -32,7 +33,7 @@ var plumber = require('gulp-plumber');
 var sort = require('gulp-natural-sort');
 
 // main task
-gulp.task('default', function (cb) {
+gulp.task('default', function(cb) {
     gulp.start('test');
 
     runSequence(
@@ -49,7 +50,7 @@ gulp.task('serve', ['default']);
 gulp.task('server', ['default']);
 
 
-gulp.task('injectAll', function (callback) {
+gulp.task('injectAll', function(callback) {
     runSequence(
         'wiredep',
         'injectScripts',
@@ -59,25 +60,25 @@ gulp.task('injectAll', function (callback) {
 });
 
 
-gulp.task('watch', function (cb) {
-    watch(config.stylesF, function () {
+gulp.task('watch', function(cb) {
+    watch(config.stylesF, function() {
         gulp.start('buildStyles')
             .on('end', cb);
     });
-    watch(config.scriptsF, function () {
+    watch(config.scriptsF, function() {
         gulp.start('injectScripts')
             .on('end', cb);
     });
-    watch(config.scripts + '*.json', function () {
+    watch(config.scripts + '*.json', function() {
         gulp.start('ngConfig')
             .on('end', cb);
     });
-    watch(config.scriptsAllF, function () {
+    watch(config.scriptsAllF, function() {
         gulp.start('lintAndBeautify')
             .on('end', cb);
 
     });
-    watch(config.allHtmlF, function () {
+    watch(config.allHtmlF, function() {
         gulp.start('html')
             .on('end', cb);
     });
@@ -86,7 +87,7 @@ gulp.task('watch', function (cb) {
 });
 
 
-gulp.task('buildStyles', function (cb) {
+gulp.task('buildStyles', function(cb) {
     runSequence(
         'injectStyles',
         'sass',
@@ -95,7 +96,7 @@ gulp.task('buildStyles', function (cb) {
 });
 
 
-gulp.task('injectStyles', function () {
+gulp.task('injectStyles', function() {
     var sources = gulp.src(config.stylesF, {read: false})
         .pipe(sort());
     var target = gulp.src(config.mainSassFile);
@@ -109,7 +110,7 @@ gulp.task('injectStyles', function () {
                 ignorePath: [config.base.replace('./', ''), 'styles'],
                 relative: true,
                 addRootSlash: false,
-                transform: function (filepath) {
+                transform: function(filepath) {
                     if (filepath) {
                         return '@import  \'' + filepath + '\';';
                     }
@@ -120,7 +121,7 @@ gulp.task('injectStyles', function () {
 });
 
 
-gulp.task('injectScripts', function () {
+gulp.task('injectScripts', function() {
     var sources = gulp.src(config.scriptsF, {read: true})
         .pipe(sort());
     var target = gulp.src(config.mainFile);
@@ -135,13 +136,13 @@ gulp.task('injectScripts', function () {
 });
 
 
-gulp.task('sass', function () {
+gulp.task('sass', function() {
     var sources = gulp.src(config.mainSassFile);
     var outputFolder = gulp.dest(config.styles);
 
     return sources
         .pipe(plumber({
-            handleError: function (err) {
+            handleError: function(err) {
                 console.log(err);
                 this.emit('end');
             }
@@ -158,7 +159,7 @@ gulp.task('sass', function () {
 });
 
 
-gulp.task('browserSync', function () {
+gulp.task('browserSync', function() {
     browserSync({
         port: config.browserSyncPort,
         server: {
@@ -169,13 +170,13 @@ gulp.task('browserSync', function () {
 });
 
 
-gulp.task('html', function () {
+gulp.task('html', function() {
     return gulp.src(config.allHtmlF)
         .pipe(reload({stream: true}));
 });
 
 
-gulp.task('wiredep', function () {
+gulp.task('wiredep', function() {
     var karmaKonf = gulp.src(config.karmaConf, {base: './'})
         .pipe(wiredep({
             devDependencies: true,
@@ -198,7 +199,7 @@ gulp.task('wiredep', function () {
 });
 
 
-gulp.task('test', function (done) {
+gulp.task('test', function(done) {
     new KarmaServer({
         configFile: __dirname + '/../karma.conf.js',
         action: 'watch',
@@ -208,7 +209,7 @@ gulp.task('test', function (done) {
 });
 
 
-gulp.task('testSingle', function (done) {
+gulp.task('testSingle', function(done) {
     new KarmaServer({
         configFile: __dirname + '/../karma.conf.js',
         action: 'run',
@@ -230,7 +231,6 @@ gulp.task('lintAndBeautify', function() {
         .pipe(jscs({fix: true}))
         .pipe(gulp.dest('./'));
 });
-
 
 
 //gulp.task('ngConfig', function () {

@@ -1,5 +1,4 @@
-module.exports = (function ()
-{
+module.exports = (function() {
     'use strict';
 
     // config vars

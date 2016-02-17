@@ -16,9 +16,12 @@ exports.config = {
         isVerbose: true
     },
 
-    onPrepare: function ()
-    {
-        browser.manage().window().setSize(1360, 768);
-        browser.manage().timeouts().setScriptTimeout(20000);
+    onPrepare: function() {
+        browser.manage()
+            .window()
+            .setSize(1360, 768);
+        browser.manage()
+            .timeouts()
+            .setScriptTimeout(20000);
     }
 };
