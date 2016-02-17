@@ -37,6 +37,7 @@ gulp.task('default', function (cb) {
 
     runSequence(
         //'ngConfig',
+        'lintAndBeautify',
         'injectAll',
         'buildStyles',
         'browserSync',
@@ -72,7 +73,7 @@ gulp.task('watch', function (cb) {
             .on('end', cb);
     });
     watch(config.scriptsAllF, function () {
-        gulp.start('lint')
+        gulp.start('lintAndBeautify')
             .on('end', cb);
 
     });
@@ -217,17 +218,19 @@ gulp.task('testSingle', function (done) {
 });
 
 
-gulp.task('lint', function () {
+gulp.task('lintAndBeautify', function() {
     return gulp.src([
-        config.scriptsAllF,
-        './karma-e2e.conf.js',
-        './karma.conf.js',
-        './gulpfile.js'
-    ])
+            config.scriptsAllF,
+            './karma-e2e.conf.js',
+            './karma.conf.js',
+            './gulpfile.js'
+        ], {base: './'})
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'))
-        .pipe(jscs());
+        .pipe(jscs({fix: true}))
+        .pipe(gulp.dest('./'));
 });
+
 
 
 //gulp.task('ngConfig', function () {
