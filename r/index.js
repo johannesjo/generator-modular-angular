@@ -7,8 +7,7 @@ var chalk = require('chalk');
 var defaultSettings = require('../default-settings.js');
 
 module.exports = ScriptBase.extend({
-    initializing: function ()
-    {
+    initializing: function() {
         // needs to be called manually
         this.init();
 
@@ -36,8 +35,7 @@ module.exports = ScriptBase.extend({
         this.setModuleNames(this.name);
     },
 
-    prompting: function ()
-    {
+    prompting: function() {
         var done = this.async();
         var defaults = {
             createTemplate: true,
@@ -45,8 +43,7 @@ module.exports = ScriptBase.extend({
             createCtrl: true
         };
 
-        function createControllerFiles(props)
-        {
+        function createControllerFiles(props) {
             // set context vars
             this.createService = props.createService;
             this.createTemplate = props.createTemplate;
@@ -100,15 +97,13 @@ module.exports = ScriptBase.extend({
         }
     },
 
-    writing: function (props)
-    {
+    writing: function(props) {
         var that = this;
         var done = this.async();
 
         // check if routes file does exist and create it if not
         if (that.uiRouter && that.routesFile) {
-            fs.stat(that.routesFile, function (err, stat)
-            {
+            fs.stat(that.routesFile, function(err, stat) {
                 // if no route-file exist
                 if (err) {
                     that.fs.copyTpl(
@@ -130,8 +125,7 @@ module.exports = ScriptBase.extend({
         }
     },
 
-    install: function ()
-    {
+    install: function() {
         // SOMEWHAT HACKY, but not possible otherwise to run
         // after file creation due to how the run queue works
         // @see http://yeoman.io/authoring/running-context.html

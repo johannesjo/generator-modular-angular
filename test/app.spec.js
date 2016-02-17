@@ -3,8 +3,7 @@ var path = require('path');
 var helpers = require('yeoman-generator').test;
 var assert = require('yeoman-generator').assert;
 
-describe('moda generator', function ()
-{
+describe('moda generator', function() {
     var alwaysExpected = [
         '.editorconfig',
         '.gitignore',
@@ -44,13 +43,11 @@ describe('moda generator', function ()
     ];
 
 
-    it('can be required without throwing', function ()
-    {
+    it('can be required without throwing', function() {
         this.app = require('../app');
     });
 
-    describe('basic file creation', function ()
-    {
+    describe('basic file creation', function() {
 
         var expectedContent = alwaysExpectedContent
             .slice()
@@ -69,30 +66,27 @@ describe('moda generator', function ()
 
         var runGen;
 
-        beforeEach(function ()
-        {
+        beforeEach(function() {
             runGen = helpers
                 .run(path.join(__dirname, '../app'))
                 .inDir(path.join(__dirname, '.tmp'))
         });
 
-        it('creates expected files', function (done)
-        {
-            runGen.withOptions(options).on('end', function ()
-            {
-                assert.file(expected);
-                assert.noFile([
-                    'app/styles/main.css'
-                ]);
-                assert.fileContent(expectedContent);
-                done();
-            });
+        it('creates expected files', function(done) {
+            runGen.withOptions(options)
+                .on('end', function() {
+                    assert.file(expected);
+                    assert.noFile([
+                        'app/styles/main.css'
+                    ]);
+                    assert.fileContent(expectedContent);
+                    done();
+                });
         });
     });
 
 
-    describe('module file creation and app.js injection', function ()
-    {
+    describe('module file creation and app.js injection', function() {
 
         var expectedContent = alwaysExpectedContent
             .slice()
@@ -100,7 +94,7 @@ describe('moda generator', function ()
                 // cfg
                 ['.yo-rc.json', /"uiRouter": true/],
 
-                    // module injection
+                // module injection
                 ['app/scripts/_app.js', /ngAnimate/],
                 ['app/scripts/_app.js', /ngAria/],
                 ['app/scripts/_app.js', /ngCookies/],
@@ -139,15 +133,13 @@ describe('moda generator', function ()
 
         var runGen;
 
-        beforeEach(function ()
-        {
+        beforeEach(function() {
             runGen = helpers
                 .run(path.join(__dirname, '../app'))
                 .inDir(path.join(__dirname, '.tmp'))
         });
 
-        it('creates expected files', function (done)
-        {
+        it('creates expected files', function(done) {
             runGen
                 .withOptions(options)
                 .withPrompts({
@@ -165,8 +157,7 @@ describe('moda generator', function ()
                         'touchModule'
                     ]
                 })
-                .on('end', function ()
-                {
+                .on('end', function() {
                     assert.file([].concat(
                         expected
                     ));
@@ -180,8 +171,7 @@ describe('moda generator', function ()
     });
 
 
-    describe('route files with ui router', function ()
-    {
+    describe('route files with ui router', function() {
 
         var expectedContent = alwaysExpectedContent
             .slice()
@@ -209,15 +199,13 @@ describe('moda generator', function ()
 
         var runGen;
 
-        beforeEach(function ()
-        {
+        beforeEach(function() {
             runGen = helpers
                 .run(path.join(__dirname, '../app'))
                 .inDir(path.join(__dirname, '.tmp'));
         });
 
-        it('creates expected files', function (done)
-        {
+        it('creates expected files', function(done) {
             runGen
                 .withOptions(options)
                 .withPrompts({
@@ -225,8 +213,7 @@ describe('moda generator', function ()
                         'uiRouterModule'
                     ]
                 })
-                .on('end', function ()
-                {
+                .on('end', function() {
                     assert.file([].concat(
                         expected
                     ));

@@ -11,7 +11,7 @@ var _s = require('underscore.string');
 
 
 module.exports = yeoman.generators.Base.extend({
-    constructor: function () {
+    constructor: function() {
         yeoman.generators.Base.apply(this, arguments);
 
         // get app name
@@ -37,7 +37,7 @@ module.exports = yeoman.generators.Base.extend({
         this.sourceRoot(path.join(__dirname, '../templates'));
     },
 
-    config: function () {
+    config: function() {
         this.config.defaults(defaultSettings);
     },
 
@@ -97,8 +97,8 @@ module.exports = yeoman.generators.Base.extend({
             ]
         }];
 
-        this.prompt(prompts, function (props) {
-            var hasMod = function (mod) {
+        this.prompt(prompts, function(props) {
+            var hasMod = function(mod) {
                 // prevent test errors if no values mocked
                 if (props && props.modules) {
                     return props.modules.indexOf(mod) !== -1;
@@ -193,17 +193,17 @@ module.exports = yeoman.generators.Base.extend({
             ]
         }];
 
-        this.prompt(prompts, function (props) {
+        this.prompt(prompts, function(props) {
             var that = this;
 
-            fs.writeFile('./.jscsrc', '{}', function (err) {
+            fs.writeFile('./.jscsrc', '{}', function(err) {
                 if (err) {
                     return console.log(err);
                 }
                 if (props.jscsCfg === 'manualCfg') {
                     var jscsrcPath = path.join('./.jscsrc')
                     that.spawnCommand('jscs', ['--auto-configure', jscsrcPath])
-                        .on('close', function () {
+                        .on('close', function() {
                             cb();
                         });
                 } else {
@@ -276,12 +276,12 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     install: function packageFiles() {
-        this.on('end', function () {
+        this.on('end', function() {
             //save configuration
             this.config.save();
             if (!this.options['skip-install']) {
                 this.installDependencies({
-                    callback: function () {
+                    callback: function() {
                         // Emit a new event - dependencies installed
                         this.emit('dependenciesInstalled');
                     }.bind(this)
@@ -289,8 +289,8 @@ module.exports = yeoman.generators.Base.extend({
             }
         });
     },
-    postRun: function () {
-        this.on('dependenciesInstalled', function () {
+    postRun: function() {
+        this.on('dependenciesInstalled', function() {
             this.spawnCommand('gulp', ['serve']);
         });
     }

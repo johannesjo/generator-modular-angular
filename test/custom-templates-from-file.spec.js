@@ -3,8 +3,7 @@ var path = require('path');
 var helpers = require('yeoman-generator').test;
 var assert = require('yeoman-generator').assert;
 var fs = require('fs');
-describe('moda custom file templates from folder', function ()
-{
+describe('moda custom file templates from folder', function() {
     var generatorPath = '../s';
     var yoRc = path.join(__dirname, '.tmp', '.yo-rc.json');
     var templatePath = path.join(__dirname, '.tmp-templates');
@@ -33,10 +32,8 @@ describe('moda custom file templates from folder', function ()
 
     var runGen;
 
-    describe('success', function ()
-    {
-        beforeEach(function ()
-        {
+    describe('success', function() {
+        beforeEach(function() {
             if (!fs.existsSync(templatePath)) {
                 fs.mkdirSync(templatePath);
             }
@@ -51,23 +48,21 @@ describe('moda custom file templates from folder', function ()
                 .inDir(path.join(__dirname, '.tmp'))
         });
 
-        afterEach(function ()
-        {
+        afterEach(function() {
             fs.unlinkSync(yoRc);
             fs.unlinkSync(serviceFile);
             fs.unlinkSync(serviceSpecFile);
             fs.rmdir(templatePath);
         });
 
-        it('should use the custom service templates', function (done)
-        {
+        it('should use the custom service templates', function(done) {
             runGen
                 .withArguments(testArguments)
                 .withLocalConfig({
                     customTemplatesPath: templatePath
                 })
-                .withOptions(options).on('end', function ()
-                {
+                .withOptions(options)
+                .on('end', function() {
                     assert.file([].concat(
                         expected
                     ));

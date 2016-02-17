@@ -3,8 +3,7 @@ var path = require('path');
 var helpers = require('yeoman-generator').test;
 var assert = require('yeoman-generator').assert;
 var fs = require('fs');
-describe('moda custom file templates via .yo-rc.json', function ()
-{
+describe('moda custom file templates via .yo-rc.json', function() {
     var generatorPath = '../d';
 
     var testArguments = 'test-name';
@@ -30,20 +29,17 @@ describe('moda custom file templates via .yo-rc.json', function ()
 
     var runGen;
 
-    beforeEach(function ()
-    {
+    beforeEach(function() {
         runGen = helpers
             .run(path.join(__dirname, generatorPath))
             .inDir(path.join(__dirname, '.tmp'))
     });
 
-    afterEach(function ()
-    {
+    afterEach(function() {
         fs.unlinkSync(path.join(__dirname, '.tmp', '.yo-rc.json'));
     });
 
-    it('works for html templates', function (done)
-    {
+    it('works for html templates', function(done) {
         runGen
             .withArguments(testArguments)
             .withLocalConfig({
@@ -55,8 +51,8 @@ describe('moda custom file templates via .yo-rc.json', function ()
                     }
                 }
             })
-            .withOptions(options).on('end', function ()
-            {
+            .withOptions(options)
+            .on('end', function() {
                 assert.file([].concat(
                     expected
                 ));
@@ -68,8 +64,7 @@ describe('moda custom file templates via .yo-rc.json', function ()
             });
     });
 
-    it('has common variables available', function (done)
-    {
+    it('has common variables available', function(done) {
         runGen
             .withArguments(testArguments)
             .withLocalConfig({
@@ -81,8 +76,8 @@ describe('moda custom file templates via .yo-rc.json', function ()
                     }
                 }
             })
-            .withOptions(options).on('end', function ()
-            {
+            .withOptions(options)
+            .on('end', function() {
                 assert.file([].concat(
                     expected
                 ));
@@ -94,8 +89,7 @@ describe('moda custom file templates via .yo-rc.json', function ()
     });
 
 
-    it('works with services created from directives', function (done)
-    {
+    it('works with services created from directives', function(done) {
         runGen
             .withArguments(testArguments)
             .withOptions({
@@ -122,8 +116,7 @@ describe('moda custom file templates via .yo-rc.json', function ()
                     }
                 }
             })
-            .on('end', function ()
-            {
+            .on('end', function() {
                 assert.file([].concat(
                     expected
                 ));

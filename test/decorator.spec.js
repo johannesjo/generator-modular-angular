@@ -4,17 +4,14 @@ var assert = require('assert');
 var helpers = require('yeoman-generator').test;
 var assert = require('yeoman-generator').assert;
 
-describe('moda Decorator generator', function ()
-{
+describe('moda Decorator generator', function() {
     var generatorPath = '../decorator';
     // not testing the actual run of generators yet
-    it('can be required without throwing', function ()
-    {
+    it('can be required without throwing', function() {
         this.app = require(generatorPath);
     });
 
-    describe('basic file creation', function ()
-    {
+    describe('basic file creation', function() {
         var testArguments = 'test-name';
         var expectedContent = [
             ['app/scripts/main/global-services/test-name-decorator.js', /TestName/],
@@ -42,19 +39,17 @@ describe('moda Decorator generator', function ()
 
         var runGen;
 
-        beforeEach(function ()
-        {
+        beforeEach(function() {
             runGen = helpers
                 .run(path.join(__dirname, generatorPath))
                 .inDir(path.join(__dirname, '.tmp'))
         });
 
-        it('creates expected files', function (done)
-        {
+        it('creates expected files', function(done) {
             runGen
                 .withArguments(testArguments)
-                .withOptions(options).on('end', function ()
-                {
+                .withOptions(options)
+                .on('end', function() {
                     assert.file([].concat(
                         expected
                     ));
@@ -73,8 +68,7 @@ describe('moda Decorator generator', function ()
     });
 
 
-    describe('file in sub folder creation', function ()
-    {
+    describe('file in sub folder creation', function() {
         var testArguments = 'test-name test-path';
         var expectedContent = [
             ['app/scripts/test-path/test-name-decorator.js', /TestName/],
@@ -103,19 +97,17 @@ describe('moda Decorator generator', function ()
 
         var runGen;
 
-        beforeEach(function ()
-        {
+        beforeEach(function() {
             runGen = helpers
                 .run(path.join(__dirname, generatorPath))
                 .inDir(path.join(__dirname, '.tmp'))
         });
 
-        it('creates expected files', function (done)
-        {
+        it('creates expected files', function(done) {
             runGen
                 .withArguments(testArguments)
-                .withOptions(options).on('end', function ()
-                {
+                .withOptions(options)
+                .on('end', function() {
                     assert.file([].concat(
                         expected
                     ));

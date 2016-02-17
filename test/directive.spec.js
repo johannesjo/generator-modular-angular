@@ -4,16 +4,13 @@ var assert = require('assert');
 var helpers = require('yeoman-generator').test;
 var assert = require('yeoman-generator').assert;
 
-describe('moda Directive generator', function ()
-{
+describe('moda Directive generator', function() {
     // not testing the actual run of generators yet
-    it('can be required without throwing', function ()
-    {
+    it('can be required without throwing', function() {
         this.app = require('../d');
     });
 
-    describe('basic file creation', function ()
-    {
+    describe('basic file creation', function() {
         var testArguments = 'test-name';
         var expectedContent = [
             ['app/scripts/test-name/test-name-d.js', /testName/],
@@ -46,19 +43,17 @@ describe('moda Directive generator', function ()
 
         var runGen;
 
-        beforeEach(function ()
-        {
+        beforeEach(function() {
             runGen = helpers
                 .run(path.join(__dirname, '../d'))
                 .inDir(path.join(__dirname, '.tmp'))
         });
 
-        it('creates expected files', function (done)
-        {
+        it('creates expected files', function(done) {
             runGen
                 .withArguments(testArguments)
-                .withOptions(options).on('end', function ()
-                {
+                .withOptions(options)
+                .on('end', function() {
                     assert.file([].concat(
                         expected
                     ));
@@ -77,8 +72,7 @@ describe('moda Directive generator', function ()
     });
 
 
-    describe('file in sub folder creation', function ()
-    {
+    describe('file in sub folder creation', function() {
         var testArguments = 'test-name test-path';
         var expectedContent = [
             ['app/scripts/test-path/test-name/test-name-d.js', /testName/],
@@ -111,19 +105,17 @@ describe('moda Directive generator', function ()
 
         var runGen;
 
-        beforeEach(function ()
-        {
+        beforeEach(function() {
             runGen = helpers
                 .run(path.join(__dirname, '../d'))
                 .inDir(path.join(__dirname, '.tmp'))
         });
 
-        it('creates expected files', function (done)
-        {
+        it('creates expected files', function(done) {
             runGen
                 .withArguments(testArguments)
-                .withOptions(options).on('end', function ()
-                {
+                .withOptions(options)
+                .on('end', function() {
                     assert.file([].concat(
                         expected
                     ));
@@ -142,8 +134,7 @@ describe('moda Directive generator', function ()
     });
 
 
-    describe('file with service creation and no template (in sub folder)', function ()
-    {
+    describe('file with service creation and no template (in sub folder)', function() {
         var testArguments = 'test-name test-path';
         var expectedContent = [
             ['app/scripts/test-path/test-name/test-name-d.js', /testName/],
@@ -178,24 +169,22 @@ describe('moda Directive generator', function ()
 
         var runGen;
 
-        beforeEach(function ()
-        {
+        beforeEach(function() {
             runGen = helpers
                 .run(path.join(__dirname, '../d'))
                 .inDir(path.join(__dirname, '.tmp'))
 
         });
 
-        it('creates expected files', function (done)
-        {
+        it('creates expected files', function(done) {
             runGen
                 .withArguments(testArguments)
                 .withPrompts({
                     createService: 'service',
                     createTemplate: false
                 })
-                .withOptions(options).on('end', function ()
-                {
+                .withOptions(options)
+                .on('end', function() {
                     assert.file([].concat(
                         expected
                     ));

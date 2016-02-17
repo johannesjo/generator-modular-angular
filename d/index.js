@@ -2,21 +2,18 @@
 var ScriptBase = require('../sub-generator-base.js');
 
 module.exports = ScriptBase.extend({
-    initializing: function ()
-    {
+    initializing: function() {
         // needs to be called manually
         this.init();
     },
-    createFactoryFiles: function createFactoryFiles()
-    {
+    createFactoryFiles: function createFactoryFiles() {
         var cb = this.async(),
             defaults = {
                 createTemplate: true,
                 createService: false
             };
 
-        var createFiles = function (props)
-        {
+        var createFiles = function(props) {
             this.createService = props.createService;
             this.createTemplate = props.createTemplate;
 

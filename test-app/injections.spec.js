@@ -6,20 +6,17 @@ var exec = require('child_process').exec;
 var fs = require('fs');
 
 
-describe('gulp inject', function ()
-{
+describe('gulp inject', function() {
     var instancePath = path.join(__dirname, '../.test-instance');
     var gulp = '$(which gulp)';
     this.timeout(20000);
 
 
-    describe('styles', function ()
-    {
+    describe('styles', function() {
         var mainScss = path.join(instancePath, 'app/styles/main.scss');
         var injectStylesCmd = gulp + ' injectStyles';
 
-        describe('scss partials in styles folder', function ()
-        {
+        describe('scss partials in styles folder', function() {
             var expectedContent = [
                 [mainScss, /_variables/],
                 [mainScss, /base\/_buttons\.scss/],
@@ -38,20 +35,17 @@ describe('gulp inject', function ()
                 mainScss
             ];
 
-            beforeEach(function (done)
-            {
+            beforeEach(function(done) {
                 fs.truncateSync(mainScss);
                 fs.writeFileSync(mainScss, '// inject:sass\n\n// endinject');
                 exec(injectStylesCmd, {
                     cwd: instancePath
-                }, function ()
-                {
+                }, function() {
                     done();
                 });
             });
 
-            it('adds imports for default files', function ()
-            {
+            it('adds imports for default files', function() {
                 assert.file([].concat(
                     expected
                 ));
@@ -62,14 +56,12 @@ describe('gulp inject', function ()
         });
     });
 
-    describe('scripts', function ()
-    {
+    describe('scripts', function() {
         var mainHtml = path.join(instancePath, 'app/index.html');
         var injectScriptsCmd = gulp + ' injectScripts';
         var cachedMainFileContent;
 
-        describe('scripts into index.html', function ()
-        {
+        describe('scripts into index.html', function() {
             var expectedContent = [
                 [mainHtml, /_app\.js/],
                 [mainHtml, /routes\.js/],
@@ -78,28 +70,24 @@ describe('gulp inject', function ()
                 mainHtml
             ];
 
-            beforeEach(function (done)
-            {
+            beforeEach(function(done) {
                 cachedMainFileContent = fs.readFileSync(mainHtml, 'utf8');
                 fs.truncateSync(mainHtml);
                 fs.writeFileSync(mainHtml, '<!-- inject:js -->\n<!-- endinject -->');
                 exec(injectScriptsCmd, {
                     cwd: instancePath
-                }, function ()
-                {
+                }, function() {
                     done();
                 });
             });
 
-            afterEach(function ()
-            {
+            afterEach(function() {
                 // restore old html
                 fs.truncateSync(mainHtml);
                 fs.writeFileSync(mainHtml, cachedMainFileContent);
             });
 
-            it('adds imports for script files', function ()
-            {
+            it('adds imports for script files', function() {
                 assert.file([].concat(
                     expected
                 ));
@@ -111,14 +99,12 @@ describe('gulp inject', function ()
     });
 
 
-    describe('wiredep', function ()
-    {
+    describe('wiredep', function() {
         var mainHtml = path.join(instancePath, 'app/index.html');
         var wiredepCmd = gulp + ' wiredep';
         var cachedMainFileContent;
 
-        describe('bower-components into index.html', function ()
-        {
+        describe('bower-components into index.html', function() {
             var expectedContent = [
                 [mainHtml, /bower_components\/angular\/angular\.js/],
                 [mainHtml, /bower_components\/angular-animate\/angular-animate\.js/],
@@ -131,28 +117,24 @@ describe('gulp inject', function ()
                 mainHtml
             ];
 
-            beforeEach(function (done)
-            {
+            beforeEach(function(done) {
                 cachedMainFileContent = fs.readFileSync(mainHtml, 'utf8');
                 fs.truncateSync(mainHtml);
                 fs.writeFileSync(mainHtml, '<!-- bower:js -->\n<!-- endbower -->');
                 exec(wiredepCmd, {
                     cwd: instancePath
-                }, function ()
-                {
+                }, function() {
                     done();
                 });
             });
 
-            afterEach(function ()
-            {
+            afterEach(function() {
                 // restore old html
                 fs.truncateSync(mainHtml);
                 fs.writeFileSync(mainHtml, cachedMainFileContent);
             });
 
-            it('adds imports for bower-components', function ()
-            {
+            it('adds imports for bower-components', function() {
                 assert.file([].concat(
                     expected
                 ));

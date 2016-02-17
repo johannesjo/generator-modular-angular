@@ -3,17 +3,14 @@ var path = require('path');
 var helpers = require('yeoman-generator').test;
 var assert = require('yeoman-generator').assert;
 
-describe('moda Controller generator', function ()
-{
+describe('moda Controller generator', function() {
     var generatorPath = '../c';
     // not testing the actual run of generators yet
-    it('can be required without throwing', function ()
-    {
+    it('can be required without throwing', function() {
         this.app = require(generatorPath);
     });
 
-    describe('basic file creation', function ()
-    {
+    describe('basic file creation', function() {
         var testArguments = 'test-name';
         var expectedContent = [
             ['app/scripts/test-name/test-name-c.js', /TestNameCtrl/],
@@ -46,19 +43,17 @@ describe('moda Controller generator', function ()
 
         var runGen;
 
-        beforeEach(function ()
-        {
+        beforeEach(function() {
             runGen = helpers
                 .run(path.join(__dirname, generatorPath))
                 .inDir(path.join(__dirname, '.tmp'))
         });
 
-        it('creates expected files', function (done)
-        {
+        it('creates expected files', function(done) {
             runGen
                 .withArguments(testArguments)
-                .withOptions(options).on('end', function ()
-                {
+                .withOptions(options)
+                .on('end', function() {
                     assert.file([].concat(
                         expected
                     ));
@@ -77,8 +72,7 @@ describe('moda Controller generator', function ()
     });
 
 
-    describe('files in sub folder creation', function ()
-    {
+    describe('files in sub folder creation', function() {
         var testArguments = 'test-name test-path';
         var expectedContent = [
             ['app/scripts/test-path/test-name/test-name-c.js', /TestNameCtrl/],
@@ -110,19 +104,17 @@ describe('moda Controller generator', function ()
 
         var runGen;
 
-        beforeEach(function ()
-        {
+        beforeEach(function() {
             runGen = helpers
                 .run(path.join(__dirname, generatorPath))
                 .inDir(path.join(__dirname, '.tmp'))
         });
 
-        it('creates expected files', function (done)
-        {
+        it('creates expected files', function(done) {
             runGen
                 .withArguments(testArguments)
-                .withOptions(options).on('end', function ()
-                {
+                .withOptions(options)
+                .on('end', function() {
                     assert.file([].concat(
                         expected
                     ));
@@ -141,8 +133,7 @@ describe('moda Controller generator', function ()
     });
 
 
-    describe('file with service creation and no template (in sub folder)', function ()
-    {
+    describe('file with service creation and no template (in sub folder)', function() {
         var testArguments = 'test-name test-path';
         var expectedContent = [
             ['app/scripts/test-path/test-name/test-name-c.js', /TestNameCtrl/],
@@ -166,8 +157,7 @@ describe('moda Controller generator', function ()
             'app/scripts/test-path/test-name/_test-name-c.scss'
         ];
 
-        var nonExpected = [
-        ];
+        var nonExpected = [];
 
         var options = {
             'skipInject': true
@@ -175,24 +165,22 @@ describe('moda Controller generator', function ()
 
         var runGen;
 
-        beforeEach(function ()
-        {
+        beforeEach(function() {
             runGen = helpers
                 .run(path.join(__dirname, generatorPath))
                 .inDir(path.join(__dirname, '.tmp'))
 
         });
 
-        it('creates expected files', function (done)
-        {
+        it('creates expected files', function(done) {
             runGen
                 .withArguments(testArguments)
                 .withPrompts({
                     createService: 'service',
                     createTemplate: false
                 })
-                .withOptions(options).on('end', function ()
-                {
+                .withOptions(options)
+                .on('end', function() {
                     assert.file([].concat(
                         expected
                     ));

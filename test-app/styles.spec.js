@@ -6,8 +6,7 @@ var exec = require('child_process').exec;
 var fs = require('fs');
 
 
-describe('gulp buildStyles', function ()
-{
+describe('gulp buildStyles', function() {
     var instancePath = path.join(__dirname, '../.test-instance');
     var gulp = '$(which gulp)';
     this.timeout(20000);
@@ -20,8 +19,7 @@ describe('gulp buildStyles', function ()
     var sassCmd = gulp + ' sass';
 
 
-    describe('autoprefixer, sourcemap as base 64 and general compilation', function ()
-    {
+    describe('autoprefixer, sourcemap as base 64 and general compilation', function() {
         var expectedContent = [
             [mainScss, /_variables/],
             [mainScss, /base\/_buttons\.scss/],
@@ -43,33 +41,28 @@ describe('gulp buildStyles', function ()
             [mainCss, /sourceMappingURL=main\.css\.map/]
         ];
 
-        beforeEach(function (done)
-        {
+        beforeEach(function(done) {
             fs.truncateSync(mainScss);
             fs.writeFileSync(testFileInScritsDir, '.scripts-class{color:blue;}');
             fs.writeFileSync(testFileInStylesDir, '.styles-class{background: linear-gradient(to bottom right, yellow, green);}');
             fs.writeFileSync(mainScss, '// inject:sass\n\n// endinject');
             exec(injectStylesCmd, {
                 cwd: instancePath
-            }, function (err, stdout)
-            {
+            }, function(err, stdout) {
                 exec(sassCmd, {
                     cwd: instancePath
-                }, function (err, stdout)
-                {
+                }, function(err, stdout) {
                     done();
                 });
             });
         });
 
-        afterEach(function ()
-        {
+        afterEach(function() {
             fs.unlinkSync(testFileInScritsDir);
             fs.unlinkSync(testFileInStylesDir);
         });
 
-        it('creates expected files', function ()
-        {
+        it('creates expected files', function() {
             assert.file([
                 mainCss,
                 mainScss,
