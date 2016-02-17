@@ -47,6 +47,7 @@
     "merge-stream": "latest",
     "node-sass": "latest",
     "protractor": "latest",
+    "phantomjs": "latest",
     "require-dir": "latest",
     "run-sequence": "latest",
     "wiredep": "latest",
