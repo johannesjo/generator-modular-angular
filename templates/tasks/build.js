@@ -30,7 +30,7 @@ gulp.task('build', function(callback) {
         'wiredepBuild',
         'injectAll',
         'testSingle',
-        'lint',
+        'lintAndBeautify',
         'sass',
         'minFiles',
         'copy',
