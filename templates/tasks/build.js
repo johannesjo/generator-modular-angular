@@ -81,9 +81,9 @@ gulp.task('copy', function () {
 
 gulp.task('minFiles', function () {
     return gulp.src(config.mainFile)
+        .pipe(useref())
         .pipe(gulpif('*.js', ngAnnotate()))
         .pipe(gulpif('*.js', uglify()))
         .pipe(gulpif('*.css', minifyCss()))
-        .pipe(useref())
         .pipe(gulp.dest(config.dist));
 });
