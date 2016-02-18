@@ -14,7 +14,7 @@
         .controller('<%= classedName %><%= nameSuffix %>', <%= classedName %><%= nameSuffix %>);
 
     /* @ngInject */
-    function <%= classedName %><%= nameSuffix %>() {
+    function <%= classedName %><%= nameSuffix %>(<% if(createService) {%><%= svcName %><% } %>) {
         var vm = this;
     }
 })();
