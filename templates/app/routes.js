@@ -22,4 +22,4 @@
         $stateProvider
             /* STATES-NEEDLE - DO NOT REMOVE THIS */;
     }
-});
+})();

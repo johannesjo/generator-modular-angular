@@ -37,4 +37,4 @@
         this.someServiceFunction = function() {
         };
     }
-});
+})();
