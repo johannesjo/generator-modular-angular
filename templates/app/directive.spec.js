@@ -1,7 +1,6 @@
 'use strict';
 
-describe('Directive: <%= cameledName %><%= nameSuffix %>', function ()
-{
+describe('Directive: <%= cameledName %><%= nameSuffix %>', function() {
 
     // load the directive's module
     beforeEach(module('<%= scriptAppName %>'));
@@ -10,13 +9,11 @@ describe('Directive: <%= cameledName %><%= nameSuffix %>', function ()
     var element,
         scope;
 
-    beforeEach(inject(function ($rootScope)
-    {
+    beforeEach(inject(function($rootScope) {
         scope = $rootScope.$new();
     }));
 
-    it('should do something', inject(function ($compile)
-    {
+    it('should do something', inject(function($compile) {
         element = $compile('<<%= dashedName %>></<%= dashedName %>>');
         expect(true).toBe(<%= testPassOnDefault %>);
     }));

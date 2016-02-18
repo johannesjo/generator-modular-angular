@@ -15,8 +15,7 @@
     /* @ngInject */
     function <%= cameledName %><%= nameSuffix %>() {
         return {<% if(tplUrl) {%>
-            templateUrl: '<%= tplUrl %>',
-            <% } %>
+            templateUrl: '<%= tplUrl %>',<% } %>
             bindToController: true,
             controller: <%= cameledName %><%= nameSuffix %>Ctrl,
             controllerAs: 'vm',

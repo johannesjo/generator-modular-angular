@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Controller: <%= classedName %><%= nameSuffix %>', function () {
+describe('Controller: <%= classedName %><%= nameSuffix %>', function() {
 
     // load the controller's module
     beforeEach(module('<%= scriptAppName %>'));
@@ -17,7 +17,7 @@ describe('Controller: <%= classedName %><%= nameSuffix %>', function () {
         });
     }));
 
-    it('should ...', function () {
+    it('should ...', function() {
          expect(true).toBe(<%= testPassOnDefault %>);
     });
 });

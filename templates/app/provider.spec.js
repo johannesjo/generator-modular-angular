@@ -1,11 +1,10 @@
 'use strict';
 
-describe('Provider: <%= classedName %><%= nameSuffix %>', function () {
+describe('Provider: <%= classedName %><%= nameSuffix %>', function() {
     // load the service's module
     var provider;
 
-    beforeEach(module('<%= scriptAppName %>', function (<%= classedName %><%= nameSuffix %>Provider)
-    {
+    beforeEach(module('<%= scriptAppName %>', function (<%= classedName %><%= nameSuffix %>Provider) {
         provider = <%= classedName %><%= nameSuffix %>Provider;
     }));
 
@@ -15,7 +14,7 @@ describe('Provider: <%= classedName %><%= nameSuffix %>', function () {
         <%= classedName %><%= nameSuffix %> = _<%= classedName %><%= nameSuffix %>_;
     }));
 
-    it('should be defined', function () {
+    it('should be defined', function() {
         // provider.extendConfig({});
         expect(true).toBe(<%= testPassOnDefault %>);
     });

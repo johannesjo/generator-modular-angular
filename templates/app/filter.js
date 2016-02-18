@@ -15,7 +15,7 @@
         .filter('<%= cameledName %><%= nameSuffix %>', <%= cameledName %><%= nameSuffix %>);
 
     function <%= cameledName %><%= nameSuffix %>() {
-        return function (parameters) {
+        return function(parameters) {
             return parameters;
         }
     }

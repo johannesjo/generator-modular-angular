@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Decorator: <%= classedName %><%= nameSuffix %>', function () {
+describe('Decorator: <%= classedName %><%= nameSuffix %>', function() {
     // load the service's module
     beforeEach(module('<%= scriptAppName %>'));
 
@@ -10,7 +10,7 @@ describe('Decorator: <%= classedName %><%= nameSuffix %>', function () {
         <%= classedName %><%= nameSuffix %> = _<%= classedName %><%= nameSuffix %>_;
     }));
 
-    it('should be defined', function () {
+    it('should be defined', function() {
         expect(true).toBe(<%= testPassOnDefault %>);
     });
 
