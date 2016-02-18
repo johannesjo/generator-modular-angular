@@ -1,25 +1,27 @@
 /**
- * @ngdoc service
+ * @ngdoc factory
  * @name <%= scriptAppName %>.<%= classedName %><%= nameSuffix %>
  * @description
  * # <%= classedName %><%= nameSuffix %>
  * Factory in the <%= scriptAppName %>.
  */
-angular.module('<%= scriptAppName %>')
-    .factory('<%= classedName %><%= nameSuffix %>', function ()
-    {
-        'use strict';
 
+(function() {
+    'use strict';
+
+    angular
+        .module('<%= scriptAppName %>')
+        .factory('<%= classedName %><%= nameSuffix %>', <%= classedName %><%= nameSuffix %>);
+
+    /* @ngInject */
+    function <%= classedName %><%= nameSuffix %>() {
         // INITIALIZATION
 
 
         // ACTUAL DEFINITION
-        var service = {
-            someMethod: function ()
-            {
-
+        return {
+            someMethod: function() {
             }
         };
-
-        return service;
-    });
+    }
+})();

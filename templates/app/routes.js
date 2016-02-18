@@ -7,14 +7,20 @@
  * Routes module. All app states are defined here.
  */
 
-angular.module('<%= scriptAppName %>')
-    .config(function ($stateProvider, $urlRouterProvider)
-    {
+
+(function() {
+
+    angular
+        .module('<%= scriptAppName %>')
+        .config(routerHelperProvider);
+
+    /* @ngInject */
+    function routerHelperProvider($stateProvider, $urlRouterProvider) {
         'use strict';
 
         $urlRouterProvider.otherwise('/');
 
         $stateProvider
             /* STATES-NEEDLE - DO NOT REMOVE THIS */;
-
-    });
+    }
+});

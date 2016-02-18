@@ -1,28 +1,41 @@
-'use strict';
-
 /**
-* @ngdoc directive
-* @name <%= scriptAppName %>.directive:<%= cameledName %><%= nameSuffix %>
-* @description
-* # <%= cameledName %><%= nameSuffix %>
-*/
-angular.module('<%= scriptAppName %>')
-    .directive('<%= cameledName %><%= nameSuffix %>', function ()
-    {
+ * @ngdoc directive
+ * @name <%= scriptAppName %>.directive:<%= cameledName %><%= nameSuffix %>
+ * @description
+ * # <%= cameledName %><%= nameSuffix %>
+ */
+
+(function() {
+    'use strict';
+
+    angular
+        .module('<%= scriptAppName %>')
+        .directive('<%= cameledName %><%= nameSuffix %>', <%= cameledName %><%= nameSuffix %>);
+
+    /* @ngInject */
+    function <%= cameledName %><%= nameSuffix %>() {
         return {<% if(tplUrl) {%>
             templateUrl: '<%= tplUrl %>',
             <% } %>
-            restrict: 'EA',
+            bindToController: true,
+            controller: <%= cameledName %><%= nameSuffix %>Ctrl,
+            controllerAs: 'vm',
+            link: linkFn,
+            restrict: 'A',
             scope: {
-
-            },
-            link: function (scope, el, attrs)
-            {
-
-            },
-            controller: function ($scope<% if(createService) {%>, <%= svcName %><% } %>)
-            {
 
             }
         };
-    });
+
+        function linkFn(scope, element, attrs) {
+
+        }
+    }
+
+    /* @ngInject */
+    function <%= cameledName %><%= nameSuffix %>Ctrl(<% if(createService) {%><%= svcName %><% } %>) {
+        var vm = this;
+    }
+
+})();
+

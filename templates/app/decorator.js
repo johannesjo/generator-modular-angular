@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc function
  * @name <%= scriptAppName %>.decorator:<%= classedName %><%= nameSuffix %>
@@ -7,11 +5,17 @@
  * # <%= classedName %><%= nameSuffix %>
  * Decorator of the <%= scriptAppName %>
  */
-angular.module('<%= scriptAppName %>')
-    .config(function ($provide)
-    {
-        $provide.decorator('<%= classedName %><%= nameSuffix %>', function ($delegate)
-        {
+
+(function() {
+    'use strict';
+
+    angular
+        .module('<%= scriptAppName %>')
+        .config(<%= classedName %><%= nameSuffix %>);
+
+    function <%= classedName %><%= nameSuffix %>($provide) {
+        $provide.decorator('<%= classedName %', function($delegate) {
             return $delegate;
         });
-    });
+    }
+})();

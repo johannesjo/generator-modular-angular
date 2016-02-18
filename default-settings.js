@@ -48,6 +48,7 @@ module.exports = {
         },
         decorator: {
             suffix: '-decorator',
+            nameSuffix: 'Decorator',
             globalDir: 'main/global-services'
         },
         mod: {

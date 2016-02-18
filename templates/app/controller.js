@@ -1,13 +1,21 @@
 /**
  * @ngdoc function
- * @name <%= scriptAppName %>.controller:<%= classedName %>Ctrl
+ * @name <%= scriptAppName %>.controller:<%= classedName %><%= nameSuffix %>
  * @description
- * # <%= classedName %>Ctrl
+ * # <%= classedName %><%= nameSuffix %>
  * Controller of the <%= scriptAppName %>
  */
-angular.module('<%= scriptAppName %>')
-    .controller('<%= classedName %><%= nameSuffix %>', function ()
-    {
-        'use strict';
 
-    });
+
+(function() {
+    'use strict';
+
+    angular
+        .module('<%= scriptAppName %>')
+        .controller('<%= classedName %><%= nameSuffix %>', <%= classedName %><%= nameSuffix %>);
+
+    /* @ngInject */
+    function <%= classedName %><%= nameSuffix %>() {
+        var vm = this;
+    }
+})();

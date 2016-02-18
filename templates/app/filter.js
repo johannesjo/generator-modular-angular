@@ -6,13 +6,17 @@
  * # <%= cameledName %><%= nameSuffix %>
  * Filter in the <%= scriptAppName %>.
  */
-angular.module('<%= scriptAppName %>')
-    .filter('<%= cameledName %><%= nameSuffix %>', function ()
-    {
-        'use strict';
 
-        return function (input)
-        {
-            return input;
-        };
-    });
+(function() {
+    'use strict';
+
+    angular
+        .module('<%= scriptAppName %>')
+        .filter('<%= cameledName %><%= nameSuffix %>', <%= cameledName %><%= nameSuffix %>);
+
+    function <%= cameledName %><%= nameSuffix %>() {
+        return function (parameters) {
+            return parameters;
+        }
+    }
+})();

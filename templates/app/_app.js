@@ -6,6 +6,11 @@
  *
  * Main module of the application.
  */
-'use strict';
 
-angular.module('<%= scriptAppName %>', [<%= angularModules %>]);
+
+(function() {
+    'use strict';
+
+    angular
+        .module('<%= scriptAppName %>', [<%= angularModules %>]);
+})();
