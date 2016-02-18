@@ -6,7 +6,6 @@
  * Controller of the <%= scriptAppName %>
  */
 
-
 (function() {
     'use strict';
 
