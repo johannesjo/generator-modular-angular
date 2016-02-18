@@ -25,12 +25,14 @@ exports.addToFile = function(filename, lineToAdd, beforeMarker) {
 
 exports.injectRoute = function(routesFile, name, url, tplUrl, ctrl, that) {
     var ind = '    ';
+    var ctrlAs = ',\n' + IND + IND + IND + IND + 'controllerAs: \'vm\'';
     var template = tplUrl ? ',\n' + ind + ind + ind + ind + 'templateUrl: \'' + tplUrl + '\'' : '';
     ctrl = ctrl ? ',\n' + ind + ind + ind + ind + 'controller: \'' + ctrl + '\'' : '';
     var code = '' +
         '.state(\'' + name + '\', {' +
         '\n' + ind + ind + ind + ind + 'url: \'' + url + '\'' +
         ctrl +
+        ctrlAs +
         template +
         '\n' + ind + ind + ind + '})';
     exports.addToFile(routesFile, code, exports.STATE_NEEDLE);
