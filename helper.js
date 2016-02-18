@@ -25,9 +25,10 @@ exports.addToFile = function(filename, lineToAdd, beforeMarker) {
 
 exports.injectRoute = function(routesFile, name, url, tplUrl, ctrl, that) {
     var IND = '    ';
-    var ctrlAs = ',\n' + IND + IND + IND + IND + 'controllerAs: \'vm\'';
     var template = tplUrl ? ',\n' + IND + IND + IND + IND + 'templateUrl: \'' + tplUrl + '\'' : '';
     ctrl = ctrl ? ',\n' + IND + IND + IND + IND + 'controller: \'' + ctrl + '\'' : '';
+    var ctrlAs = ctrl ? ',\n' + IND + IND + IND + IND + 'controllerAs: \'vm\'' : '';
+
     var code = '' +
         '.state(\'' + name + '\', {' +
         '\n' + IND + IND + IND + IND + 'url: \'' + url + '\'' +

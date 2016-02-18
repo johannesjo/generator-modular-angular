@@ -94,7 +94,7 @@ describe('moda Helper-Scripts', function() {
                 [routesFile, url],
                 [routesFile, 'SomeCtrl'],
                 [routesFile, 'some.html'],
-                [routesFile, /\.state\('test\.name', \{\s*url:\s*'\/some-url',\s*controller:\s*'SomeCtrl',\s*templateUrl:\s*'some.html'\s+}\)\s*\/\* NEEEEEEDLE \*\//]
+                [routesFile, /\.state\('test\.name', \{\s*url:\s*'\/some-url',\s*controller:\s*'SomeCtrl',\s*controllerAs:\s*'vm',\s*templateUrl:\s*'some.html'\s+}\)\s*\/\* NEEEEEEDLE \*\//]
             ]);
         });
 
