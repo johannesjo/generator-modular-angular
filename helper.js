@@ -24,17 +24,17 @@ exports.addToFile = function(filename, lineToAdd, beforeMarker) {
 };
 
 exports.injectRoute = function(routesFile, name, url, tplUrl, ctrl, that) {
-    var ind = '    ';
+    var IND = '    ';
     var ctrlAs = ',\n' + IND + IND + IND + IND + 'controllerAs: \'vm\'';
-    var template = tplUrl ? ',\n' + ind + ind + ind + ind + 'templateUrl: \'' + tplUrl + '\'' : '';
-    ctrl = ctrl ? ',\n' + ind + ind + ind + ind + 'controller: \'' + ctrl + '\'' : '';
+    var template = tplUrl ? ',\n' + IND + IND + IND + IND + 'templateUrl: \'' + tplUrl + '\'' : '';
+    ctrl = ctrl ? ',\n' + IND + IND + IND + IND + 'controller: \'' + ctrl + '\'' : '';
     var code = '' +
         '.state(\'' + name + '\', {' +
-        '\n' + ind + ind + ind + ind + 'url: \'' + url + '\'' +
+        '\n' + IND + IND + IND + IND + 'url: \'' + url + '\'' +
         ctrl +
         ctrlAs +
         template +
-        '\n' + ind + ind + ind + '})';
+        '\n' + IND + IND + IND + '})';
     exports.addToFile(routesFile, code, exports.STATE_NEEDLE);
 
     that.log.writeln(chalk.green(' updating') + ' %s', path.basename(routesFile));
