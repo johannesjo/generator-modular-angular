@@ -18,6 +18,9 @@ var inj = require('gulp-inject');
 
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
+var proxy = require('proxy-middleware');
+var url = require('url');
+
 var watch = require('gulp-watch');
 var runSequence = require('run-sequence')
     .use(gulp);
@@ -32,13 +35,16 @@ var merge = require('merge-stream');
 var plumber = require('gulp-plumber');
 var sort = require('gulp-natural-sort');
 
+var beautify = require('gulp-jsbeautifier');
+
 // main task
 gulp.task('default', function(cb) {
     gulp.start('test');
 
     runSequence(
         //'ngConfig',
-        'lintAndBeautify',
+        'lint',
+        'beautify',
         'injectAll',
         'buildStyles',
         'browserSync',
@@ -55,6 +61,7 @@ gulp.task('injectAll', function(callback) {
         'wiredep',
         'injectScripts',
         'injectStyles',
+        'beautify',
         callback
     );
 });
@@ -74,7 +81,7 @@ gulp.task('watch', function(cb) {
             .on('end', cb);
     });
     watch(config.scriptsAllF, function() {
-        gulp.start('lintAndBeautify')
+        gulp.start('lint')
             .on('end', cb);
 
     });
@@ -160,11 +167,14 @@ gulp.task('sass', function() {
 
 
 gulp.task('browserSync', function() {
+    var proxyOptions = url.parse('http://localhost:3000/api');
+    proxyOptions.route = '/api';
+
     browserSync({
-        port: config.browserSyncPort,
         server: {
             baseDir: config.base,
-            livereload: true
+            livereload: true,
+            middleware: [proxy(proxyOptions)]
         }
     });
 });
@@ -219,15 +229,27 @@ gulp.task('testSingle', function(done) {
 });
 
 
-gulp.task('lintAndBeautify', function() {
+gulp.task('lint', function() {
     return gulp.src([
             config.scriptsAllF,
             './karma-e2e.conf.js',
             './karma.conf.js',
             './gulpfile.js'
         ], {base: './'})
+        //.pipe(beautify({
+        //    config: '.jsbeautifyrc'}))
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'))
+        .pipe(jscs());
+});
+
+gulp.task('beautify', function() {
+    return gulp.src([
+            config.scriptsAllF,
+            './karma-e2e.conf.js',
+            './karma.conf.js',
+            './gulpfile.js'
+        ], {base: './'})
         .pipe(jscs({fix: true}))
         .pipe(gulp.dest('./'));
 });
@@ -236,7 +258,7 @@ gulp.task('lintAndBeautify', function() {
 //gulp.task('ngConfig', function () {
 //    return gulp.src(config.scripts + 'constants.json')
 //        .pipe(gulpNgConfig('config', {
-//            wrap: '(function () {\n\'use strict\';\n/*jshint ignore:start*/\n return <%= ngConfModulePlaceholder %> /*jshint ignore:end*/\n})();',
+//            wrap: '(function () {\n\'use strict\';\n/*jshint ignore:start*/\n return <%= module %> /*jshint ignore:end*/\n})();',
 //            environment: 'dev'
 //        }))
 //        .pipe(gulp.dest(config.scripts))
