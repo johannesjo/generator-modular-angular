@@ -11,5 +11,5 @@
     'use strict';
 
     angular
-        .module('<%= scriptAppName %>', [<%= angularModules %>]);
+        .module('<%= scriptAppName %>', [<%- angularModules %>]);
 })();

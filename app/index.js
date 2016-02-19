@@ -167,7 +167,7 @@ module.exports = yeoman.Base.extend({
             }
 
             if (angMods.length) {
-                this.env.options.angularDeps = '\n    ' + angMods.join(',\n    ') + '\n  ';
+                this.env.options.angularDeps = '\n        ' + angMods.join(',\n        ') + '\n  ';
             }
 
             cb();
