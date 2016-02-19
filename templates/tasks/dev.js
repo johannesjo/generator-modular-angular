@@ -34,17 +34,20 @@ var sort = require('gulp-natural-sort');
 
 // main task
 gulp.task('default', function(cb) {
-    gulp.start('test');
-
     runSequence(
         //'ngConfig',
+        'wiredep',
         'lint',
         'beautify',
         'injectAll',
         'buildStyles',
         'browserSync',
         'watch',
-        cb
+        function() {
+            // run in parallel but afterwards
+            gulp.start('test');
+            cb();
+        }
     );
 });
 gulp.task('serve', ['default']);
