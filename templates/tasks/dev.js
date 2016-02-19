@@ -32,8 +32,6 @@ var merge = require('merge-stream');
 var plumber = require('gulp-plumber');
 var sort = require('gulp-natural-sort');
 
-var beautify = require('gulp-jsbeautifier');
-
 // main task
 gulp.task('default', function(cb) {
     gulp.start('test');
