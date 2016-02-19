@@ -31,5 +31,8 @@
 },
   "devDependencies": {
     "angular-mocks": "^<%= ngVer %>"
+  },
+  "scripts":{
+    "postinstall": "gulp wiredep"
   }
 }

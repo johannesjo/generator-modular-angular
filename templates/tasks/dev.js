@@ -26,7 +26,7 @@ var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
 var KarmaServer = require('karma').Server;
 
-var gulpNgConfig = require('gulp-ng-config');
+// var gulpNgConfig = require('gulp-ng-config');
 
 var merge = require('merge-stream');
 var plumber = require('gulp-plumber');
@@ -71,21 +71,22 @@ gulp.task('watch', function(cb) {
         gulp.start('injectScripts')
             .on('end', cb);
     });
-    watch(config.scripts + '*.json', function() {
-        gulp.start('ngConfig')
-            .on('end', cb);
-    });
     watch(config.scriptsAllF, function() {
         gulp.start('lint')
             .on('end', cb);
-
     });
     watch(config.allHtmlF, function() {
         gulp.start('html')
             .on('end', cb);
     });
 
-    gulp.watch('bower.json', ['wiredep']);
+    //gulp.watch('bower.json', ['wiredep']);
+
+    // enable at your convenience
+    //watch(config.scripts + '*.json', function() {
+    //    gulp.start('ngConfig')
+    //        .on('end', cb);
+    //});
 });
 
 
@@ -178,8 +179,10 @@ gulp.task('html', function() {
 });
 
 
-gulp.task('wiredep', function() {
-    var karmaKonf = gulp.src(config.karmaConf, {base: './'})
+gulp.task('wiredep', ['wirdepKarma', 'wiredepIndex']);
+
+gulp.task('wirdepKarma', function() {
+    return gulp.src(config.karmaConf, {base: './'})
         .pipe(wiredep({
             devDependencies: true,
             exclude: config.excludedBowerComponents
@@ -187,8 +190,10 @@ gulp.task('wiredep', function() {
         // required as weird workaround for not messing up the files
         .pipe(gulp.dest(config.tmp))
         .pipe(gulp.dest('./'));
+});
 
-    var indexHtml = gulp.src(config.mainFile, {base: './'})
+gulp.task('wiredepIndex', function() {
+    return gulp.src(config.mainFile, {base: './'})
         .pipe(wiredep({
             devDependencies: false,
             exclude: config.excludedBowerComponents
@@ -196,8 +201,6 @@ gulp.task('wiredep', function() {
         // required as weird workaround for not messing up the files
         .pipe(gulp.dest(config.tmp))
         .pipe(gulp.dest('./'));
-
-    return merge(karmaKonf, indexHtml);
 });
 
 
@@ -228,8 +231,6 @@ gulp.task('lint', function() {
             './karma.conf.js',
             './gulpfile.js'
         ], {base: './'})
-        //.pipe(beautify({
-        //    config: '.jsbeautifyrc'}))
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'))
         .pipe(jscs());
