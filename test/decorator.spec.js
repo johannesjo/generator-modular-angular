@@ -1,8 +1,8 @@
 'use strict';
 var path = require('path');
 var assert = require('assert');
-var helpers = require('yeoman-generator').test;
-var assert = require('yeoman-generator').assert;
+var helpers = require('yeoman-test');
+var assert = require('yeoman-assert');
 
 describe('moda Decorator generator', function() {
     var generatorPath = '../decorator';

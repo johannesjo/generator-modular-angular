@@ -10,9 +10,9 @@ var chalk = require('chalk');
 var _s = require('underscore.string');
 
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = yeoman.Base.extend({
     constructor: function() {
-        yeoman.generators.Base.apply(this, arguments);
+        yeoman.Base.apply(this, arguments);
 
         // get app name
         this.argument('appname', {type: String, required: false});
@@ -214,14 +214,13 @@ module.exports = yeoman.generators.Base.extend({
         }.bind(this));
     },
 
-    readIndex: function readIndex() {
+    readOptions: function readOptions() {
         this.ngRoute = this.env.options.ngRoute;
         this.uiRouter = this.env.options.uiRouter;
         this.ngMaterial = this.env.options.ngMaterial;
-        this.indexFile = this.engine(this.read('index.html'), this);
     },
 
-    cssFiles: function bootstrapFiles() {
+    cssFiles: function copyCssFiles() {
         this.fs.copy(
             this.templatePath('styles/**/*'),
             this.destinationPath(path.join(this.appPath, 'styles/')
@@ -230,8 +229,7 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     createIndexHtml: function createIndexHtml() {
-        this.indexFile = this.indexFile.replace(/&apos;/g, "'");
-        this.write(path.join(this.appPath, 'index.html'), this.indexFile);
+        this.template('index.html', path.join(this.appPath, 'index.html'));
     },
 
     appJs: function appJs() {

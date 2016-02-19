@@ -1,7 +1,7 @@
 'use strict';
 var path = require('path');
-var helpers = require('yeoman-generator').test;
-var assert = require('yeoman-generator').assert;
+var helpers = require('yeoman-test');
+var assert = require('yeoman-assert');
 var fs = require('fs');
 describe('moda custom file templates from folder', function() {
     var generatorPath = '../s';
