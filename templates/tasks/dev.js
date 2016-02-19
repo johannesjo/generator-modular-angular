@@ -18,9 +18,6 @@ var inj = require('gulp-inject');
 
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
-var proxy = require('proxy-middleware');
-var url = require('url');
-
 var watch = require('gulp-watch');
 var runSequence = require('run-sequence')
     .use(gulp);
@@ -167,14 +164,11 @@ gulp.task('sass', function() {
 
 
 gulp.task('browserSync', function() {
-    var proxyOptions = url.parse('http://localhost:3000/api');
-    proxyOptions.route = '/api';
-
     browserSync({
+        port: config.browserSyncPort,
         server: {
             baseDir: config.base,
-            livereload: true,
-            middleware: [proxy(proxyOptions)]
+            livereload: true
         }
     });
 });
@@ -258,7 +252,7 @@ gulp.task('beautify', function() {
 //gulp.task('ngConfig', function () {
 //    return gulp.src(config.scripts + 'constants.json')
 //        .pipe(gulpNgConfig('config', {
-//            wrap: '(function () {\n\'use strict\';\n/*jshint ignore:start*/\n return <%= module %> /*jshint ignore:end*/\n})();',
+//            wrap: '(function () {\n\'use strict\';\n/*jshint ignore:start*/\n return <%= ngConfModulePlaceholder %> /*jshint ignore:end*/\n})();',
 //            environment: 'dev'
 //        }))
 //        .pipe(gulp.dest(config.scripts))
