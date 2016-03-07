@@ -9,11 +9,9 @@
 
 [![Yeoman](assets/yeoman.png)](http://yeoman.io/) [![Angular](assets/angular.png)](https://angularjs.org) [![Gulp](assets/gulp.png)](http://gulpjs.com/) [![libSass](assets/libsass.png)](http://libsass.org/) [![Bower](assets/bower.png)](http://bower.io/) [![Cordova](assets/cordova.png)](https://cordova.apache.org/)
 
-This generator originated in the pure hate towards repetition and because all the ones I've used so far didn't fit my taste. `generator-modular-angular` is intended to encourage and ease a modular workflow for your AngularJS apps. It generates a front-end-build that uses all the tools I love (namely gulp, libsass and of course angular) and offers an **easy adaption towards multi-platform web-app hybrid-apps** (in shot muplawehy-apps, if you didn't know). Although its great, you don't need ionic and sometimes you don't want to need it.
+This generator originated in the pure hate towards repetition. 
 
-Creating a generator is much about best practise and much about ones personal taste and preferences for development. At the moment `generator-modular-angular` does fit mostly my own, but I would be really happy to discuss and adjust it to a broader public. So if you don't like something or miss anything always feel free to submit a feature request.
-
-Credits to the [generator-angular](https://github.com/yeoman/generator-angular) team. Their code helped me to get started and some of the file-templates are very similiar.
+It comes with a basic gulp setup that offers you [some useful tasks](#gulp-tasks) for development (autoinjection of all development sass and javascript files, unit-tests, e2e tests and more), for building your app (minification of everything) and for building cordova multi-platform hybrid apps. It further adds a [set of useful sub-generators](#sub-gens) (e.g.: the component generator `yo moda:d myDirective`) that creates your development and testfiles in one simple sweep. The generated files follow John Papas [angular styleguide](https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md).
 
 I want this to be really good, so I would be excited to [hear about your thoughts and what possible features you might be missing](https://github.com/johannesjo/generator-modular-angular/issues). Any other kind of help is also highly appreciated :)
 
@@ -43,7 +41,7 @@ gulp serve
 for development.
 
 
-## Features
+## <a name="features"></a> Features
 * **total injection**: Basically everything you create is automatically injected where it needs to be and removed when its gone. Creating a new scss-file? No problem it's in your main.scss! Deleting an unused component? It's gone from your index.html.
 * **gulp and libsass speedified**: It's amazing how much faster both are compared to their counterparts.
 * **super modular**: No more controller madness by design. 
@@ -71,7 +69,7 @@ Finally it is safe to say that I'm really dedicated to this project. I'm an Angu
 * Directives are the way to go. Build components all the way. They're sexy enclosed logic and expressive. Chances are you'll reuse them and it is no problem if it is only in your current app.
 * Use controllers economically. They will be gone in Angular 2.0 and honestly - I'm not too sad about it. Use them on a page-level (if your app has something like that) to get data for your views or for very minor and very specific logic.
 
-## The gulp tasks
+## <a name="gulp-tasks"></a> The gulp tasks
 As per default the following tasks are available at your convenience:
 
 * `gulp`: The development task. Runs all the injectors on file-change, file-creation or file-deletion. Unit-tests are run in parallel, as well as the sass-compilation. 
@@ -96,7 +94,7 @@ For all cordova related commands there is an optional platform parameter you can
 
 All tasks can be edited freely and can be found in the /tasks folder.
 
-## Sub-Generators
+## <a name="sub-gens"></a> Sub-Generators
 * [moda](#moda) (aka [moda:app](#app))
 * [directive](#directive)
 * [service](#service)
