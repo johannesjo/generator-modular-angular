@@ -17,7 +17,7 @@
         return {<% if(tplUrl) {%>
             templateUrl: '<%= tplUrl %>',<% } %>
             bindToController: true,
-            controller: <%= cameledName %><%= nameSuffix %>Ctrl,
+            controller: <%= classedName %><%= nameSuffix %>Ctrl,
             controllerAs: 'vm',
             link: linkFn,
             restrict: 'A',
@@ -32,7 +32,7 @@
     }
 
     /* @ngInject */
-    function <%= cameledName %><%= nameSuffix %>Ctrl(<% if(createService) {%><%= svcName %><% } %>) {
+    function <%= classedName %><%= nameSuffix %>Ctrl(<% if(createService) {%><%= svcName %><% } %>) {
         var vm = this;
     }
 
