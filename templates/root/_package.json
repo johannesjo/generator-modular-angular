@@ -44,6 +44,7 @@
     "karma-jasmine": "latest",
     "karma-ng-html2js-preprocessor": "latest",
     "karma-phantomjs-launcher": "latest",
+    "lazypipe": "latest",
     "merge-stream": "latest",
     "node-sass": "latest",
     "protractor": "latest",
