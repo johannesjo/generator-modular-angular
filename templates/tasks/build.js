@@ -11,7 +11,7 @@ var gulp = require('gulp');
 var del = require('del');
 var gulpif = require('gulp-if');
 var minifyHtml = require('gulp-minify-html');
-var minifyCss = require('gulp-minify-css');
+var cleanCSS = require('gulp-clean-css');
 var useref = require('gulp-useref');
 var ngAnnotate = require('gulp-ng-annotate');
 var uglify = require('gulp-uglify');
@@ -85,6 +85,6 @@ gulp.task('minFiles', function() {
         .pipe(useref())
         .pipe(gulpif('*.js', ngAnnotate()))
         .pipe(gulpif('*.js', uglify()))
-        .pipe(gulpif('*.css', minifyCss()))
+        .pipe(gulpif('*.css', cleanCSS()))
         .pipe(gulp.dest(config.dist));
 });
