@@ -156,7 +156,7 @@ gulp.task('sass', function() {
         .pipe(sourcemaps.init())
         .pipe(sass({errLogToConsole: true}))
         .pipe(autoprefixer({
-            browsers: ['> 1%']
+            browsers: ['> 0.1%']
         }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(config.tmp))
