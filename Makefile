@@ -44,7 +44,7 @@ create-app-instance:
 	npm install -g yo bower node-gyp
 	npm link
 	cd $(INSTANCE_TESTS_DIR) && echo "CDing into $(INSTANCE_TESTS_DIR)" && \
-	yes | yo moda --skip-install && \
+	yo moda --skip-install --skipPrompts && \
 	npm install && \
 	bower install
 
@@ -53,13 +53,13 @@ test-node-module:
 	mkdir $(INSTANCE_TESTS_DIR)
 	npm install -g yo bower generator-moda node-gyp
 	cd $(INSTANCE_TESTS_DIR) && echo "CDing into $(INSTANCE_TESTS_DIR)" && \
-	yes | yo moda --skip-install && \
+	yo moda --skipPrompts --skip-install && \
 	npm cache clean && \
 	npm install && \
 	bower install && \
 	gulp injectAll && \
-	yes | yo moda:r hello-route && \
-	yes | yo moda:d hello-directive && \
-	yes | yo moda:s hello-service && \
+	yo moda:r hello-route --useDefaults && \
+	yo moda:d hello-directive --useDefaults && \
+	yo moda:s hello-service --useDefaults && \
 	gulp testSingle && \
 	gulp build

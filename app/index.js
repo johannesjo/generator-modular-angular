@@ -9,7 +9,6 @@ var wiredep = require('wiredep');
 var chalk = require('chalk');
 var _s = require('underscore.string');
 
-
 module.exports = yeoman.Base.extend({
     constructor: function() {
         yeoman.Base.apply(this, arguments);
@@ -43,6 +42,23 @@ module.exports = yeoman.Base.extend({
 
     askForModules: function askForModules() {
         var cb = this.async();
+
+        if (this.options.skipPrompts) {
+            cb();
+            // set defaults if skipping this one
+            this.animateModule = false;
+            this.ariaModule = false;
+            this.cookiesModule = false;
+            this.messagesModule = false;
+            this.resourceModule = false;
+            this.routeModule = false;
+            this.uiRouterModule = false;
+            this.ngFabFormModule = false;
+            this.sanitizeModule = false;
+            this.ngMaterialModule = false;
+            this.touchModule = false;
+            return;
+        }
 
         var prompts = [{
             type: 'checkbox',
@@ -176,6 +192,11 @@ module.exports = yeoman.Base.extend({
 
     askForCodingStyle: function askForModules() {
         var cb = this.async();
+
+        if (this.options.skipPrompts) {
+            cb();
+            return;
+        }
 
         var prompts = [{
             type: 'list',
