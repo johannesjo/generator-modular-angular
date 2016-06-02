@@ -63,8 +63,7 @@ describe('gulp inject', function() {
 
         describe('scripts into index.html', function() {
             var expectedContent = [
-                [mainHtml, /_app\.js/],
-                [mainHtml, /routes\.js/],
+                [mainHtml, /_app\.js/]
             ];
             var expected = [
                 mainHtml
@@ -106,12 +105,7 @@ describe('gulp inject', function() {
 
         describe('bower-components into index.html', function() {
             var expectedContent = [
-                [mainHtml, /bower_components\/angular\/angular\.js/],
-                [mainHtml, /bower_components\/angular-animate\/angular-animate\.js/],
-                [mainHtml, /bower_components\/angular-aria\/angular-aria\.js/],
-                [mainHtml, /bower_components\/angular-aria\/angular-aria\.js/],
-                [mainHtml, /bower_components\/angular-resource\/angular-resource\.js/],
-                [mainHtml, /bower_components\/angular-ui-router\/release\/angular-ui-router\.js/],
+                [mainHtml, /bower_components\/angular\/angular\.js/]
             ];
             var expected = [
                 mainHtml
