@@ -118,7 +118,7 @@ gulp.task('injectStyles', function() {
                 addRootSlash: false,
                 transform: function(filepath) {
                     if (filepath) {
-                        return '@import  \'' + filepath + '\';';
+                        return '@import \'' + filepath + '\';';
                     }
                 }
             }
