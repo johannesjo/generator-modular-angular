@@ -30,6 +30,11 @@ module.exports = {
             globalDir: '',
             createDirectory: true
         },
+        component: {
+            suffix: '-cp',
+            globalDir: '',
+            createDirectory: true
+        },
         service: {
             suffix: '-s',
             globalDir: 'main/global-services'

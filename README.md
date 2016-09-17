@@ -97,6 +97,7 @@ All tasks can be edited freely and can be found in the /tasks folder.
 ## <a name="sub-gens"></a> Sub-Generators
 * [moda](#moda) (aka [moda:app](#app))
 * [directive](#directive)
+* [component](#component)
 * [service](#service)
 * [factory](#factory)
 * [controller](#controller)
@@ -147,8 +148,45 @@ By default directives are wrapped into their own folder. If you don't want that 
 yo moda:d my-directive my-path --noParentFolder
 ```
 
+
+### component
+Interactively generates a component, a test file and if you choose so a scss and html-template files.
+
+**usage:**
+```
+yo moda:cp my-component
+```
+**output:**
+```
+app/scripts/my-component/my-component-cp.js
+app/scripts/my-component/my-component-cp.spec.js
+
+// If you choose the template option (default:true)
+app/scripts/my-component/my-component-cp.html
+app/scripts/my-component/_my-component-cp.scss
+// If you choose service for the service or factory option (default:false)
+app/scripts/my-component/my-component-s.js
+// If you choose factory
+app/scripts/my-component/my-component-f.js
+```
+
+You can also specify a path or a parent module:
+```
+yo moda:cp my-component my-path
+```
+**output:**
+```
+app/scripts/my-path/my-component/my-component-cp.js
+app/scripts/my-path/my-component/my-component-cp.spec.js
+```
+By default components are wrapped into their own folder. If you don't want that you can [edit the .yo-rc.json](#yo-rc) or specify the `--noParentFolder` flag:
+
+```
+yo moda:cp my-component my-path --noParentFolder
+```
+
 ### controller
-Creates a controller and a test-file and template and service-files if you choose so. Although it works just fine, most of the time you probably would want to use [route](#route) or [directive](#directive) instead.
+Creates a controller and a test-file and template and service-files if you choose so. Although it works just fine, most of the time you probably would want to use [route](#route) or [component](#directive) instead.
 
 **usage:**
 ```
@@ -477,6 +515,11 @@ subGenerators: {
         globalDir: '',
         createDirectory: true,
     },
+    component: {
+        suffix: '-cp',
+        globalDir: '',
+        createDirectory: true
+    },    
     service: {
         suffix: '-s',
         globalDir: '_main/global-services'
