@@ -223,17 +223,21 @@ gulp.task('testSingle', function(done) {
         action: 'run',
         autoWatch: false,
         singleRun: true
-    }, done).start();
+    })
+        .on('run_complete', function(browsers, results) {
+            done(results.error ? 'There are test failures' : null);
+        })
+        .start();
 });
 
 
 gulp.task('lint', function() {
     return gulp.src([
-            config.scriptsAllF,
-            './karma-e2e.conf.js',
-            './karma.conf.js',
-            './gulpfile.js'
-        ], {base: './'})
+        config.scriptsAllF,
+        './karma-e2e.conf.js',
+        './karma.conf.js',
+        './gulpfile.js'
+    ], {base: './'})
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'))
         .pipe(jscs());
@@ -241,11 +245,11 @@ gulp.task('lint', function() {
 
 gulp.task('beautify', function() {
     return gulp.src([
-            config.scriptsAllF,
-            './karma-e2e.conf.js',
-            './karma.conf.js',
-            './gulpfile.js'
-        ], {base: './'})
+        config.scriptsAllF,
+        './karma-e2e.conf.js',
+        './karma.conf.js',
+        './gulpfile.js'
+    ], {base: './'})
         .pipe(jscs({fix: true}))
         .pipe(gulp.dest('./'));
 });
