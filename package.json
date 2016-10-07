@@ -42,6 +42,7 @@
   "files": [
     "app",
     "c",
+    "cp",
     "constant",
     "d",
     "decorator",
