@@ -223,11 +223,7 @@ gulp.task('testSingle', function(done) {
         action: 'run',
         autoWatch: false,
         singleRun: true
-    })
-        .on('run_complete', function(browsers, results) {
-            done(results.error ? 'There are test failures' : null);
-        })
-        .start();
+    }, done).start();
 });
 
 
