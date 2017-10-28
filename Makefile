@@ -1,14 +1,14 @@
-TESTS = test/**/*.spec.js
+TESTS = ./test/**/*.spec.js
 INSTANCE_TESTS_DIR = .test-instance
-INSTANCE_TESTS = test-app/**/*.spec.js
+INSTANCE_TESTS = ./test-app/**/*.spec.js
 REPORTER = spec
 COVERAGE_REPORT = ./coverage/lcov.info
-COVERALLS = ./node_modules/coveralls/bin/coveralls.js
+COVERALLS = ./node_modules/.bin/coveralls
 
 test: test-mocha
 
 test-mocha:
-	@NODE_ENV=test mocha \
+	@NODE_ENV=test ./node_modules/.bin/mocha \
 		--timeout 200 \
 		--reporter $(REPORTER) \
 		$(TESTS)
@@ -16,7 +16,7 @@ test-mocha:
 test-full: ./node_modules/.bin/istanbul create-app-instance test-app-instance test-node-module
 
 istanbul:
-	./node_modules/.bin/istanbul cover ./node_modules/.bin/mocha -- -R spec $(TESTS)
+	./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -R spec $(TESTS)
 
 coveralls:
 	cat $(COVERAGE_REPORT) | $(COVERALLS)
@@ -36,7 +36,7 @@ clean:
 	rm -rf ./coverage
 
 test-app-instance:
-	./node_modules/.bin/istanbul cover ./node_modules/.bin/mocha -- -R spec $(INSTANCE_TESTS)
+	./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -R spec $(INSTANCE_TESTS)
 
 create-app-instance:
 	rm -rf $(INSTANCE_TESTS_DIR)/
