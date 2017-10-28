@@ -16,6 +16,7 @@ var useref = require('gulp-useref');
 var sourcemaps = require('gulp-sourcemaps');
 var ngAnnotate = require('gulp-ng-annotate');
 var uglify = require('gulp-uglify');
+var saveLicense = require('uglify-save-license');
 var imagemin = require('gulp-imagemin');
 var runSequence = require('run-sequence')
     .use(gulp);
@@ -87,7 +88,11 @@ gulp.task('minFiles', function() {
         .pipe(useref({}, lazypipe()
             .pipe(sourcemaps.init, {loadMaps: true})))
         .pipe(gulpif('*.js', ngAnnotate()))
-        .pipe(gulpif('*.js', uglify({preserveComments: 'license'})))
+        .pipe(gulpif(/\.js$/, uglify({
+          output: {
+            comments: saveLicense
+          }
+        })))
         .pipe(gulpif('*.css', cleanCSS()))
         .pipe(gulp.dest(config.dist));
 });
