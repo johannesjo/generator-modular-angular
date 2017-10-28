@@ -13,10 +13,10 @@ test-mocha:
 		--reporter $(REPORTER) \
 		$(TESTS)
 
-test-full: istanbul create-app-instance test-app-instance test-node-module
+test-full: ./node_modules/.bin/istanbul create-app-instance test-app-instance test-node-module
 
 istanbul:
-	istanbul cover _mocha -- -R spec $(TESTS)
+	./node_modules/.bin/istanbul cover ./node_modules/.bin/mocha -- -R spec $(TESTS)
 
 coveralls:
 	cat $(COVERAGE_REPORT) | $(COVERALLS)
@@ -24,7 +24,7 @@ coveralls:
 cov-html: test-cov html-cov-report
 
 html-cov-report:
-	istanbul report html
+	./node_modules/.bin/istanbul report html
 
 npm:
 	npm publish ./
@@ -36,7 +36,7 @@ clean:
 	rm -rf ./coverage
 
 test-app-instance:
-	istanbul cover _mocha -- -R spec $(INSTANCE_TESTS)
+	./node_modules/.bin/istanbul cover ./node_modules/.bin/mocha -- -R spec $(INSTANCE_TESTS)
 
 create-app-instance:
 	rm -rf $(INSTANCE_TESTS_DIR)/
