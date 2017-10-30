@@ -7,7 +7,7 @@
  * Routes module. All app states are defined here.
  */
 
-(function() {
+(() => {
     'use strict';
 
     angular

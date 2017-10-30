@@ -6,7 +6,7 @@
  * Decorator of the <%= scriptAppName %>
  */
 
-(function() {
+(() => {
     'use strict';
 
     angular
@@ -14,7 +14,7 @@
         .config(<%= classedName %><%= nameSuffix %>);
 
     function <%= classedName %><%= nameSuffix %>($provide) {
-        $provide.decorator('<%= classedName %>', function($delegate) {
+        $provide.decorator('<%= classedName %>', ($delegate) => {
             return $delegate;
         });
     }

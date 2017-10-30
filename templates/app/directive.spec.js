@@ -1,19 +1,19 @@
 'use strict';
 
-describe('Directive: <%= cameledName %><%= nameSuffix %>', function() {
+describe('Directive: <%= cameledName %><%= nameSuffix %>', () => {
 
     // load the directive's module
     beforeEach(module('<%= scriptAppName %>'));
     beforeEach(module('templates'));
 
-    var element,
-        scope;
+    let element;
+    let scope;
 
-    beforeEach(inject(function($rootScope) {
+    beforeEach(inject(($rootScope) => {
         scope = $rootScope.$new();
     }));
 
-    it('should do something', inject(function($compile) {
+    it('should do something', inject(($compile) => {
         element = $compile('<<%= dashedName %>></<%= dashedName %>>')(scope);
         scope.$digest();
         expect(true).toBe(<%= testPassOnDefault %>);

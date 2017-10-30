@@ -6,22 +6,19 @@
  * Factory in the <%= scriptAppName %>.
  */
 
-(function() {
+(() => {
     'use strict';
+
+    class <%= classedName %><%= nameSuffix %> {
+        /* @ngInject */
+        constructor(){
+        }
+    }
 
     angular
         .module('<%= scriptAppName %>')
         .factory('<%= classedName %><%= nameSuffix %>', <%= classedName %><%= nameSuffix %>);
 
-    /* @ngInject */
-    function <%= classedName %><%= nameSuffix %>() {
-        // INITIALIZATION
-
-
-        // ACTUAL DEFINITION
-        return {
-            someMethod: function() {
-            }
-        };
-    }
+    // hacky fix for ff
+    <%= classedName %><%= nameSuffix %>.$$ngIsClass = true;
 })();

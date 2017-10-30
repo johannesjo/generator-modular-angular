@@ -7,7 +7,7 @@
  * Filter in the <%= scriptAppName %>.
  */
 
-(function() {
+(() => {
     'use strict';
 
     angular
@@ -15,7 +15,7 @@
         .filter('<%= cameledName %><%= nameSuffix %>', <%= cameledName %><%= nameSuffix %>);
 
     function <%= cameledName %><%= nameSuffix %>() {
-        return function(parameters) {
+        return (parameters) => {
             return parameters;
         }
     }

@@ -1,20 +1,20 @@
 'use strict';
 
-describe('Provider: <%= classedName %><%= nameSuffix %>', function() {
+describe('Provider: <%= classedName %><%= nameSuffix %>', () => {
     // load the service's module
-    var provider;
+    let provider;
 
-    beforeEach(module('<%= scriptAppName %>', function (<%= classedName %><%= nameSuffix %>Provider) {
+    beforeEach(module('<%= scriptAppName %>', (<%= classedName %><%= nameSuffix %>Provider) => {
         provider = <%= classedName %><%= nameSuffix %>Provider;
     }));
 
     // instantiate service-function
-    var <%= classedName %><%= nameSuffix %>;
+    let <%= classedName %><%= nameSuffix %>;
     beforeEach(inject(function (_<%= classedName %><%= nameSuffix %>_) {
         <%= classedName %><%= nameSuffix %> = _<%= classedName %><%= nameSuffix %>_;
     }));
 
-    it('should be defined', function() {
+    it('should be defined', () => {
         // provider.extendConfig({});
         expect(true).toBe(<%= testPassOnDefault %>);
     });

@@ -1,15 +1,15 @@
 'use strict';
 
-describe('Controller: <%= classedName %><%= nameSuffix %>', function() {
+describe('Controller: <%= classedName %><%= nameSuffix %>', () => {
 
     // load the controller's module
     beforeEach(module('<%= scriptAppName %>'));
 
-    var <%= classedName %><%= nameSuffix %>;
-    var scope;
+    let <%= classedName %><%= nameSuffix %>;
+    let scope;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller, $rootScope) {
+    beforeEach(inject(($controller, $rootScope) => {
         scope = $rootScope.$new();
         <%= classedName %><%= nameSuffix %> = $controller('<%= classedName %><%= nameSuffix %>', {
              $scope: scope
@@ -17,7 +17,7 @@ describe('Controller: <%= classedName %><%= nameSuffix %>', function() {
         });
     }));
 
-    it('should ...', function() {
+    it('should ...', () => {
          expect(true).toBe(<%= testPassOnDefault %>);
     });
 });

@@ -1,9 +1,9 @@
-describe('<%= scriptAppName %>', function() {
+describe('<%= scriptAppName %>', () => {
     'use strict';
 
     beforeEach(module('<%= scriptAppName %>'));
 
-    it('should always work', function() {
+    it('should always work', () => {
         expect(true)
             .toBe(true);
     });

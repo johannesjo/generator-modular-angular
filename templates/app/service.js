@@ -6,17 +6,19 @@
  * Service in the <%= scriptAppName %>.
  */
 
-(function() {
+(() => {
     'use strict';
+
+    class <%= classedName %><%= nameSuffix %> {
+        /* @ngInject */
+        constructor(){
+        }
+    }
 
     angular
         .module('<%= scriptAppName %>')
         .service('<%= classedName %><%= nameSuffix %>', <%= classedName %><%= nameSuffix %>);
 
-    /* @ngInject */
-    function <%= classedName %><%= nameSuffix %>() {
-
-        // AngularJS will instantiate a singleton by calling "new" on this function
-    }
-
+    // hacky fix for ff
+    <%= classedName %><%= nameSuffix %>.$$ngIsClass = true;
 })();

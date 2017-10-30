@@ -6,35 +6,43 @@
  * Provider in the <%= scriptAppName %>.
  */
 
-(function() {
+(() => {
     'use strict';
+
+  let config;
+
+    // Private constructor-function aka factory definition
+    class <%= classedName %><%= nameSuffix %> {
+        /* @ngInject */
+        constructor() {
+        }
+
+        someServiceFunction() {
+        };
+    }
+
+    class <%= classedName %><%= nameSuffix %>Provider {
+        /* @ngInject */
+        constructor() {
+          config = {};
+        }
+
+        // PROVIDER-FUNCTIONS
+        extendConfig(additionalConfig) {
+          config = angular.extend(config, additionalConfig);
+        }
+
+        // return service definition
+        $get() {
+          return new <%= classedName %><%= nameSuffix %>();
+        }
+    }
 
     angular
         .module('<%= scriptAppName %>')
-        .provider('<%= classedName %><%= nameSuffix %>');
+        .provider('<%= classedName %><%= nameSuffix %>', <%= classedName %><%= nameSuffix %>Provider);
 
-
-    /* @ngInject */
-    function <%= classedName %><%= nameSuffix %>Provider() {
-        var config = {};
-
-        // PROVIDER-FUNCTIONS
-        this.extendConfig = function(additionalConfig) {
-            config = angular.extend(config, additionalConfig);
-        };
-
-        // return service definition
-        this.$get = function() {
-            return new <%= classedName %><%= nameSuffix %>();
-        };
-    }
-
-    // Private constructor-function aka factory definition
-    /* @ngInject */
-    function <%= classedName %><%= nameSuffix %>() {
-
-        // SERVICE-FUNCTIONS
-        this.someServiceFunction = function() {
-        };
-    }
+    // hacky fix for ff
+    <%= classedName %><%= nameSuffix %>Provider.$$ngIsClass = true;
+    <%= classedName %><%= nameSuffix %>.$$ngIsClass = true;
 })();

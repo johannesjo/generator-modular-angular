@@ -1,16 +1,16 @@
 'use strict';
 
-describe('Service: <%= classedName %><%= nameSuffix %>', function() {
+describe('Service: <%= classedName %><%= nameSuffix %>', () => {
     // load the service's module
     beforeEach(module('<%= scriptAppName %>'));
 
     // instantiate service
-    var <%= classedName %><%= nameSuffix %>;
-    beforeEach(inject(function (_<%= classedName %><%= nameSuffix %>_) {
+    let <%= classedName %><%= nameSuffix %>;
+    beforeEach(inject((_<%= classedName %><%= nameSuffix %>_) => {
         <%= classedName %><%= nameSuffix %> = _<%= classedName %><%= nameSuffix %>_;
     }));
 
-    it('should be defined', function() {
+    it('should be defined', () => {
         expect(true).toBe(<%= testPassOnDefault %>);
     });
 

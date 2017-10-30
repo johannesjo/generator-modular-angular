@@ -1,5 +1,5 @@
-{<% var ngVer = "1.5.0" %>
-  "name": "<%= scriptAppName %>",
+{<% var ngVer = "1.6.6" %>
+  "name": "<%= slugAppName %>",
   "version": "0.0.0",
   "authors": [
   ],

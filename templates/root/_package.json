@@ -1,5 +1,5 @@
 {
-  "name": "<%= scriptAppName %>",
+  "name": "<%= slugAppName %>",
   "version": "0.0.0",
   "description": "",
   "main": "gulpfile.js",

@@ -6,15 +6,20 @@
  * Controller of the <%= scriptAppName %>
  */
 
-(function() {
+(() => {
     'use strict';
+
+    class <%= classedName %><%= nameSuffix %> {
+        /* @ngInject */
+        constructor(<% if(createService) {%><%= svcName %><% } %>){
+        }
+    }
 
     angular
         .module('<%= scriptAppName %>')
         .controller('<%= classedName %><%= nameSuffix %>', <%= classedName %><%= nameSuffix %>);
 
-    /* @ngInject */
-    function <%= classedName %><%= nameSuffix %>(<% if(createService) {%><%= svcName %><% } %>) {
-        var vm = this;
-    }
+    // hacky fix for ff
+    <%= classedName %><%= nameSuffix %>.$$ngIsClass = true;
+
 })();
